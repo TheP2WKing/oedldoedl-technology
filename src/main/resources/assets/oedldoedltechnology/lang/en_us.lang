@@ -1,0 +1,23 @@
+# creative tabs
+itemGroup.oedldoedltechnology.name=§dOedldoedl Technology
+
+# icons
+item.oedldoedlcore.technology_icon.annotation3=Version: §e1.12.2-3.0.0
+
+# blocks
+tile.oedldoedltechnology.record_package.name=Record Package
+tile.oedldoedltechnology.record_package.annotation1=Contents: §eMusic Discs
+tile.oedldoedltechnology.record_package.tip1=Thanks for the quick delivery, Jeffy.
+tile.oedldoedltechnology.record_package.tip2=What is inside for you?
+
+tile.oedldoedltechnology.music_player.name=Music Player
+tile.oedldoedltechnology.music_player.tip1=Has 12 disc slots and saves its inventory.
+tile.oedldoedltechnology.music_player.tip2=A way better method of listening to records.
+
+# items
+item.oedldoedltechnology.iphone_14_pro_max.name=iPhone 14 Pro Max
+item.oedldoedltechnology.iphone_14_pro_max.tip1=TODO
+
+item.oedldoedltechnology.railgun.name=Railgun
+item.oedldoedltechnology.railgun.tip1=TODO
+

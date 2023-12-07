@@ -1,0 +1,14 @@
+[
+    {
+        "modid": "oedldoedltechnology",
+        "name": "Oedldoedl Technology",
+        "description": "TODO",
+        "version": "${version}",
+        "mcversion": "${mcversion}",
+        "url": "https://github.com/TheP2WKing/oedldoedl-technology",
+        "authorList": ["TheP2WKing"],
+        "credits": "TheP2WKing",
+        "logoFile": "assets/oedldoedltechnology/textures/gui/logo/technology_logo.png",
+        "dependencies": []
+    }
+]

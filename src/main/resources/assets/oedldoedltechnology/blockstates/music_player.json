@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "oedldoedltechnology:music_player",
+            "y": 180
+        },
+        "facing=south": {
+            "model": "oedldoedltechnology:music_player",
+            "y": 0
+        },
+        "facing=west": {
+            "model": "oedldoedltechnology:music_player",
+            "y": 90
+        },
+        "facing=east": {
+            "model": "oedldoedltechnology:music_player",
+            "y": 270
+        }
+    }
+}

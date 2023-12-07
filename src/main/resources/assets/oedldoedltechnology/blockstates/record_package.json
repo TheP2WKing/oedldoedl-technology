@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "facing=north": {
+            "model": "oedldoedltechnology:record_package",
+            "y": 90
+        },
+        "facing=south": {
+            "model": "oedldoedltechnology:record_package",
+            "y": 270
+        },
+        "facing=east": {
+            "model": "oedldoedltechnology:record_package",
+            "y": 180
+        },
+        "facing=west": {
+            "model": "oedldoedltechnology:record_package",
+            "y": 0
+        }
+    }
+}
