@@ -1,6 +1,7 @@
 package net.thep2wking.oedldoedltechnology.content.item;
 
 import matteroverdrive.Reference;
+import matteroverdrive.api.weapon.IWeapon;
 import matteroverdrive.api.weapon.IWeaponModule;
 import matteroverdrive.api.weapon.WeaponShot;
 import matteroverdrive.client.sound.MOPositionedSound;
@@ -28,70 +29,111 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedlcore.config.CoreConfig;
+import net.thep2wking.oedldoedlcore.util.ModLogger;
 import net.thep2wking.oedldoedltechnology.api.ModItemEnergyWeaponBase;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
+@Mod.EventBusSubscriber
 public class ItemRailgunV2 extends EnergyWeapon {
 	public final String modid;
 	public final String name;
 	public final CreativeTabs tab;
 	public final EnumRarity rarity;
 	public final boolean hasEffect;
+		private final Map<IWeapon, Integer> shotTracker;
 
-public ItemRailgunV2(String modid, String name, CreativeTabs tab, EnumRarity rarity, boolean hasEffect) {
-	super(name, RANGE);
-	this.modid = modid;
-	this.name = name;
-	this.tab = tab;
-	this.rarity = rarity;
-	this.hasEffect = hasEffect;
-	setFull3D();
-	leftClickFire = true;
+	public ItemRailgunV2(String modid, String name, CreativeTabs tab, EnumRarity rarity, boolean hasEffect) {
+		super(name, RANGE);
+		this.modid = modid;
+		this.name = name;
+		this.tab = tab;
+		this.rarity = rarity;
+		this.hasEffect = hasEffect;
+		shotTracker = new HashMap<>();
+		setFull3D();
+		leftClickFire = true;
+		MinecraftForge.EVENT_BUS.register(this);
+	}
 
-}
 	public static final int RANGE = 64;
 	public static final int MAX_HEAT = 50;
 	public static final int MAX_USE_TIME = 512;
 	public static final int ENERGY_PER_SHOT = 4096;
 
-	@Override
-    @SideOnly(Side.CLIENT)
-    public EnumRarity getRarity(ItemStack stack) {
-        if (!stack.isItemEnchanted() && CoreConfig.PROPERTIES.COLORFUL_RARITIES) {
-            return this.rarity;
-        } else if (stack.isItemEnchanted()) {
-            switch (this.rarity) {
-                case COMMON:
-                case UNCOMMON:
-                    return EnumRarity.RARE;
-                case RARE:
-                    return EnumRarity.EPIC;
-                case EPIC:
-                default:
-                    return this.rarity;
-            }
-        }
-        return EnumRarity.COMMON;
-    }
+	@SubscribeEvent
+	public void onClientTick(TickEvent.ClientTickEvent event) {
+		if (!Minecraft.getMinecraft().isGamePaused() && Minecraft.getMinecraft().world != null
+				&& Minecraft.getMinecraft().player != null) {
+			for (IWeapon item : shotTracker.keySet()) {
+				int oldTime = shotTracker.get(item);
+				if (oldTime > 0) {
+					shotTracker.put(item, oldTime - 1);
+				}
+			}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean hasEffect(ItemStack stack) {
-        if (CoreConfig.PROPERTIES.ENCHANTMENT_EFFECTS) {
-            return this.hasEffect || stack.isItemEnchanted();
-        }
-        return stack.isItemEnchanted();
-    }
+		}
+	}
+
 	
+	public boolean shootDelayPassed(IWeapon item) {
+		return shotTracker.get(item) <= 0;
+	}
+
+	public void addShootDelay(IWeapon item, ItemStack weaponStack) {
+		if (shotTracker.containsKey(item)) {
+			shotTracker.put(item, shotTracker.get(item) + item.getShootCooldown(weaponStack));
+		}
+	}
+
+	public void addReloadDelay(IWeapon weapon, int delay) {
+		if (shotTracker.containsKey(weapon)) {
+			shotTracker.put(weapon, shotTracker.get(weapon) + delay);
+		}
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public EnumRarity getRarity(ItemStack stack) {
+		if (!stack.isItemEnchanted() && CoreConfig.PROPERTIES.COLORFUL_RARITIES) {
+			return this.rarity;
+		} else if (stack.isItemEnchanted()) {
+			switch (this.rarity) {
+				case COMMON:
+				case UNCOMMON:
+					return EnumRarity.RARE;
+				case RARE:
+					return EnumRarity.EPIC;
+				case EPIC:
+				default:
+					return this.rarity;
+			}
+		}
+		return EnumRarity.COMMON;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean hasEffect(ItemStack stack) {
+		if (CoreConfig.PROPERTIES.ENCHANTMENT_EFFECTS) {
+			return this.hasEffect || stack.isItemEnchanted();
+		}
+		return stack.isItemEnchanted();
+	}
 
 	@Override
 	public int getCapacity() {
@@ -162,40 +204,63 @@ public ItemRailgunV2(String modid, String name, CreativeTabs tab, EnumRarity rar
 	// @Override
 	// @SideOnly(Side.CLIENT)
 	// public void addShootDelay(ItemStack weaponStack) {
-	//    ClientProxy.instance().getClientWeaponHandler().addShootDelay(this, weaponStack);
+	// ClientProxy.instance().getClientWeaponHandler().addShootDelay(this,
+	// weaponStack);
 	// }
- 
+
 	// @Override
 	// @SideOnly(Side.CLIENT)
 	// public boolean hasShootDelayPassed() {
-	//    return ClientProxy.instance().getClientWeaponHandler().shootDelayPassed(this);
+	// return
+	// ClientProxy.instance().getClientWeaponHandler().shootDelayPassed(this);
+	// }
+
+	// @Override
+	// @SideOnly(Side.CLIENT)
+	// public void addShootDelay(ItemStack weaponStack) {
+	// 	net.thep2wking.oedldoedltechnology.util.proxy.ClientProxy.instance().getClientWeaponHandler()
+	// 			.addShootDelay(this, weaponStack);
+	// }
+
+	// @Override
+	// @SideOnly(Side.CLIENT)
+	// public boolean hasShootDelayPassed() {
+	// 	return net.thep2wking.oedldoedltechnology.util.proxy.ClientProxy.instance().getClientWeaponHandler()
+	// 			.shootDelayPassed(this);
 	// }
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onShooterClientUpdate(ItemStack itemStack, World world, EntityPlayer entityPlayer,
 			boolean sendServerTick) {
-		if (Mouse.isButtonDown(0)/*  && hasShootDelayPassed()*/) {
-			if (canFire(itemStack, world, entityPlayer)) {
-				Vec3d dir = entityPlayer.getLook(1);
-				Vec3d pos = getFirePosition(entityPlayer, dir, isWeaponZoomed(entityPlayer, itemStack));
-				WeaponShot shot = createClientShot(itemStack, entityPlayer, isWeaponZoomed(entityPlayer, itemStack));
-				onClientShot(itemStack, entityPlayer, pos, dir, shot);
-				addShootDelay(itemStack);
-				sendShootTickToServer(world, shot, dir, pos);
-				if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) {
-					if (isWeaponZoomed(entityPlayer, itemStack)) {
-						ClientProxy.instance().getClientWeaponHandler()
-								.setRecoil(2f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 0.5f);
-						ClientProxy.instance().getClientWeaponHandler()
-								.setCameraRecoil(3 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 3), 1);
-					} else {
-						ClientProxy.instance().getClientWeaponHandler()
-								.setRecoil(4f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 1);
-						ClientProxy.instance().getClientWeaponHandler()
-								.setCameraRecoil(4 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 4), 1);
+		if (Mouse.isButtonDown(0)) {
+			ModLogger.LOGGER.info("HMMM0");
+			
+				ModLogger.LOGGER.info("HMMM1");
+				if (canFire(itemStack, world, entityPlayer)) {
+					ModLogger.LOGGER.info("HMMM2");
+					Vec3d dir = entityPlayer.getLook(1);
+					Vec3d pos = getFirePosition(entityPlayer, dir, isWeaponZoomed(entityPlayer, itemStack));
+					WeaponShot shot = createClientShot(itemStack, entityPlayer,
+							isWeaponZoomed(entityPlayer, itemStack));
+					onClientShot(itemStack, entityPlayer, pos, dir, shot);
+					addShootDelay(itemStack);
+					sendShootTickToServer(world, shot, dir, pos);
+					if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) {
+						ModLogger.LOGGER.info("HMMM3");
+						if (isWeaponZoomed(entityPlayer, itemStack)) {
+							ClientProxy.instance().getClientWeaponHandler()
+									.setRecoil(2f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 0.5f);
+							ClientProxy.instance().getClientWeaponHandler()
+									.setCameraRecoil(3 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 3), 1);
+						} else {
+							ClientProxy.instance().getClientWeaponHandler()
+									.setRecoil(4f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 1);
+							ClientProxy.instance().getClientWeaponHandler()
+									.setCameraRecoil(4 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 4), 1);
+						}
 					}
-				}
+				
 				return;
 			} else if (needsRecharge(itemStack)) {
 				chargeFromEnergyPack(itemStack, entityPlayer);
@@ -235,16 +300,16 @@ public ItemRailgunV2(String modid, String name, CreativeTabs tab, EnumRarity rar
 	@SideOnly(Side.CLIENT)
 	public Vector2f getSlotPosition(int slot, ItemStack weapon) {
 		switch (slot) {
-		case Reference.MODULE_BATTERY:
-			return new Vector2f(170, 115);
-		case Reference.MODULE_COLOR:
-			return new Vector2f(60, 45);
-		case Reference.MODULE_BARREL:
-			return new Vector2f(60, 115);
-		case Reference.MODULE_SIGHTS:
-			return new Vector2f(150, 35);
-		default:
-			return new Vector2f(205, 80 + ((slot - Reference.MODULE_OTHER) * 22));
+			case Reference.MODULE_BATTERY:
+				return new Vector2f(170, 115);
+			case Reference.MODULE_COLOR:
+				return new Vector2f(60, 45);
+			case Reference.MODULE_BARREL:
+				return new Vector2f(60, 115);
+			case Reference.MODULE_SIGHTS:
+				return new Vector2f(150, 35);
+			default:
+				return new Vector2f(205, 80 + ((slot - Reference.MODULE_OTHER) * 22));
 		}
 	}
 
@@ -252,14 +317,14 @@ public ItemRailgunV2(String modid, String name, CreativeTabs tab, EnumRarity rar
 	@SideOnly(Side.CLIENT)
 	public Vector2f getModuleScreenPosition(int slot, ItemStack weapon) {
 		switch (slot) {
-		case Reference.MODULE_BATTERY:
-			return new Vector2f(165, 80);
-		case Reference.MODULE_COLOR:
-			return new Vector2f(110, 90);
-		case Reference.MODULE_BARREL:
-			return new Vector2f(90, 95);
-		case Reference.MODULE_SIGHTS:
-			return new Vector2f(150, 72);
+			case Reference.MODULE_BATTERY:
+				return new Vector2f(165, 80);
+			case Reference.MODULE_COLOR:
+				return new Vector2f(110, 90);
+			case Reference.MODULE_BARREL:
+				return new Vector2f(90, 95);
+			case Reference.MODULE_SIGHTS:
+				return new Vector2f(150, 72);
 		}
 		return getSlotPosition(slot, weapon);
 	}
@@ -306,19 +371,20 @@ public ItemRailgunV2(String modid, String name, CreativeTabs tab, EnumRarity rar
 	public boolean supportsModule(ItemStack weapon, ItemStack module) {
 		return module.isEmpty() || !(module.getItem() instanceof IWeaponModule)
 				|| ((IWeaponModule) module.getItem()).getSlot(module) != Reference.MODULE_BARREL
-				&& module.getItemDamage() != WeaponModuleBarrel.HEAL_BARREL_ID && module.getItemDamage() != WeaponModuleBarrel.EXPLOSION_BARREL_ID;
+						&& module.getItemDamage() != WeaponModuleBarrel.HEAL_BARREL_ID
+						&& module.getItemDamage() != WeaponModuleBarrel.EXPLOSION_BARREL_ID;
 	}
 
 	@Override
 	public boolean onServerFire(ItemStack weapon, EntityLivingBase shooter, WeaponShot shot, Vec3d position, Vec3d dir,
 			int delay) {
 		if (shooter instanceof EntityPlayer) {
-		if (!((EntityPlayer) shooter).capabilities.isCreativeMode) {
-			DrainEnergy(weapon, getShootCooldown(weapon), false);
-			float newHeat = getHeat(weapon) + getMaxHeat(weapon) * 0.8f;
-			setHeat(weapon, newHeat);
-			manageOverheat(weapon, shooter.world, shooter);
-		}
+			if (!((EntityPlayer) shooter).capabilities.isCreativeMode) {
+				DrainEnergy(weapon, getShootCooldown(weapon), false);
+				float newHeat = getHeat(weapon) + getMaxHeat(weapon) * 0.8f;
+				setHeat(weapon, newHeat);
+				manageOverheat(weapon, shooter.world, shooter);
+			}
 		}
 		PlasmaBolt fire = spawnProjectile(weapon, shooter, position, dir, shot);
 		fire.simulateDelay(delay);
@@ -335,7 +401,7 @@ public ItemRailgunV2(String modid, String name, CreativeTabs tab, EnumRarity rar
 	public boolean isWeaponZoomed(EntityLivingBase entityPlayer, ItemStack weapon) {
 		// Fix the requirement to have the button down for a "right click".
 		if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) {
-		return entityPlayer.isHandActive() && entityPlayer.getActiveHand() == EnumHand.MAIN_HAND;
+			return entityPlayer.isHandActive() && entityPlayer.getActiveHand() == EnumHand.MAIN_HAND;
 		}
 		return false;
 	}

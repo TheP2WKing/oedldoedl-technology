@@ -21,6 +21,15 @@ public class ClientProxy extends CommonProxy {
 		weaponHandler = new ClientWeaponHandler();
 	}
 
+	public static ClientProxy instance() {
+		if (OedldoedlTechnology.PROXY instanceof ClientProxy)
+			return (ClientProxy) OedldoedlTechnology.PROXY;
+		else if (OedldoedlTechnology.PROXY == null)
+			throw new UnsupportedOperationException("Attempted to access ClientProxy without it being initialized");
+		throw new UnsupportedOperationException("Attempted to access ClientProxy on server side");
+	}
+
+
 	private void registerSubscribtions() {
 		MinecraftForge.EVENT_BUS.register(weaponHandler);
 		ModLogger.LOGGER.info("SOMETHING0");
@@ -37,6 +46,7 @@ public class ClientProxy extends CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
+		weaponHandler = new ClientWeaponHandler();
 		renderHandler = new RenderHandlerV2();
 		renderHandler.createItemRenderers();
 		renderHandler.init(Minecraft.getMinecraft().world, Minecraft.getMinecraft().getTextureManager());
@@ -51,4 +61,10 @@ public class ClientProxy extends CommonProxy {
 	public void postInit(FMLPostInitializationEvent event) {
 		super.postInit(event);
 	}
+
+	
+	public ClientWeaponHandler getClientWeaponHandler() {
+		return weaponHandler;
+	}
+
 }
