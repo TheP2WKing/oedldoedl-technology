@@ -32,6 +32,7 @@ public class ClientProxy extends CommonProxy {
 		super.preInit(event);
 		renderHandler = new ModRenderHandler();
 		renderHandler.createItemRenderers();
+		renderHandler.registerEntityRenderers();
 	}
 
 	public void init(FMLInitializationEvent event) {

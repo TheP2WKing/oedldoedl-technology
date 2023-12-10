@@ -8,7 +8,6 @@ import org.lwjgl.util.vector.Vector2f;
 import matteroverdrive.Reference;
 import matteroverdrive.api.weapon.WeaponShot;
 import matteroverdrive.client.sound.WeaponSound;
-import matteroverdrive.entity.weapon.PlasmaBolt;
 import matteroverdrive.items.weapon.EnergyWeapon;
 import matteroverdrive.network.packet.bi.PacketFirePlasmaShot;
 import net.minecraft.client.Minecraft;
@@ -30,6 +29,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedlcore.config.CoreConfig;
+import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
+import net.thep2wking.oedldoedltechnology.entity.EntityRailgunBolt;
+import net.thep2wking.oedldoedltechnology.util.handler.ModClientWeaponHandler;
 import net.thep2wking.oedldoedltechnology.util.proxy.ClientProxy;
 
 public class ModItemEnergyWeaponBase extends EnergyWeapon {
@@ -284,6 +286,16 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 		super.onShooterClientUpdate(itemStack, world, entityPlayer, sendServerTick);
 	}
 
+	public EntityRailgunBolt spawnProjectileV2(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
+			WeaponShot shot) {
+		EntityRailgunBolt fire = getDefaultProjectileV2(weapon, shooter, position, dir, shot);
+		shooter.world.spawnEntity(fire);
+		if (shooter.world.isRemote && shooter instanceof EntityPlayer) {
+			((ModClientWeaponHandler) OedldoedlTechnology.PROXY.getModWeaponHandler()).addPlasmaBolt(fire);
+		}
+		return fire;
+	}
+
 	@Override
 	public boolean onServerFire(ItemStack weapon, EntityLivingBase shooter, WeaponShot shot, Vec3d position, Vec3d dir,
 			int delay) {
@@ -295,7 +307,7 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 				manageOverheat(weapon, shooter.world, shooter);
 			}
 		}
-		PlasmaBolt fire = spawnProjectile(weapon, shooter, position, dir, shot);
+		EntityRailgunBolt fire = spawnProjectileV2(weapon, shooter, position, dir, shot);
 		fire.simulateDelay(delay);
 		return true;
 	}
@@ -318,10 +330,10 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 	public void onProjectileHit(RayTraceResult arg0, ItemStack arg1, World arg2, float arg3) {
 	}
 
-	@Override
-	public PlasmaBolt getDefaultProjectile(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
+	public EntityRailgunBolt getDefaultProjectileV2(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
 			WeaponShot shot) {
-		PlasmaBolt bolt = new PlasmaBolt(shooter.world, shooter, position, dir, shot, getShotSpeed(weapon, shooter));
+		EntityRailgunBolt bolt = new EntityRailgunBolt(shooter.world, shooter, position, dir, shot,
+				getShotSpeed(weapon, shooter));
 		bolt.setKnockBack(1);
 		bolt.setExplodeMultiply(explosionDamage);
 		return bolt;

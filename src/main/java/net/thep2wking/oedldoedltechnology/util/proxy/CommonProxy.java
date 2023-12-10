@@ -23,9 +23,6 @@ public class CommonProxy {
 	public void postInit(FMLPostInitializationEvent event) {
 	}
 
-	public void render() {
-	}
-
 	public ModCommonWeaponHandler getModWeaponHandler() {
 		return commonWeaponHandler;
 	}

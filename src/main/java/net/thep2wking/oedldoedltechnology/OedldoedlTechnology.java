@@ -20,7 +20,7 @@ import net.thep2wking.oedldoedlcore.init.ModItems;
 import net.thep2wking.oedldoedlcore.util.ModLogger;
 import net.thep2wking.oedldoedlcore.util.ModReferences;
 import net.thep2wking.oedldoedltechnology.registry.ModRecipes;
-
+import net.thep2wking.oedldoedltechnology.util.network.ModPacketPipeline;
 import net.thep2wking.oedldoedltechnology.util.proxy.CommonProxy;
 
 @Mod(modid = OedldoedlTechnology.MODID, name = OedldoedlTechnology.NAME, version = OedldoedlTechnology.VERSION, dependencies = OedldoedlTechnology.DEPENDENCIES)
@@ -33,6 +33,7 @@ public class OedldoedlTechnology {
     public static final String DEPENDENCIES = "required-after:forge@[14.23.5.2847,);required-after:oedldoedlcore@[1.12.2-3.0.0,);required-after:matteroverdrive@[0.8,);";
     public static final String CLIENT_PROXY_CLASS = "net.thep2wking.oedldoedltechnology.util.proxy.ClientProxy";
     public static final String SERVER_PROXY_CLASS = "net.thep2wking.oedldoedltechnology.util.proxy.ServerProxy";
+	public static final ModPacketPipeline NETWORK = new ModPacketPipeline();;
 
     @Instance
     public static OedldoedlTechnology INSTANCE;
@@ -57,6 +58,7 @@ public class OedldoedlTechnology {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         ModLogger.preInitLogger(MODID);
+        NETWORK.registerPackets();
         PROXY.preInit(event);
     }
 
@@ -65,7 +67,6 @@ public class OedldoedlTechnology {
         ModLogger.initLogger(MODID);
         ModRecipes.registerOreDict();
         ModRecipes.registerRecipes();
-        PROXY.render();
         PROXY.init(event);
     }
 

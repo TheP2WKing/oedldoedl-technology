@@ -47,8 +47,10 @@ import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.client.model.obj.OBJModel;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.thep2wking.oedldoedltechnology.entity.EntityRailgunBolt;
 import net.thep2wking.oedldoedltechnology.init.ModItems;
 
 public class ModRenderHandler {
@@ -210,6 +212,10 @@ public class ModRenderHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void registerEntityRenderers() {
+		RenderingRegistry.registerEntityRenderingHandler(EntityRailgunBolt.class, ModEntityRenderPhaserFire::new);
 	}
 
 	public RenderParticlesHandler getRenderParticlesHandler() {
