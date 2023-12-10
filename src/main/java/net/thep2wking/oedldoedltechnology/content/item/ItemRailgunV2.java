@@ -1,17 +1,14 @@
 package net.thep2wking.oedldoedltechnology.content.item;
 
 import matteroverdrive.Reference;
-import matteroverdrive.api.weapon.IWeapon;
 import matteroverdrive.api.weapon.IWeaponModule;
 import matteroverdrive.api.weapon.WeaponShot;
 import matteroverdrive.client.sound.MOPositionedSound;
 import matteroverdrive.client.sound.WeaponSound;
 import matteroverdrive.entity.weapon.PlasmaBolt;
-import matteroverdrive.init.MatterOverdriveSounds;
 import matteroverdrive.items.weapon.EnergyWeapon;
-import matteroverdrive.items.weapon.PhaserRifle;
 import matteroverdrive.items.weapon.module.WeaponModuleBarrel;
-import matteroverdrive.proxy.ClientProxy;
+import matteroverdrive.network.packet.bi.PacketFirePlasmaShot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,7 +16,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -27,35 +23,29 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.RayTraceResult.Type;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedlcore.config.CoreConfig;
-import net.thep2wking.oedldoedlcore.util.ModLogger;
-import net.thep2wking.oedldoedltechnology.api.ModItemEnergyWeaponBase;
+import net.thep2wking.oedldoedltechnology.init.ModSounds;
+import net.thep2wking.oedldoedltechnology.util.proxy.ClientProxy;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
-@Mod.EventBusSubscriber
 public class ItemRailgunV2 extends EnergyWeapon {
 	public final String modid;
 	public final String name;
 	public final CreativeTabs tab;
 	public final EnumRarity rarity;
 	public final boolean hasEffect;
-		private final Map<IWeapon, Integer> shotTracker;
+	
+	public static final int RANGE = 64;
+	public static final int MAX_HEAT = 100;
+	public static final int MAX_USE_TIME = 512;
+	public static final int ENERGY_PER_SHOT = 4096;
 
 	public ItemRailgunV2(String modid, String name, CreativeTabs tab, EnumRarity rarity, boolean hasEffect) {
 		super(name, RANGE);
@@ -64,49 +54,13 @@ public class ItemRailgunV2 extends EnergyWeapon {
 		this.tab = tab;
 		this.rarity = rarity;
 		this.hasEffect = hasEffect;
-		shotTracker = new HashMap<>();
+		setUnlocalizedName(this.modid + "." + this.name);
+		setCreativeTab(this.tab);
 		setFull3D();
 		leftClickFire = true;
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	public static final int RANGE = 64;
-	public static final int MAX_HEAT = 50;
-	public static final int MAX_USE_TIME = 512;
-	public static final int ENERGY_PER_SHOT = 4096;
-
-	@SubscribeEvent
-	public void onClientTick(TickEvent.ClientTickEvent event) {
-		if (!Minecraft.getMinecraft().isGamePaused() && Minecraft.getMinecraft().world != null
-				&& Minecraft.getMinecraft().player != null) {
-			for (IWeapon item : shotTracker.keySet()) {
-				int oldTime = shotTracker.get(item);
-				if (oldTime > 0) {
-					shotTracker.put(item, oldTime - 1);
-				}
-			}
-
-		}
-	}
-
-	
-	public boolean shootDelayPassed(IWeapon item) {
-		return shotTracker.get(item) <= 0;
-	}
-
-	public void addShootDelay(IWeapon item, ItemStack weaponStack) {
-		if (shotTracker.containsKey(item)) {
-			shotTracker.put(item, shotTracker.get(item) + item.getShootCooldown(weaponStack));
-		}
-	}
-
-	public void addReloadDelay(IWeapon weapon, int delay) {
-		if (shotTracker.containsKey(weapon)) {
-			shotTracker.put(weapon, shotTracker.get(weapon) + delay);
-		}
-	}
-	
-	@Override
 	@SideOnly(Side.CLIENT)
 	public EnumRarity getRarity(ItemStack stack) {
 		if (!stack.isItemEnchanted() && CoreConfig.PROPERTIES.COLORFUL_RARITIES) {
@@ -150,11 +104,6 @@ public class ItemRailgunV2 extends EnergyWeapon {
 		return 128;
 	}
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addCustomDetails(ItemStack weapon, EntityPlayer player, List infos) {
-
-	}
 
 	@Override
 	public int getBaseEnergyUse(ItemStack item) {
@@ -193,7 +142,7 @@ public class ItemRailgunV2 extends EnergyWeapon {
 
 	@Override
 	public int getBaseShootCooldown(ItemStack weapon) {
-		return 50;
+		return 100;
 	}
 
 	@Override
@@ -201,72 +150,36 @@ public class ItemRailgunV2 extends EnergyWeapon {
 		return 0.1f;
 	}
 
-	// @Override
-	// @SideOnly(Side.CLIENT)
-	// public void addShootDelay(ItemStack weaponStack) {
-	// ClientProxy.instance().getClientWeaponHandler().addShootDelay(this,
-	// weaponStack);
-	// }
-
-	// @Override
-	// @SideOnly(Side.CLIENT)
-	// public boolean hasShootDelayPassed() {
-	// return
-	// ClientProxy.instance().getClientWeaponHandler().shootDelayPassed(this);
-	// }
-
-	// @Override
-	// @SideOnly(Side.CLIENT)
-	// public void addShootDelay(ItemStack weaponStack) {
-	// 	net.thep2wking.oedldoedltechnology.util.proxy.ClientProxy.instance().getClientWeaponHandler()
-	// 			.addShootDelay(this, weaponStack);
-	// }
-
-	// @Override
-	// @SideOnly(Side.CLIENT)
-	// public boolean hasShootDelayPassed() {
-	// 	return net.thep2wking.oedldoedltechnology.util.proxy.ClientProxy.instance().getClientWeaponHandler()
-	// 			.shootDelayPassed(this);
-	// }
-
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void onShooterClientUpdate(ItemStack itemStack, World world, EntityPlayer entityPlayer,
-			boolean sendServerTick) {
-		if (Mouse.isButtonDown(0)) {
-			ModLogger.LOGGER.info("HMMM0");
-			
-				ModLogger.LOGGER.info("HMMM1");
-				if (canFire(itemStack, world, entityPlayer)) {
-					ModLogger.LOGGER.info("HMMM2");
-					Vec3d dir = entityPlayer.getLook(1);
-					Vec3d pos = getFirePosition(entityPlayer, dir, isWeaponZoomed(entityPlayer, itemStack));
-					WeaponShot shot = createClientShot(itemStack, entityPlayer,
-							isWeaponZoomed(entityPlayer, itemStack));
-					onClientShot(itemStack, entityPlayer, pos, dir, shot);
-					addShootDelay(itemStack);
-					sendShootTickToServer(world, shot, dir, pos);
-					if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) {
-						ModLogger.LOGGER.info("HMMM3");
-						if (isWeaponZoomed(entityPlayer, itemStack)) {
-							ClientProxy.instance().getClientWeaponHandler()
-									.setRecoil(2f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 0.5f);
-							ClientProxy.instance().getClientWeaponHandler()
-									.setCameraRecoil(3 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 3), 1);
-						} else {
-							ClientProxy.instance().getClientWeaponHandler()
-									.setRecoil(4f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 1);
-							ClientProxy.instance().getClientWeaponHandler()
-									.setCameraRecoil(4 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 4), 1);
-						}
+	public void onShooterClientUpdate(ItemStack itemStack, World world, EntityPlayer entityPlayer, boolean sendServerTick) {
+		if (Mouse.isButtonDown(0) && this.hasShootDelayPassed()) {
+			if (canFire(itemStack, world, entityPlayer)) {
+				Vec3d dir = entityPlayer.getLook(1);
+				Vec3d pos = getFirePosition(entityPlayer, dir, isWeaponZoomed(entityPlayer, itemStack));
+				WeaponShot shot = createClientShot(itemStack, entityPlayer,
+						isWeaponZoomed(entityPlayer, itemStack));
+				this.onClientShot(itemStack, entityPlayer, pos, dir, shot);
+				this.addShootDelay(itemStack);
+				this.sendShootTickToServer(world, shot, dir, pos);
+				if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) {
+					if (isWeaponZoomed(entityPlayer, itemStack)) {
+						matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
+								.setRecoil(2f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 0.5f);
+								matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
+								.setCameraRecoil(3 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 3), 1);
+					} else {
+						matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
+								.setRecoil(4f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 1);
+								matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
+								.setCameraRecoil(4 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 4), 1);
 					}
-				
+				}
 				return;
 			} else if (needsRecharge(itemStack)) {
 				chargeFromEnergyPack(itemStack, entityPlayer);
 			}
 		}
-
 		super.onShooterClientUpdate(itemStack, world, entityPlayer, sendServerTick);
 	}
 
@@ -284,8 +197,7 @@ public class ItemRailgunV2 extends EnergyWeapon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onClientShot(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir, WeaponShot shot) {
-		MOPositionedSound sound = new MOPositionedSound(MatterOverdriveSounds.weaponsSniperRifleFire,
-				SoundCategory.PLAYERS, 3f + itemRand.nextFloat() * 0.5f, 0.9f + itemRand.nextFloat() * 0.2f);
+		MOPositionedSound sound = new MOPositionedSound(ModSounds.RAILGUN, SoundCategory.PLAYERS, 3f + itemRand.nextFloat() * 0.5f, 0.9f + itemRand.nextFloat() * 0.2f);
 		sound.setPosition((float) position.x, (float) position.y, (float) position.z);
 		Minecraft.getMinecraft().getSoundHandler().playSound(sound);
 		spawnProjectile(weapon, shooter, position, dir, shot);
@@ -293,7 +205,6 @@ public class ItemRailgunV2 extends EnergyWeapon {
 
 	@Override
 	public void onProjectileHit(RayTraceResult hit, ItemStack weapon, World world, float amount) {
-		// world.newExplosion(null, hit., amount, amount, amount, canRepair, bFull3D)
 	}
 
 	@Override
@@ -330,10 +241,10 @@ public class ItemRailgunV2 extends EnergyWeapon {
 	}
 
 	@Override
-	public PlasmaBolt getDefaultProjectile(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
-			WeaponShot shot) {
-		PlasmaBolt bolt = super.getDefaultProjectile(weapon, shooter, position, dir, shot);
+	public PlasmaBolt getDefaultProjectile(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir, WeaponShot shot) {
+		PlasmaBolt bolt = new PlasmaBolt(shooter.world, shooter, position, dir, shot, getShotSpeed(weapon, shooter));
 		bolt.setKnockBack(1);
+		bolt.setExplodeMultiply(5);
 		return bolt;
 	}
 
@@ -349,7 +260,7 @@ public class ItemRailgunV2 extends EnergyWeapon {
 
 	@Override
 	public boolean supportsModule(int slot, ItemStack weapon) {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -376,8 +287,7 @@ public class ItemRailgunV2 extends EnergyWeapon {
 	}
 
 	@Override
-	public boolean onServerFire(ItemStack weapon, EntityLivingBase shooter, WeaponShot shot, Vec3d position, Vec3d dir,
-			int delay) {
+	public boolean onServerFire(ItemStack weapon, EntityLivingBase shooter, WeaponShot shot, Vec3d position, Vec3d dir, int delay) {
 		if (shooter instanceof EntityPlayer) {
 			if (!((EntityPlayer) shooter).capabilities.isCreativeMode) {
 				DrainEnergy(weapon, getShootCooldown(weapon), false);
@@ -399,7 +309,6 @@ public class ItemRailgunV2 extends EnergyWeapon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean isWeaponZoomed(EntityLivingBase entityPlayer, ItemStack weapon) {
-		// Fix the requirement to have the button down for a "right click".
 		if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) {
 			return entityPlayer.isHandActive() && entityPlayer.getActiveHand() == EnumHand.MAIN_HAND;
 		}
@@ -410,5 +319,36 @@ public class ItemRailgunV2 extends EnergyWeapon {
 	@SideOnly(Side.CLIENT)
 	public WeaponSound getFireSound(ItemStack weapon, EntityLivingBase entity) {
 		return null;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void manageClientServerTicks(World world) {
+		ClientProxy.instance().getClientWeaponHandlerV2().sendWeaponTickToServer(world, (PacketFirePlasmaShot) null);
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void sendShootTickToServer(World world, WeaponShot weaponShot, Vec3d dir, Vec3d pos) {
+		PacketFirePlasmaShot packetFirePlasmaShot = new PacketFirePlasmaShot(
+				Minecraft.getMinecraft().player.getEntityId(), pos, dir, weaponShot);
+		ClientProxy.instance().getClientWeaponHandlerV2().sendWeaponTickToServer(world, packetFirePlasmaShot);
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void addShootDelay(ItemStack weaponStack) {
+		ClientProxy.instance().getClientWeaponHandlerV2().addShootDelay(this, weaponStack);
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public boolean hasShootDelayPassed() {
+		return ClientProxy.instance().getClientWeaponHandlerV2().shootDelayPassed(this);
+	}
+
+	@Override
+	@SuppressWarnings("all")
+	public void addCustomDetails(ItemStack arg0, EntityPlayer arg1, List arg2) {
 	}
 }

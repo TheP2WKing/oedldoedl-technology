@@ -1,10 +1,8 @@
 package net.thep2wking.oedldoedltechnology;
 
-import matteroverdrive.util.WeaponFactory;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -74,7 +72,6 @@ public class OedldoedlTechnology {
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         ModLogger.postInitLogger(MODID);
-        // renderHandler.createItemRenderers();
         PROXY.postInit(event);
     }
 

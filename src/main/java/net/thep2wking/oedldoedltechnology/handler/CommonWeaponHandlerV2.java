@@ -11,11 +11,11 @@ import matteroverdrive.network.packet.bi.PacketFirePlasmaShot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class CommonWeaponHandler {
+public class CommonWeaponHandlerV2 {
 	private static final PacketFirePlasmaShot.BiHandler firePlasmaShotHandler = new PacketFirePlasmaShot.BiHandler();
 	private final Map<EntityPlayer, Long> weaponTimestamps;
 
-	public CommonWeaponHandler() {
+	public CommonWeaponHandlerV2() {
 		weaponTimestamps = new HashMap<>();
 	}
 

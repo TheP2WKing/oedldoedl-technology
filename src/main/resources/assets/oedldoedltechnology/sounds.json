@@ -1,0 +1,9 @@
+{
+    "railgun": {
+        "category": "player",
+        "subtitle": "sound.oedldoedltechnology.railgun",
+        "sounds": [
+            "oedldoedltechnology:railgun"
+        ]
+    }
+}

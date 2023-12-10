@@ -10,6 +10,7 @@ import net.thep2wking.oedldoedlcore.util.ModLogger;
 import net.thep2wking.oedldoedlcore.util.ModRegistryHelper;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.init.ModItems;
+import net.thep2wking.oedldoedltechnology.init.ModSounds;
 
 @Mod.EventBusSubscriber
 public class ModRegistry {
@@ -30,5 +31,7 @@ public class ModRegistry {
 	@SubscribeEvent
 	public static void onSoundEventRegister(RegistryEvent.Register<SoundEvent> event) {
 		ModLogger.registeredSoundEventsLogger(OedldoedlTechnology.MODID);
+
+		ModRegistryHelper.registerSoundEvent(event, ModSounds.RAILGUN);
 	}
 }

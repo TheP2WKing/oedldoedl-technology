@@ -219,7 +219,9 @@ public class ItemRailgun extends ModItemEnergyWeaponBase {
 	@Override
 	public PlasmaBolt getDefaultProjectile(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
 			WeaponShot shot) {
-		PlasmaBolt bolt = super.getDefaultProjectile(weapon, shooter, position, dir, shot);
+		PlasmaBolt bolt = new PlasmaBolt(shooter.world, shooter, position, dir, shot, getShotSpeed(weapon, shooter)) {
+			
+		};
 		bolt.setKnockBack(1);
 		return bolt;
 	}

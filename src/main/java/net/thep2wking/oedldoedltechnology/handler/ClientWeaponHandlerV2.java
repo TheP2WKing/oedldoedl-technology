@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ClientWeaponHandler extends CommonWeaponHandler {
+public class ClientWeaponHandlerV2 extends CommonWeaponHandlerV2 {
 	private static final float RECOIL_RESET_SPEED = 0.03f;
 	private static final float CAMERA_RECOIL_RESET_SPEED = 0.03f;
 	public static float ZOOM_TIME;
@@ -41,7 +41,7 @@ public class ClientWeaponHandler extends CommonWeaponHandler {
 	private int nextShotID;
 	private boolean hasChangedSensitivity = false;
 
-	public ClientWeaponHandler() {
+	public ClientWeaponHandlerV2() {
 		shotTracker = new HashMap<>();
 		plasmaBolts = new IntHashMap<>();
 	}
@@ -59,7 +59,6 @@ public class ClientWeaponHandler extends CommonWeaponHandler {
 					shotTracker.put(item, oldTime - 1);
 				}
 			}
-
 			manageWeaponView();
 		}
 	}
@@ -68,7 +67,6 @@ public class ClientWeaponHandler extends CommonWeaponHandler {
 	public void onTick(TickEvent.RenderTickEvent event) {
 		if (Minecraft.getMinecraft().player != null && event.phase.equals(TickEvent.Phase.END)) {
 			EntityPlayer entityPlayer = Minecraft.getMinecraft().player;
-
 			if (entityPlayer.getHeldItem(EnumHand.MAIN_HAND) != null
 					&& entityPlayer.getHeldItem(EnumHand.MAIN_HAND).getItem() instanceof IWeapon) {
 				if (((IWeapon) entityPlayer.getHeldItem(EnumHand.MAIN_HAND).getItem()).isWeaponZoomed(entityPlayer,
@@ -80,7 +78,6 @@ public class ClientWeaponHandler extends CommonWeaponHandler {
 			} else {
 				ZOOM_TIME = Math.max(ZOOM_TIME - (event.renderTickTime * 0.2f), 0);
 			}
-
 			if (ZOOM_TIME == 0) {
 				if (hasChangedSensitivity) {
 					hasChangedSensitivity = false;
@@ -129,11 +126,8 @@ public class ClientWeaponHandler extends CommonWeaponHandler {
 					&& ((IWeapon) currentitem.getItem()).isAlwaysEquipped(currentitem)) {
 				if (player == Minecraft.getMinecraft().player
 						&& Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) {
-					// this disables the use animation of the weapon in first person
-					// to enable custom animations
 					currentitem.setItemDamage(0);
 				} else {
-					// this allows the item to play the bow use animation when in 3rd person mode
 					currentitem.setItemDamage(1);
 					player.setActiveHand(EnumHand.MAIN_HAND);
 				}
