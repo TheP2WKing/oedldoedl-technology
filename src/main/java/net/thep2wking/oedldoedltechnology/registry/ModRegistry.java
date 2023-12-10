@@ -17,7 +17,6 @@ public class ModRegistry {
 	@SubscribeEvent
 	public static void onBlockRegister(RegistryEvent.Register<Block> event) {
 		ModLogger.registeredBlocksLogger(OedldoedlTechnology.MODID);
-		
 	}
 
 	@SubscribeEvent
@@ -25,6 +24,7 @@ public class ModRegistry {
 		ModLogger.registeredItemsLogger(OedldoedlTechnology.MODID);
 
 		ModRegistryHelper.registerItem(event, ModItems.IPHONE_14_PRO_MAX);
+
 		ModRegistryHelper.registerItem(event, ModItems.RAILGUN);
 	}
 
@@ -32,6 +32,6 @@ public class ModRegistry {
 	public static void onSoundEventRegister(RegistryEvent.Register<SoundEvent> event) {
 		ModLogger.registeredSoundEventsLogger(OedldoedlTechnology.MODID);
 
-		ModRegistryHelper.registerSoundEvent(event, ModSounds.RAILGUN);
+		ModRegistryHelper.registerSoundEvent(event, ModSounds.RAILGUN_SHOT);
 	}
 }

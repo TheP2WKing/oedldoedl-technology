@@ -1,9 +1,9 @@
 {
-    "railgun": {
+    "railgun_shot": {
         "category": "player",
-        "subtitle": "sound.oedldoedltechnology.railgun",
+        "subtitle": "sound.oedldoedltechnology.railgun_shot",
         "sounds": [
-            "oedldoedltechnology:railgun"
+            "oedldoedltechnology:railgun_shot"
         ]
     }
 }

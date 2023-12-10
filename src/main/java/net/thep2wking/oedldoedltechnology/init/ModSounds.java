@@ -5,5 +5,5 @@ import net.thep2wking.oedldoedlcore.api.sound.ModSoundEventBase;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 
 public class ModSounds {
-	public static final SoundEvent RAILGUN = new ModSoundEventBase(OedldoedlTechnology.MODID, "railgun");
+	public static final SoundEvent RAILGUN_SHOT = new ModSoundEventBase(OedldoedlTechnology.MODID, "railgun_shot");
 }

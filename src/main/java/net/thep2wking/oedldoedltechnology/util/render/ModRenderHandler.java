@@ -1,4 +1,4 @@
-package net.thep2wking.oedldoedltechnology.render;
+package net.thep2wking.oedldoedltechnology.util.render;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.thep2wking.oedldoedltechnology.init.ModItems;
 
-public class RenderHandlerV2 {
+public class ModRenderHandler {
 	public static final Function<ResourceLocation, TextureAtlasSprite> modelTextureBakeFunc = new Function<ResourceLocation, TextureAtlasSprite>() {
 		@Override
 		@SuppressWarnings("null")
@@ -74,12 +74,12 @@ public class RenderHandlerV2 {
 	private AndroidStatRenderRegistry statRenderRegistry;
 	private AndroidBionicPartRenderRegistry bionicPartRenderRegistry;
 	private WeaponModuleModelRegistry weaponModuleModelRegistry;
-	private WeaponRenderHandlerV2 weaponRenderHandler;
+	private ModWeaponRenderHandler weaponRenderHandler;
 
-	public RenderHandlerV2() {
+	public ModRenderHandler() {
 		customRenderers = new ArrayList<>();
 		MinecraftForge.EVENT_BUS.register(this);
-		weaponRenderHandler = new WeaponRenderHandlerV2();
+		weaponRenderHandler = new ModWeaponRenderHandler();
 	}
 
 	public void init(World world, TextureManager textureManager) {
@@ -232,7 +232,7 @@ public class RenderHandlerV2 {
 		customRenderers.add(renderer);
 	}
 
-	public WeaponRenderHandlerV2 getWeaponRenderHandler() {
+	public ModWeaponRenderHandler getWeaponRenderHandler() {
 		return weaponRenderHandler;
 	}
 }

@@ -1,4 +1,4 @@
-package net.thep2wking.oedldoedltechnology.handler;
+package net.thep2wking.oedldoedltechnology.util.handler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ClientWeaponHandlerV2 extends CommonWeaponHandlerV2 {
+public class ModClientWeaponHandler extends ModCommonWeaponHandler {
 	private static final float RECOIL_RESET_SPEED = 0.03f;
 	private static final float CAMERA_RECOIL_RESET_SPEED = 0.03f;
 	public static float ZOOM_TIME;
@@ -41,7 +41,7 @@ public class ClientWeaponHandlerV2 extends CommonWeaponHandlerV2 {
 	private int nextShotID;
 	private boolean hasChangedSensitivity = false;
 
-	public ClientWeaponHandlerV2() {
+	public ModClientWeaponHandler() {
 		shotTracker = new HashMap<>();
 		plasmaBolts = new IntHashMap<>();
 	}

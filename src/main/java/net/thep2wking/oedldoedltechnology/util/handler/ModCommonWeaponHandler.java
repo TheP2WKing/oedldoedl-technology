@@ -1,4 +1,4 @@
-package net.thep2wking.oedldoedltechnology.handler;
+package net.thep2wking.oedldoedltechnology.util.handler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -11,11 +11,11 @@ import matteroverdrive.network.packet.bi.PacketFirePlasmaShot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class CommonWeaponHandlerV2 {
+public class ModCommonWeaponHandler {
 	private static final PacketFirePlasmaShot.BiHandler firePlasmaShotHandler = new PacketFirePlasmaShot.BiHandler();
 	private final Map<EntityPlayer, Long> weaponTimestamps;
 
-	public CommonWeaponHandlerV2() {
+	public ModCommonWeaponHandler() {
 		weaponTimestamps = new HashMap<>();
 	}
 

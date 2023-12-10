@@ -1,4 +1,4 @@
-package net.thep2wking.oedldoedltechnology.render;
+package net.thep2wking.oedldoedltechnology.util.render;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,18 +47,18 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedlcore.util.ModLogger;
-import net.thep2wking.oedldoedltechnology.handler.ClientWeaponHandlerV2;
+import net.thep2wking.oedldoedltechnology.util.handler.ModClientWeaponHandler;
 
 import org.lwjgl.util.glu.Project;
 
 @SideOnly(Side.CLIENT)
 @SuppressWarnings("all")
-public class WeaponRenderHandlerV2 {
+public class ModWeaponRenderHandler {
 	private final Minecraft mc = Minecraft.getMinecraft();
-	private final Map<Class<? extends IWeaponModule>, IModuleRenderV2> moduleRenders = new HashMap();
+	private final Map<Class<? extends IWeaponModule>, IModModuleRenderer> moduleRenders = new HashMap();
 	private final List<IWeaponLayer> weaponLayers = new ArrayList();
 
-	public WeaponRenderHandlerV2() {
+	public ModWeaponRenderHandler() {
 	}
 
 	@SubscribeEvent
@@ -84,9 +84,9 @@ public class WeaponRenderHandlerV2 {
 					&& ((EntityLivingBase) this.mc.getRenderViewEntity()).isPlayerSleeping();
 			if (this.mc.gameSettings.thirdPersonView == 0 && !flag && !this.mc.gameSettings.hideGUI
 					&& !this.mc.playerController.isSpectator()) {
-				float zoomValue = Sine.easeInOut(ClientWeaponHandlerV2.ZOOM_TIME, 0.0F, 1.0F, 1.0F);
-				float recoilValue = Quad.easeInOut(ClientWeaponHandlerV2.RECOIL_TIME, 0.0F, 1.0F, 1.0F)
-						* MathHelper.clamp(ClientWeaponHandlerV2.RECOIL_AMOUNT, 0.0F, 20.0F);
+				float zoomValue = Sine.easeInOut(ModClientWeaponHandler.ZOOM_TIME, 0.0F, 1.0F, 1.0F);
+				float recoilValue = Quad.easeInOut(ModClientWeaponHandler.RECOIL_TIME, 0.0F, 1.0F, 1.0F)
+						* MathHelper.clamp(ModClientWeaponHandler.RECOIL_AMOUNT, 0.0F, 20.0F);
 				this.transformFirstPerson(zoomValue);
 				WeaponItemRenderer model = this.getWeaponModel(weapon);
 				if (model != null) {
@@ -141,18 +141,18 @@ public class WeaponRenderHandlerV2 {
 		this.renderModules(modules, model.getWeaponMetadata(), weapon, partialTicks);
 	}
 
-	public void onModelBake(TextureMap textureMap, RenderHandlerV2 renderHandler) {
+	public void onModelBake(TextureMap textureMap, ModRenderHandler renderHandler) {
 		Iterator var3 = this.moduleRenders.values().iterator();
 		while (var3.hasNext()) {
-			IModuleRenderV2 render = (IModuleRenderV2) var3.next();
+			IModModuleRenderer render = (IModModuleRenderer) var3.next();
 			render.onModelBake(textureMap, renderHandler);
 		}
 	}
 
-	public void onTextureStich(TextureMap textureMap, RenderHandlerV2 renderHandler) {
+	public void onTextureStich(TextureMap textureMap, ModRenderHandler renderHandler) {
 		Iterator var3 = this.moduleRenders.values().iterator();
 		while (var3.hasNext()) {
-			IModuleRenderV2 render = (IModuleRenderV2) var3.next();
+			IModModuleRenderer render = (IModModuleRenderer) var3.next();
 			render.onTextureStich(textureMap, renderHandler);
 		}
 	}
@@ -190,7 +190,7 @@ public class WeaponRenderHandlerV2 {
 			Iterator var6 = modules.iterator();
 			while (var6.hasNext()) {
 				ItemStack module = (ItemStack) var6.next();
-				IModuleRenderV2 render = (IModuleRenderV2) this.moduleRenders.get(module.getItem().getClass());
+				IModModuleRenderer render = (IModModuleRenderer) this.moduleRenders.get(module.getItem().getClass());
 				if (render != null) {
 					render.transformWeapon(weaponMeta, weapon, module, ticks, zoomValue);
 				}
@@ -205,7 +205,7 @@ public class WeaponRenderHandlerV2 {
 			Iterator var5 = modules.iterator();
 			while (var5.hasNext()) {
 				ItemStack module = (ItemStack) var5.next();
-				IModuleRenderV2 render = (IModuleRenderV2) this.moduleRenders.get(module.getItem().getClass());
+				IModModuleRenderer render = (IModModuleRenderer) this.moduleRenders.get(module.getItem().getClass());
 				if (render != null) {
 					GlStateManager.pushMatrix();
 					render.renderModule(weaponMeta, weapon, module, ticks);
@@ -266,9 +266,9 @@ public class WeaponRenderHandlerV2 {
 	@SubscribeEvent
 	public void handleCameraRecoil(EntityViewRenderEvent.CameraSetup event) {
 		event.setRoll(event.getRoll()
-				+ ClientWeaponHandlerV2.CAMERA_RECOIL_AMOUNT * ClientWeaponHandlerV2.CAMERA_RECOIL_TIME);
-		event.setPitch(event.getPitch() + Math.abs(ClientWeaponHandlerV2.CAMERA_RECOIL_AMOUNT)
-				* ClientWeaponHandlerV2.CAMERA_RECOIL_TIME * 0.5F);
+				+ ModClientWeaponHandler.CAMERA_RECOIL_AMOUNT * ModClientWeaponHandler.CAMERA_RECOIL_TIME);
+		event.setPitch(event.getPitch() + Math.abs(ModClientWeaponHandler.CAMERA_RECOIL_AMOUNT)
+				* ModClientWeaponHandler.CAMERA_RECOIL_TIME * 0.5F);
 	}
 
 	private void transformFirstPerson(float zoomValue) {
@@ -317,7 +317,7 @@ public class WeaponRenderHandlerV2 {
 		}
 	}
 
-	public void addModuleRender(Class<? extends IWeaponModule> moduleClass, IModuleRenderV2 render) {
+	public void addModuleRender(Class<? extends IWeaponModule> moduleClass, IModModuleRenderer render) {
 		this.moduleRenders.put(moduleClass, render);
 	}
 

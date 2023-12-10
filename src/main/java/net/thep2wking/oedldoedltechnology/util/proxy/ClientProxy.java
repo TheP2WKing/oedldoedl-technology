@@ -6,18 +6,18 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
-import net.thep2wking.oedldoedltechnology.handler.ClientWeaponHandlerV2;
-import net.thep2wking.oedldoedltechnology.handler.CommonWeaponHandlerV2;
-import net.thep2wking.oedldoedltechnology.handler.TickHandlerV2;
 import net.thep2wking.oedldoedltechnology.init.ModItems;
-import net.thep2wking.oedldoedltechnology.render.RenderHandlerV2;
+import net.thep2wking.oedldoedltechnology.util.handler.ModClientWeaponHandler;
+import net.thep2wking.oedldoedltechnology.util.handler.ModCommonWeaponHandler;
+import net.thep2wking.oedldoedltechnology.util.handler.ModTickHandler;
+import net.thep2wking.oedldoedltechnology.util.render.ModRenderHandler;
 
 public class ClientProxy extends CommonProxy {
-	public static RenderHandlerV2 renderHandler;
-	private ClientWeaponHandlerV2 weaponHandler;
+	public static ModRenderHandler renderHandler;
+	private ModClientWeaponHandler weaponHandler;
 
 	public ClientProxy() {
-		weaponHandler = new ClientWeaponHandlerV2();
+		weaponHandler = new ModClientWeaponHandler();
 	}
 
 	public static ClientProxy instance() {
@@ -30,7 +30,7 @@ public class ClientProxy extends CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
-		renderHandler = new RenderHandlerV2();
+		renderHandler = new ModRenderHandler();
 		renderHandler.createItemRenderers();
 	}
 
@@ -38,11 +38,11 @@ public class ClientProxy extends CommonProxy {
 		super.init(event);
 		renderHandler.init(Minecraft.getMinecraft().world, Minecraft.getMinecraft().getTextureManager());
 		MinecraftForge.EVENT_BUS.register(renderHandler);
-		MinecraftForge.EVENT_BUS.register(new TickHandlerV2());
+		MinecraftForge.EVENT_BUS.register(new ModTickHandler());
 		renderHandler.registerWeaponLayers();
 		renderHandler.createItemRenderers();
-		weaponHandler = new ClientWeaponHandlerV2();
-		renderHandler = new RenderHandlerV2();
+		weaponHandler = new ModClientWeaponHandler();
+		renderHandler = new ModRenderHandler();
 		weaponHandler.registerWeapon(ModItems.RAILGUN);
 	}
 
@@ -50,12 +50,12 @@ public class ClientProxy extends CommonProxy {
 		super.postInit(event);
 	}
 
-	public ClientWeaponHandlerV2 getClientWeaponHandlerV2() {
+	public ModClientWeaponHandler getModClientWeaponHandler() {
 		return weaponHandler;
 	}
 
 	@Override
-	public CommonWeaponHandlerV2 getWeaponHandlerV2() {
+	public ModCommonWeaponHandler getModWeaponHandler() {
 		return weaponHandler;
 	}
 }
