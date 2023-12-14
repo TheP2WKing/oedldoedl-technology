@@ -1,26 +1,30 @@
 package net.thep2wking.oedldoedltechnology.content.item;
 
+import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
 import matteroverdrive.MatterOverdrive;
 import matteroverdrive.Reference;
 import matteroverdrive.api.weapon.WeaponShot;
 import matteroverdrive.items.weapon.module.WeaponModuleBarrel;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedltechnology.api.ModEntityPlasmaShotBase;
 import net.thep2wking.oedldoedltechnology.api.ModItemEnergyWeaponBase;
-import net.thep2wking.oedldoedltechnology.entity.EntityRailgunBolt;
+import net.thep2wking.oedldoedltechnology.entity.EntityUpNAtomizerBolt;
 import net.thep2wking.oedldoedltechnology.init.ModSounds;
 
-public class ItemRailgun extends ModItemEnergyWeaponBase {
-	public ItemRailgun(String modid, String name, CreativeTabs tab, int range, int cooldown, int damage, int maxUseTime,
+public class ItemUpNAtomizer extends ModItemEnergyWeaponBase {
+	public ItemUpNAtomizer(String modid, String name, CreativeTabs tab, int range, int cooldown, int damage, int maxUseTime,
 			int shotSpeed, float zoom, int maxHeat, int maxEnergy, int energyPerShot, EnumRarity rarity,
 			boolean hasEffect) {
 		super(modid, name, tab, range, cooldown, damage, maxUseTime, shotSpeed, zoom, maxHeat,
@@ -74,24 +78,54 @@ public class ItemRailgun extends ModItemEnergyWeaponBase {
 
 	@Override
 	public float getWeaponBaseAccuracy(ItemStack weapon, boolean zoomed) {
-		if (zoomed) {
-			return 1f + getHeat(weapon) * 0.1f;
-		} else {
-			return 5 + getHeat(weapon) * 0.3f;
-		}
+		return 0.5f + getHeat(weapon) / getMaxHeat(weapon) * 6;
 	}
 
 	@Override
 	public SoundEvent setShotSound() {
-		return ModSounds.RAILGUN_SHOT;
+		return ModSounds.UP_N_ATOMIZER_SHOT;
 	}
 
 	@Override
 	public ModEntityPlasmaShotBase setBolt(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
 			WeaponShot shot) {
-		EntityRailgunBolt bolt = new EntityRailgunBolt(shooter.world, shooter, position, dir, shot,
+		EntityUpNAtomizerBolt bolt = new EntityUpNAtomizerBolt(shooter.world, shooter, position, dir, shot,
 				getShotSpeed(weapon, shooter));
 		bolt.setKnockBack(1);
 		return bolt;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void onShooterClientUpdate(ItemStack itemStack, World world, EntityPlayer entityPlayer,
+			boolean sendServerTick) {
+		if (Mouse.isButtonDown(0) && this.hasShootDelayPassed()) {
+			if (canFire(itemStack, world, entityPlayer)) {
+				Vec3d dir = entityPlayer.getLook(1);
+				Vec3d pos = getFirePosition(entityPlayer, dir, isWeaponZoomed(entityPlayer, itemStack));
+				WeaponShot shot = createClientShot(itemStack, entityPlayer,
+						isWeaponZoomed(entityPlayer, itemStack));
+				this.onClientShot(itemStack, entityPlayer, pos, dir, shot);
+				this.addShootDelay(itemStack);
+				this.sendShootTickToServer(world, shot, dir, pos);
+				if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) {
+					if (isWeaponZoomed(entityPlayer, itemStack)) {
+						matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
+								.setRecoil(2f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 0.05f);
+						matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
+								.setCameraRecoil(3 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 0.1f), 1);
+					} else {
+						matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
+								.setRecoil(4f + Math.min(2, getAccuracy(itemStack, entityPlayer, true) * 2), 1, 0.07f);
+						matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
+								.setCameraRecoil(4 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 0.5f), 1);
+					}
+				}
+				return;
+			} else if (needsRecharge(itemStack)) {
+				chargeFromEnergyPack(itemStack, entityPlayer);
+			}
+		}
+		super.onShooterClientUpdate(itemStack, world, entityPlayer, sendServerTick);
 	}
 }

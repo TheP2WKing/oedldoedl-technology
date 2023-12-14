@@ -45,6 +45,7 @@ public class ClientProxy extends CommonProxy {
 		weaponHandler = new ModClientWeaponHandler();
 		renderHandler = new ModRenderHandler();
 		weaponHandler.registerWeapon(ModItems.RAILGUN);
+		weaponHandler.registerWeapon(ModItems.UP_N_ATOMIZER);
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {

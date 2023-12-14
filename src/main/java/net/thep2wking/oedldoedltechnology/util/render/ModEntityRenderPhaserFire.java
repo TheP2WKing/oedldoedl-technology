@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
-import net.thep2wking.oedldoedltechnology.entity.EntityRailgunBolt;
+import net.thep2wking.oedldoedltechnology.api.ModEntityPlasmaShotBase;
 
 @SuppressWarnings("all")
 public class ModEntityRenderPhaserFire extends Render {
@@ -25,7 +25,7 @@ public class ModEntityRenderPhaserFire extends Render {
 		super(renderManager);
 	}
 
-	public void doRender(EntityRailgunBolt plasmaBolt, double x, double y, double z, float p_76986_8_, float p_76986_9_) {
+	public void doRender(ModEntityPlasmaShotBase plasmaBolt, double x, double y, double z, float p_76986_8_, float p_76986_9_) {
 		this.bindEntityTexture(plasmaBolt);
 		RenderUtils.disableLightmap();
 		GlStateManager.enableBlend();
@@ -88,17 +88,17 @@ public class ModEntityRenderPhaserFire extends Render {
 		RenderUtils.enableLightmap();
 	}
 
-	protected ResourceLocation getEntityTexture(EntityRailgunBolt p_110775_1_) {
+	protected ResourceLocation getEntityTexture(ModEntityPlasmaShotBase p_110775_1_) {
 		return arrowTextures;
 	}
 
 	protected ResourceLocation getEntityTexture(Entity p_110775_1_) {
-		return this.getEntityTexture((EntityRailgunBolt) p_110775_1_);
+		return this.getEntityTexture((ModEntityPlasmaShotBase) p_110775_1_);
 	}
 
 	@Override
 	public void doRender(Entity p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_,
 			float p_76986_9_) {
-		this.doRender((EntityRailgunBolt) p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
+		this.doRender((ModEntityPlasmaShotBase) p_76986_1_, p_76986_2_, p_76986_4_, p_76986_6_, p_76986_8_, p_76986_9_);
 	}
 }

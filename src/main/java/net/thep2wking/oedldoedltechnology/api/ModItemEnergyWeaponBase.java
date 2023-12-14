@@ -7,7 +7,9 @@ import org.lwjgl.util.vector.Vector2f;
 
 import matteroverdrive.Reference;
 import matteroverdrive.api.weapon.WeaponShot;
+import matteroverdrive.client.sound.MOPositionedSound;
 import matteroverdrive.client.sound.WeaponSound;
+import matteroverdrive.init.MatterOverdriveSounds;
 import matteroverdrive.items.weapon.EnergyWeapon;
 import matteroverdrive.network.packet.bi.PacketFirePlasmaShot;
 import net.minecraft.client.Minecraft;
@@ -21,6 +23,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -30,7 +34,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedlcore.config.CoreConfig;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
-import net.thep2wking.oedldoedltechnology.entity.EntityRailgunBolt;
 import net.thep2wking.oedldoedltechnology.util.handler.ModClientWeaponHandler;
 import net.thep2wking.oedldoedltechnology.util.proxy.ClientProxy;
 
@@ -41,7 +44,6 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 	public final int range;
 	public final int cooldown;
 	public final int damage;
-	public final int explosionDamage;
 	public final int maxUseTime;
 	public final int shotSpeed;
 	public final float zoom;
@@ -52,8 +54,8 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 	public final boolean hasEffect;
 
 	public ModItemEnergyWeaponBase(String modid, String name, CreativeTabs tab, int range, int cooldown, int damage,
-			int explosionDamage, int maxUseTime, int shotSpeed, float zoom, int maxHeat, int maxEnergy,
-			int energyPerShot, EnumRarity rarity, boolean hasEffect) {
+			int maxUseTime, int shotSpeed, float zoom, int maxHeat, int maxEnergy, int energyPerShot, EnumRarity rarity,
+			boolean hasEffect) {
 		super(name, range);
 		this.modid = modid;
 		this.name = name;
@@ -61,7 +63,6 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 		this.range = range;
 		this.cooldown = cooldown;
 		this.damage = damage;
-		this.explosionDamage = explosionDamage;
 		this.maxUseTime = maxUseTime;
 		this.shotSpeed = shotSpeed;
 		this.zoom = zoom;
@@ -163,7 +164,7 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 	}
 
 	@SideOnly(Side.CLIENT)
-	private Vec3d getFirePosition(EntityPlayer entityPlayer, Vec3d dir, boolean isAiming) {
+	public Vec3d getFirePosition(EntityPlayer entityPlayer, Vec3d dir, boolean isAiming) {
 		Vec3d pos = entityPlayer.getPositionEyes(1);
 		if (!isAiming) {
 			pos = pos.subtract((double) (MathHelper.cos(entityPlayer.rotationYaw / 180.0F * (float) Math.PI) * 0.16F),
@@ -286,16 +287,6 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 		super.onShooterClientUpdate(itemStack, world, entityPlayer, sendServerTick);
 	}
 
-	public EntityRailgunBolt spawnProjectileV2(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
-			WeaponShot shot) {
-		EntityRailgunBolt fire = getDefaultProjectileV2(weapon, shooter, position, dir, shot);
-		shooter.world.spawnEntity(fire);
-		if (shooter.world.isRemote && shooter instanceof EntityPlayer) {
-			((ModClientWeaponHandler) OedldoedlTechnology.PROXY.getModWeaponHandler()).addPlasmaBolt(fire);
-		}
-		return fire;
-	}
-
 	@Override
 	public boolean onServerFire(ItemStack weapon, EntityLivingBase shooter, WeaponShot shot, Vec3d position, Vec3d dir,
 			int delay) {
@@ -307,7 +298,7 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 				manageOverheat(weapon, shooter.world, shooter);
 			}
 		}
-		EntityRailgunBolt fire = spawnProjectileV2(weapon, shooter, position, dir, shot);
+		ModEntityPlasmaShotBase fire = spawnBolt(weapon, shooter, position, dir, shot);
 		fire.simulateDelay(delay);
 		return true;
 	}
@@ -323,20 +314,25 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 	}
 
 	@Override
-	public void onClientShot(ItemStack arg0, EntityLivingBase arg1, Vec3d arg2, Vec3d arg3, WeaponShot arg4) {
-	}
-
-	@Override
 	public void onProjectileHit(RayTraceResult arg0, ItemStack arg1, World arg2, float arg3) {
 	}
 
-	public EntityRailgunBolt getDefaultProjectileV2(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
+	public ModEntityPlasmaShotBase setBolt(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
 			WeaponShot shot) {
-		EntityRailgunBolt bolt = new EntityRailgunBolt(shooter.world, shooter, position, dir, shot,
+		ModEntityPlasmaShotBase bolt = new ModEntityPlasmaShotBase(shooter.world, shooter, position, dir, shot,
 				getShotSpeed(weapon, shooter));
 		bolt.setKnockBack(1);
-		bolt.setExplodeMultiply(explosionDamage);
 		return bolt;
+	}
+
+	public ModEntityPlasmaShotBase spawnBolt(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
+			WeaponShot shot) {
+		ModEntityPlasmaShotBase fire = setBolt(weapon, shooter, position, dir, shot);
+		shooter.world.spawnEntity(fire);
+		if (shooter.world.isRemote && shooter instanceof EntityPlayer) {
+			((ModClientWeaponHandler) OedldoedlTechnology.PROXY.getModWeaponHandler()).addPlasmaBolt(fire);
+		}
+		return fire;
 	}
 
 	@Override
@@ -383,5 +379,19 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 	@Override
 	public boolean hasShootDelayPassed() {
 		return ClientProxy.instance().getModClientWeaponHandler().shootDelayPassed(this);
+	}
+
+	public SoundEvent setShotSound() {
+		return MatterOverdriveSounds.weaponsPhaserRifleShot;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void onClientShot(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir, WeaponShot shot) {
+		MOPositionedSound sound = new MOPositionedSound(setShotSound(), SoundCategory.PLAYERS,
+				3f + itemRand.nextFloat() * 0.5f, 0.9f + itemRand.nextFloat() * 0.2f);
+		sound.setPosition((float) position.x, (float) position.y, (float) position.z);
+		Minecraft.getMinecraft().getSoundHandler().playSound(sound);
+		spawnProjectile(weapon, shooter, position, dir, shot);
 	}
 }

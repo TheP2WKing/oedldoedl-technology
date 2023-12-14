@@ -5,5 +5,19 @@
         "sounds": [
             "oedldoedltechnology:railgun_shot"
         ]
+    },
+    "up_n_atomizer_shot": {
+        "category": "player",
+        "subtitle": "sound.oedldoedltechnology.up_n_atomizer_shot",
+        "sounds": [
+            "oedldoedltechnology:up_n_atomizer_shot"
+        ]
+    },
+    "up_n_atomizer_shot_impact": {
+        "category": "player",
+        "subtitle": "sound.oedldoedltechnology.up_n_atomizer_shot_impact",
+        "sounds": [
+            "oedldoedltechnology:up_n_atomizer_shot_impact"
+        ]
     }
 }

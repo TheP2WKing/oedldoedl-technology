@@ -50,7 +50,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.thep2wking.oedldoedltechnology.entity.EntityRailgunBolt;
+import net.thep2wking.oedldoedltechnology.api.ModEntityPlasmaShotBase;
 import net.thep2wking.oedldoedltechnology.init.ModItems;
 
 public class ModRenderHandler {
@@ -61,8 +61,9 @@ public class ModRenderHandler {
 			return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(input.toString());
 		}
 	};
-	public static int stencilBuffer;
 	private static ItemRendererRailgun rendererRailgun;
+	private static ItemRendererUpNAtomizer rendererUpNAtomizer;
+	public static int stencilBuffer;
 	private final Random random = new Random();
 	private final WeaponLayerAmmoRender weaponLayerAmmoRender = new WeaponLayerAmmoRender();
 	public EntityRendererRougeAndroid<EntityRougeAndroidMob> rendererRougeAndroidHologram;
@@ -156,15 +157,18 @@ public class ModRenderHandler {
 
 	public void createItemRenderers() {
 		rendererRailgun = new ItemRendererRailgun();
+		rendererUpNAtomizer = new ItemRendererUpNAtomizer();
 	}
 
 	public void activateItemRenderers() {
 		rendererRailgun.init();
+		rendererUpNAtomizer.init();
 	}
 
 	public void bakeItemModels() {
 		weaponRenderHandler.onModelBake(Minecraft.getMinecraft().getTextureMapBlocks(), this);
 		rendererRailgun.bakeModel();
+		rendererUpNAtomizer.bakeModel();
 	}
 
 	public void registerModelTextures(TextureMap textureMap, OBJModel model) {
@@ -184,8 +188,8 @@ public class ModRenderHandler {
 
 	@SubscribeEvent
 	public void onModelBake(ModelBakeEvent event) {
-		event.getModelRegistry().putObject(new ModelResourceLocation(ModItems.RAILGUN.getRegistryName(), "inventory"),
-				rendererRailgun);
+		event.getModelRegistry().putObject(new ModelResourceLocation(ModItems.RAILGUN.getRegistryName(), "inventory"), rendererRailgun);
+		event.getModelRegistry().putObject(new ModelResourceLocation(ModItems.UP_N_ATOMIZER.getRegistryName(), "inventory"), rendererUpNAtomizer);
 		activateItemRenderers();
 		bakeItemModels();
 	}
@@ -215,7 +219,7 @@ public class ModRenderHandler {
 	}
 
 	public void registerEntityRenderers() {
-		RenderingRegistry.registerEntityRenderingHandler(EntityRailgunBolt.class, ModEntityRenderPhaserFire::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityPlasmaShotBase.class, ModEntityRenderPhaserFire::new);
 	}
 
 	public RenderParticlesHandler getRenderParticlesHandler() {

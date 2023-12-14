@@ -18,15 +18,14 @@ import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 @ChannelHandler.Sharable
 public class ModPacketPipeline {
 	public static final SimpleNetworkWrapper CHANNEL = NetworkRegistry.INSTANCE.newSimpleChannel(OedldoedlTechnology.MODID + "_channel");
-	public static  int packetID = 10000;
+	public static int packetID = 0;
 
 	public ModPacketPipeline() {
-
 	}
 
 	public void registerPackets() {
-		CHANNEL.registerMessage(ModPacketUpdatePlasmaBolt.ClientHandler.class, ModPacketUpdatePlasmaBolt.class, 10000, Side.CLIENT);
-		CHANNEL.registerMessage(ModPacketWeaponTick.ServerHandler.class, ModPacketWeaponTick.class, 10001, Side.SERVER);
+		CHANNEL.registerMessage(ModPacketUpdatePlasmaBolt.ClientHandler.class, ModPacketUpdatePlasmaBolt.class, packetID++, Side.CLIENT);
+		CHANNEL.registerMessage(ModPacketWeaponTick.ServerHandler.class, ModPacketWeaponTick.class, packetID++, Side.SERVER);
 	}
 
 	public static <REQ extends IMessage, REPLY extends IMessage> void registerPacket(
@@ -88,5 +87,4 @@ public class ModPacketPipeline {
 	public void sendToDimention(IMessage message, WorldProvider worldProvider) {
 		CHANNEL.sendToDimension(message, worldProvider.getDimension());
 	}
-
 }

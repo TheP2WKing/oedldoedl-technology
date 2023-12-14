@@ -21,5 +21,11 @@ item.oedldoedltechnology.iphone_14_pro_max.tip1=TODO
 item.oedldoedltechnology.railgun.name=Railgun
 item.oedldoedltechnology.railgun.tip1=TODO
 
+item.oedldoedltechnology.up_n_atomizer.name=Up-n-Atomizer
+item.oedldoedltechnology.up_n_atomizer.tip1=TODO
+
+
 # sounds
 sound.oedldoedltechnology.railgun_shot=Railgun Shot
+sound.oedldoedltechnology.up_n_atomizer_shot=Up-n-Atomizer Shot
+sound.oedldoedltechnology.up_n_atomizer_shot_impact=Up-n-Atomizer Shot Impact

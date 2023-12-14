@@ -26,6 +26,7 @@ public class ModRegistry {
 		ModRegistryHelper.registerItem(event, ModItems.IPHONE_14_PRO_MAX);
 
 		ModRegistryHelper.registerItem(event, ModItems.RAILGUN);
+		ModRegistryHelper.registerItem(event, ModItems.UP_N_ATOMIZER);
 	}
 
 	@SubscribeEvent
@@ -33,5 +34,7 @@ public class ModRegistry {
 		ModLogger.registeredSoundEventsLogger(OedldoedlTechnology.MODID);
 
 		ModRegistryHelper.registerSoundEvent(event, ModSounds.RAILGUN_SHOT);
+		ModRegistryHelper.registerSoundEvent(event, ModSounds.UP_N_ATOMIZER_SHOT);
+		ModRegistryHelper.registerSoundEvent(event, ModSounds.UP_N_ATOMIZER_SHOT_IMPACT);
 	}
 }

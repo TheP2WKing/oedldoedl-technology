@@ -22,7 +22,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
-import net.thep2wking.oedldoedltechnology.entity.EntityRailgunBolt;
+import net.thep2wking.oedldoedltechnology.api.ModEntityPlasmaShotBase;
 import net.thep2wking.oedldoedltechnology.util.network.ModPacketWeaponTick;
 
 @SideOnly(Side.CLIENT)
@@ -35,7 +35,7 @@ public class ModClientWeaponHandler extends ModCommonWeaponHandler {
 	public static float CAMERA_RECOIL_TIME;
 	public static float CAMERA_RECOIL_AMOUNT;
 	private final Map<IWeapon, Integer> shotTracker;
-	private final IntHashMap<EntityRailgunBolt> plasmaBolts;
+	private final IntHashMap<ModEntityPlasmaShotBase> plasmaBolts;
 	private final Random cameraRecoilRandom = new Random();
 	private float lastMouseSensitivity;
 	private int nextShotID;
@@ -180,15 +180,15 @@ public class ModClientWeaponHandler extends ModCommonWeaponHandler {
 		return 0;
 	}
 
-	public void addPlasmaBolt(EntityRailgunBolt plasmaBolt) {
+	public void addPlasmaBolt(ModEntityPlasmaShotBase plasmaBolt) {
 		plasmaBolts.addKey(plasmaBolt.getEntityId(), plasmaBolt);
 	}
 
-	public void removePlasmaBolt(EntityRailgunBolt plasmaBolt) {
+	public void removePlasmaBolt(ModEntityPlasmaShotBase plasmaBolt) {
 		plasmaBolts.removeObject(plasmaBolt.getEntityId());
 	}
 
-	public EntityRailgunBolt getPlasmaBolt(int id) {
+	public ModEntityPlasmaShotBase getPlasmaBolt(int id) {
 		return plasmaBolts.lookup(id);
 	}
 

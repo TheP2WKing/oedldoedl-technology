@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
-import net.thep2wking.oedldoedltechnology.entity.EntityRailgunBolt;
+import net.thep2wking.oedldoedltechnology.api.ModEntityPlasmaShotBase;
 import net.thep2wking.oedldoedltechnology.util.handler.ModClientWeaponHandler;
 
 public class ModPacketUpdatePlasmaBolt implements IMessage {
@@ -50,7 +50,7 @@ public class ModPacketUpdatePlasmaBolt implements IMessage {
 		public void handleClientMessage(EntityPlayerSP player, ModPacketUpdatePlasmaBolt message, MessageContext ctx) {
 			Entity bolt = ((ModClientWeaponHandler) OedldoedlTechnology.PROXY.getModWeaponHandler())
 					.getPlasmaBolt(message.boltID);
-			if (bolt instanceof EntityRailgunBolt) {
+			if (bolt instanceof ModEntityPlasmaShotBase) {
 				bolt.setPosition(message.posX, message.posY, message.posZ);
 			}
 		}
