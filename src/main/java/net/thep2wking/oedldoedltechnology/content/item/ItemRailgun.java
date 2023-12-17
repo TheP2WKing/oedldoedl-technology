@@ -75,7 +75,7 @@ public class ItemRailgun extends ModItemEnergyWeaponBase {
 	@Override
 	public float getWeaponBaseAccuracy(ItemStack weapon, boolean zoomed) {
 		if (zoomed) {
-			return 1f + getHeat(weapon) * 0.1f;
+			return 1 + getHeat(weapon) * 0.1f;
 		} else {
 			return 5 + getHeat(weapon) * 0.3f;
 		}

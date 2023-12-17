@@ -19,11 +19,21 @@ item.oedldoedltechnology.iphone_14_pro_max.name=iPhone 14 Pro Max
 item.oedldoedltechnology.iphone_14_pro_max.tip1=TODO
 
 item.oedldoedltechnology.railgun.name=Railgun
-item.oedldoedltechnology.railgun.tip1=TODO
+item.oedldoedltechnology.railgun.tip1=All you need to know is Magnets and it does
+item.oedldoedltechnology.railgun.tip1=horrible Things to the Things it is pointed at.
 
 item.oedldoedltechnology.up_n_atomizer.name=Up-n-Atomizer
 item.oedldoedltechnology.up_n_atomizer.tip1=TODO
 
+item.oedldoedltechnology.oedldoedl_isolinear_circuit.name=Oedldoedl Isolinear Circuit
+item.oedldoedltechnology.oedldoedl_isolinear_circuit.tip1=Where the F*CK did this come from?
+item.oedldoedltechnology.oedldoedl_isolinear_circuit.tip2=There are way too many Addons...
+item.oedldoedltechnology.railgun_handle.name=Railgun Handle
+item.oedldoedltechnology.railgun_handle.tip1=Too hot to handle.
+item.oedldoedltechnology.railgun_receiver.name=Railgun Receiver
+item.oedldoedltechnology.railgun_receiver.tip1=The only thing you recieve is hate!
+item.oedldoedltechnology.tesla_core.name=Tesla Core
+item.oedldoedltechnology.tesla_core.tip1=Developed and manufactured by Coil (TM).
 
 # sounds
 sound.oedldoedltechnology.railgun_shot=Railgun Shot

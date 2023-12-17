@@ -13,4 +13,9 @@ public class ModItems {
 	public static final ItemRailgun RAILGUN = new ItemRailgun(OedldoedlTechnology.MODID, "railgun", OedldoedlTechnology.TAB, 64, 100, 5, 512, 8, 0.1f, 100, 64000, 4096, ModRarities.RED, false);
 	public static final ItemUpNAtomizer UP_N_ATOMIZER = new ItemUpNAtomizer(OedldoedlTechnology.MODID, "up_n_atomizer", OedldoedlTechnology.TAB, 20, 50, 4, 256, 2, 0.2f, 100, 32000, 2048, ModRarities.RED, false);
 
+	public static final Item OEDLDOEDL_ISOLINEAR_CIRCUIT = new ModItemBase(OedldoedlTechnology.MODID, "oedldoedl_isolinear_circuit", OedldoedlTechnology.TAB, ModRarities.LIGHT_PURPLE, true, 2, 0);
+
+	public static final Item RAILGUN_HANDLE = new ModItemBase(OedldoedlTechnology.MODID, "railgun_handle", OedldoedlTechnology.TAB, ModRarities.YELLOW, false, 1, 0);
+	public static final Item RAILGUN_RECEIVER = new ModItemBase(OedldoedlTechnology.MODID, "railgun_receiver", OedldoedlTechnology.TAB, ModRarities.YELLOW, false, 1, 0);
+	public static final Item TESLA_CORE = new ModItemBase(OedldoedlTechnology.MODID, "tesla_core", OedldoedlTechnology.TAB, ModRarities.YELLOW, false, 1, 0);
 }

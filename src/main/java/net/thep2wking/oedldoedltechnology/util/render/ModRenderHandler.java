@@ -33,12 +33,10 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -83,10 +81,6 @@ public class ModRenderHandler {
 		customRenderers = new ArrayList<>();
 		MinecraftForge.EVENT_BUS.register(this);
 		weaponRenderHandler = new ModWeaponRenderHandler();
-	}
-
-	public void init(World world, TextureManager textureManager) {
-		MinecraftForge.EVENT_BUS.register(weaponRenderHandler);
 	}
 
 	@SubscribeEvent

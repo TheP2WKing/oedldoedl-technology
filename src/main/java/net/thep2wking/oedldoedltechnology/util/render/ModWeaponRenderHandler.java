@@ -9,7 +9,6 @@ import matteroverdrive.api.weapon.IWeaponModule;
 import matteroverdrive.client.render.weapons.WeaponItemRenderer;
 import matteroverdrive.client.render.weapons.layers.IWeaponLayer;
 import matteroverdrive.client.resources.data.WeaponMetadataSection;
-import matteroverdrive.items.weapon.EnergyWeapon;
 import matteroverdrive.util.MOInventoryHelper;
 import matteroverdrive.util.RenderUtils;
 import matteroverdrive.util.WeaponHelper;
@@ -46,7 +45,7 @@ import net.minecraftforge.client.model.pipeline.LightUtil;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.thep2wking.oedldoedlcore.util.ModLogger;
+import net.thep2wking.oedldoedltechnology.api.ModItemEnergyWeaponBase;
 import net.thep2wking.oedldoedltechnology.util.handler.ModClientWeaponHandler;
 
 import org.lwjgl.util.glu.Project;
@@ -55,16 +54,18 @@ import org.lwjgl.util.glu.Project;
 @SuppressWarnings("all")
 public class ModWeaponRenderHandler {
 	private final Minecraft mc = Minecraft.getMinecraft();
-	private final Map<Class<? extends IWeaponModule>, IModModuleRenderer> moduleRenders = new HashMap();
-	private final List<IWeaponLayer> weaponLayers = new ArrayList();
+	private Map<Class<? extends IWeaponModule>, IModModuleRenderer> moduleRenders = new HashMap();
+	private List<IWeaponLayer> weaponLayers = new ArrayList();
 
 	public ModWeaponRenderHandler() {
+		this.moduleRenders = new HashMap<>();
+		weaponLayers = new ArrayList<>();
 	}
 
 	@SubscribeEvent
 	public void onHandRender(RenderSpecificHandEvent event) {
 		ItemStack weapon = event.getItemStack();
-		if (event.getHand() == EnumHand.MAIN_HAND && !weapon.isEmpty() && weapon.getItem() instanceof EnergyWeapon) {
+		if (event.getHand() == EnumHand.MAIN_HAND && !weapon.isEmpty() && weapon.getItem() instanceof ModItemEnergyWeaponBase) {
 			event.setCanceled(true);
 			GlStateManager.clear(256);
 			EntityRenderer entityRenderer = this.mc.entityRenderer;
@@ -113,7 +114,7 @@ public class ModWeaponRenderHandler {
 					List<ItemStack> modules = MOInventoryHelper.getStacks(weapon);
 					this.transformFromModules(modules, model.getWeaponMetadata(), weapon, event.getPartialTicks(),
 							zoomValue);
-					model.transformFirstPersonWeapon((EnergyWeapon) weapon.getItem(), weapon, zoomValue, recoilValue);
+					model.transformFirstPersonWeapon((ModItemEnergyWeaponBase) weapon.getItem(), weapon, zoomValue, recoilValue);
 					this.renderWeaponAndModules(modules, model, weapon, event.getPartialTicks());
 					this.renderLayers(model.getWeaponMetadata(), weapon, event.getPartialTicks());
 					entityRenderer.disableLightmap();
@@ -125,7 +126,7 @@ public class ModWeaponRenderHandler {
 				this.setupViewBobbing(event.getPartialTicks());
 			}
 		} else if (event.getHand() == EnumHand.OFF_HAND && !weapon.isEmpty()
-				&& weapon.getItem() instanceof EnergyWeapon) {
+				&& weapon.getItem() instanceof ModItemEnergyWeaponBase) {
 			event.setCanceled(true);
 		}
 	}

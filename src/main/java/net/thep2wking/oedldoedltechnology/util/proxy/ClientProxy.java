@@ -1,6 +1,5 @@
 package net.thep2wking.oedldoedltechnology.util.proxy;
 
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -33,11 +32,11 @@ public class ClientProxy extends CommonProxy {
 		renderHandler = new ModRenderHandler();
 		renderHandler.createItemRenderers();
 		renderHandler.registerEntityRenderers();
+		renderHandler.registerWeaponModuleRenders();
 	}
 
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
-		renderHandler.init(Minecraft.getMinecraft().world, Minecraft.getMinecraft().getTextureManager());
 		MinecraftForge.EVENT_BUS.register(renderHandler);
 		MinecraftForge.EVENT_BUS.register(new ModTickHandler());
 		renderHandler.registerWeaponLayers();

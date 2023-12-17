@@ -269,14 +269,14 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 				if (Minecraft.getMinecraft().gameSettings.thirdPersonView == 0) {
 					if (isWeaponZoomed(entityPlayer, itemStack)) {
 						matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
-								.setRecoil(2f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 0.5f);
+								.setRecoil(3f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 0.5f);
 						matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
-								.setCameraRecoil(3 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 3), 1);
+								.setCameraRecoil(4 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 3), 1);
 					} else {
 						matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
-								.setRecoil(4f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 1);
+								.setRecoil(6f + Math.min(2, getAccuracy(itemStack, entityPlayer, true)), 1, 1);
 						matteroverdrive.proxy.ClientProxy.instance().getClientWeaponHandler()
-								.setCameraRecoil(4 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 4), 1);
+								.setCameraRecoil(6 + ((getHeat(itemStack) / getMaxHeat(itemStack)) * 4), 1);
 					}
 				}
 				return;

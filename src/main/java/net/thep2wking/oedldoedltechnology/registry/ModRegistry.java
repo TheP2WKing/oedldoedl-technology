@@ -27,6 +27,11 @@ public class ModRegistry {
 
 		ModRegistryHelper.registerItem(event, ModItems.RAILGUN);
 		ModRegistryHelper.registerItem(event, ModItems.UP_N_ATOMIZER);
+
+		ModRegistryHelper.registerItem(event, ModItems.OEDLDOEDL_ISOLINEAR_CIRCUIT);
+		ModRegistryHelper.registerItem(event, ModItems.RAILGUN_HANDLE);
+		ModRegistryHelper.registerItem(event, ModItems.RAILGUN_RECEIVER);
+		ModRegistryHelper.registerItem(event, ModItems.TESLA_CORE);
 	}
 
 	@SubscribeEvent
