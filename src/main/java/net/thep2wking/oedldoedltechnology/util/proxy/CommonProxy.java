@@ -4,6 +4,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.thep2wking.oedldoedltechnology.util.ModModules;
 import net.thep2wking.oedldoedltechnology.util.handler.ModCommonWeaponHandler;
 
 public class CommonProxy {
@@ -17,7 +18,9 @@ public class CommonProxy {
 	}
 
 	public void init(FMLInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(getModWeaponHandler());
+		if (ModModules.isMatterOverdriveLoaded()) {
+			MinecraftForge.EVENT_BUS.register(getModWeaponHandler());
+		}
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {

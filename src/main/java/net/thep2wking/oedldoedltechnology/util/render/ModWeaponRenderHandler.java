@@ -54,12 +54,12 @@ import org.lwjgl.util.glu.Project;
 @SuppressWarnings("all")
 public class ModWeaponRenderHandler {
 	private final Minecraft mc = Minecraft.getMinecraft();
-	private Map<Class<? extends IWeaponModule>, IModModuleRenderer> moduleRenders = new HashMap();
-	private List<IWeaponLayer> weaponLayers = new ArrayList();
+	private final Map<Class<? extends IWeaponModule>, IModModuleRenderer> moduleRenders = new HashMap();
+	private final List<IWeaponLayer> weaponLayers = new ArrayList();
 
 	public ModWeaponRenderHandler() {
-		this.moduleRenders = new HashMap<>();
-		weaponLayers = new ArrayList<>();
+		// this.moduleRenders = new HashMap<>();
+		// weaponLayers = new ArrayList<>();
 	}
 
 	@SubscribeEvent

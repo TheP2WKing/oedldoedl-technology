@@ -33,10 +33,12 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
@@ -54,11 +56,11 @@ import net.thep2wking.oedldoedltechnology.init.ModItems;
 public class ModRenderHandler {
 	public static final Function<ResourceLocation, TextureAtlasSprite> modelTextureBakeFunc = new Function<ResourceLocation, TextureAtlasSprite>() {
 		@Override
-		@SuppressWarnings("null")
 		public TextureAtlasSprite apply(ResourceLocation input) {
 			return Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(input.toString());
 		}
 	};
+	
 	private static ItemRendererRailgun rendererRailgun;
 	private static ItemRendererUpNAtomizer rendererUpNAtomizer;
 	public static int stencilBuffer;
@@ -81,6 +83,10 @@ public class ModRenderHandler {
 		customRenderers = new ArrayList<>();
 		MinecraftForge.EVENT_BUS.register(this);
 		weaponRenderHandler = new ModWeaponRenderHandler();
+	}
+
+	public void init(World world, TextureManager textureManager) {
+		MinecraftForge.EVENT_BUS.register(weaponRenderHandler);
 	}
 
 	@SubscribeEvent
@@ -182,8 +188,8 @@ public class ModRenderHandler {
 
 	@SubscribeEvent
 	public void onModelBake(ModelBakeEvent event) {
-		event.getModelRegistry().putObject(new ModelResourceLocation(ModItems.RAILGUN.getRegistryName(), "inventory"), rendererRailgun);
-		event.getModelRegistry().putObject(new ModelResourceLocation(ModItems.UP_N_ATOMIZER.getRegistryName(), "inventory"), rendererUpNAtomizer);
+		event.getModelRegistry().putObject(new ModelResourceLocation(ModItems.RAILGUN.getRegistryName(), "normal"), rendererRailgun);
+		event.getModelRegistry().putObject(new ModelResourceLocation(ModItems.UP_N_ATOMIZER.getRegistryName(), "normal"), rendererUpNAtomizer);
 		activateItemRenderers();
 		bakeItemModels();
 	}

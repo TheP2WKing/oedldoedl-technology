@@ -22,9 +22,9 @@ import net.thep2wking.oedldoedltechnology.init.ModSounds;
 public class ItemRailgun extends ModItemEnergyWeaponBase {
 	public ItemRailgun(String modid, String name, CreativeTabs tab, int range, int cooldown, int damage, int maxUseTime,
 			int shotSpeed, float zoom, int maxHeat, int maxEnergy, int energyPerShot, EnumRarity rarity,
-			boolean hasEffect) {
+			boolean hasEffect, int tooltipLines, int annotationLines) {
 		super(modid, name, tab, range, cooldown, damage, maxUseTime, shotSpeed, zoom, maxHeat,
-				maxEnergy, energyPerShot, rarity, hasEffect);
+				maxEnergy, energyPerShot, rarity, hasEffect, tooltipLines, annotationLines);
 	}
 
 	@Override
@@ -74,11 +74,7 @@ public class ItemRailgun extends ModItemEnergyWeaponBase {
 
 	@Override
 	public float getWeaponBaseAccuracy(ItemStack weapon, boolean zoomed) {
-		if (zoomed) {
-			return 1 + getHeat(weapon) * 0.1f;
-		} else {
-			return 5 + getHeat(weapon) * 0.3f;
-		}
+		return 5 + getHeat(weapon) * 0.3f;
 	}
 
 	@Override

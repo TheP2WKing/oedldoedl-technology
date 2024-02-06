@@ -430,7 +430,6 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 		}
 	}
 
-	@SuppressWarnings("null")
 	private boolean canAttackTeammate(EntityLivingBase shooter, EntityLivingBase target) {
 		if (shooter != null && target != null) {
 			if (shooter.getTeam() != null && shooter.isOnSameTeam(target)) {

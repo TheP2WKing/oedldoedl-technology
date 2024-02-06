@@ -2,7 +2,7 @@
     {
         "modid": "oedldoedltechnology",
         "name": "Oedldoedl Technology",
-        "description": "TODO",
+        "description": "An addon or module or whatever you want to call it for the oedldoedl series. This mod adds different types of custom matter overdrive energy weapons and other technological items. Originally intended to be used with mods like CraftTweaker or KubeJS to add recipes, but the mod itself adds its own basic recipes. Recipes can be disabled and some items easily configured via a config file.",
         "version": "${version}",
         "mcversion": "${mcversion}",
         "url": "https://github.com/TheP2WKing/oedldoedl-technology",

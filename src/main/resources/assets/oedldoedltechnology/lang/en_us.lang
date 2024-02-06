@@ -19,11 +19,15 @@ item.oedldoedltechnology.iphone_14_pro_max.name=iPhone 14 Pro Max
 item.oedldoedltechnology.iphone_14_pro_max.tip1=TODO
 
 item.oedldoedltechnology.railgun.name=Railgun
+item.oedldoedltechnology.railgun.annotation1=Manufacturer: §cCoil
 item.oedldoedltechnology.railgun.tip1=All you need to know is Magnets and it does
-item.oedldoedltechnology.railgun.tip1=horrible Things to the Things it is pointed at.
+item.oedldoedltechnology.railgun.tip2=horrible Things to the Things it is pointed at.
 
 item.oedldoedltechnology.up_n_atomizer.name=Up-n-Atomizer
-item.oedldoedltechnology.up_n_atomizer.tip1=TODO
+item.oedldoedltechnology.up_n_atomizer.annotation1=Manufacturer: §9Unknown
+item.oedldoedltechnology.up_n_atomizer.tip1=Republican Space Ranger Special, fresh from
+item.oedldoedltechnology.up_n_atomizer.tip2=the Galactic War on Socialism: No Ammo, no Mag,
+item.oedldoedltechnology.up_n_atomizer.tip3=just one brutal Energy Pulse after another.
 
 item.oedldoedltechnology.oedldoedl_isolinear_circuit.name=Oedldoedl Isolinear Circuit
 item.oedldoedltechnology.oedldoedl_isolinear_circuit.tip1=Where the F*CK did this come from?
@@ -38,4 +42,6 @@ item.oedldoedltechnology.tesla_core.tip1=Developed and manufactured by Coil (TM)
 # sounds
 sound.oedldoedltechnology.railgun_shot=Railgun Shot
 sound.oedldoedltechnology.up_n_atomizer_shot=Up-n-Atomizer Shot
-sound.oedldoedltechnology.up_n_atomizer_shot_impact=Up-n-Atomizer Shot Impact
+
+# tooltips
+key.oedldoedltechnology.weapon=§7Hold §b§oCrtl§r§7 for Weapon Info

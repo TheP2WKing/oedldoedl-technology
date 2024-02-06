@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
@@ -26,9 +27,9 @@ import net.thep2wking.oedldoedltechnology.init.ModSounds;
 public class ItemUpNAtomizer extends ModItemEnergyWeaponBase {
 	public ItemUpNAtomizer(String modid, String name, CreativeTabs tab, int range, int cooldown, int damage, int maxUseTime,
 			int shotSpeed, float zoom, int maxHeat, int maxEnergy, int energyPerShot, EnumRarity rarity,
-			boolean hasEffect) {
+			boolean hasEffect, int tooltipLines, int annotationLines) {
 		super(modid, name, tab, range, cooldown, damage, maxUseTime, shotSpeed, zoom, maxHeat,
-				maxEnergy, energyPerShot, rarity, hasEffect);
+				maxEnergy, energyPerShot, rarity, hasEffect, tooltipLines, annotationLines);
 	}
 
 	@Override
@@ -78,7 +79,17 @@ public class ItemUpNAtomizer extends ModItemEnergyWeaponBase {
 
 	@Override
 	public float getWeaponBaseAccuracy(ItemStack weapon, boolean zoomed) {
-		return 0.5f + getHeat(weapon) / getMaxHeat(weapon) * 6;
+		return 0.5f + getHeat(weapon) / getMaxHeat(weapon) * 4;
+	}
+
+	// @Override
+	// public boolean isWeaponZoomed(EntityLivingBase entityPlayer, ItemStack weapon) {
+	// 	return false;
+	// }
+
+	@Override
+	public EnumAction getItemUseAction(ItemStack itemStack) {
+		return EnumAction.NONE;
 	}
 
 	@Override

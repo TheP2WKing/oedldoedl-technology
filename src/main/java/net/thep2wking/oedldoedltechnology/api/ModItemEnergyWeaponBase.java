@@ -1,18 +1,26 @@
 package net.thep2wking.oedldoedltechnology.api;
 
+import java.text.DecimalFormat;
 import java.util.List;
+
+import javax.annotation.Nullable;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 
 import matteroverdrive.Reference;
 import matteroverdrive.api.weapon.WeaponShot;
+import matteroverdrive.api.weapon.WeaponStats;
 import matteroverdrive.client.sound.MOPositionedSound;
 import matteroverdrive.client.sound.WeaponSound;
 import matteroverdrive.init.MatterOverdriveSounds;
 import matteroverdrive.items.weapon.EnergyWeapon;
 import matteroverdrive.network.packet.bi.PacketFirePlasmaShot;
+import matteroverdrive.util.MOEnergyHelper;
+import matteroverdrive.util.WeaponHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,12 +36,16 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedlcore.config.CoreConfig;
+import net.thep2wking.oedldoedlcore.util.ModTooltips;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
+import net.thep2wking.oedldoedltechnology.config.TechnologyConfig;
 import net.thep2wking.oedldoedltechnology.util.handler.ModClientWeaponHandler;
 import net.thep2wking.oedldoedltechnology.util.proxy.ClientProxy;
 
@@ -52,10 +64,12 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 	public final int energyPerShot;
 	public final EnumRarity rarity;
 	public final boolean hasEffect;
+	public final int tooltipLines;
+	public final int annotationLines;
 
 	public ModItemEnergyWeaponBase(String modid, String name, CreativeTabs tab, int range, int cooldown, int damage,
 			int maxUseTime, int shotSpeed, float zoom, int maxHeat, int maxEnergy, int energyPerShot, EnumRarity rarity,
-			boolean hasEffect) {
+			boolean hasEffect, int tooltipLines, int annotationLines) {
 		super(name, range);
 		this.modid = modid;
 		this.name = name;
@@ -71,6 +85,8 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 		this.energyPerShot = energyPerShot;
 		this.rarity = rarity;
 		this.hasEffect = hasEffect;
+		this.tooltipLines = tooltipLines;
+		this.annotationLines = annotationLines;
 		setUnlocalizedName(this.modid + "." + this.name);
 		setCreativeTab(this.tab);
 		this.bFull3D = true;
@@ -78,6 +94,7 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
+	private final DecimalFormat damageFormater = new DecimalFormat("#.##");
 	private boolean isBeaconPayment;
 
 	public Item setBeaconPayment() {
@@ -385,6 +402,30 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 		return MatterOverdriveSounds.weaponsPhaserRifleShot;
 	}
 
+	public String addStatWithMultiplyInfo(String statName, Object value, double multiply, String units) {
+		String info = String.format("%s: %s%s", statName, TextFormatting.DARK_AQUA, value);
+		if (!units.isEmpty()) {
+			info = info + " " + units;
+		}
+		if (multiply != 1.0) {
+			if (multiply > 0.002) {
+				info = info + TextFormatting.DARK_GREEN;
+			} else {
+				info = info + TextFormatting.DARK_RED;
+			}
+			info = info + String.format(" (%s) %s", DecimalFormat.getPercentInstance().format(multiply),
+					TextFormatting.RESET);
+		}
+		return info;
+	}
+
+	@SuppressWarnings("all")
+	public void AddModuleDetails(ItemStack weapon, List infos) {
+		ItemStack module = WeaponHelper.getModuleAtSlot(2, weapon);
+		if (!module.isEmpty()) {
+		}
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onClientShot(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir, WeaponShot shot) {
@@ -393,5 +434,62 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 		sound.setPosition((float) position.x, (float) position.y, (float) position.z);
 		Minecraft.getMinecraft().getSoundHandler().playSound(sound);
 		spawnProjectile(weapon, shooter, position, dir, shot);
+	}
+
+	public void addMOWeaponDetails(ItemStack stack, EntityPlayer player, List<String> tooltip) {
+		IEnergyStorage storage = getStorage(stack);
+		tooltip.add(TextFormatting.YELLOW
+				+ MOEnergyHelper.formatEnergy(storage.getEnergyStored(), storage.getMaxEnergyStored()));
+		String energyInfo = TextFormatting.DARK_RED + "Power Use: "
+				+ MOEnergyHelper.formatEnergy(null, getEnergyUse(stack) * 20) + "/s";
+		float energyMultiply = (float) getEnergyUse(stack) / (float) getBaseEnergyUse(stack);
+		if (energyMultiply != 1) {
+			energyInfo += " (" + DecimalFormat.getPercentInstance().format(energyMultiply) + ")";
+		}
+		tooltip.add(energyInfo);
+		tooltip.add("");
+		tooltip.add(addStatWithMultiplyInfo("Damage", damageFormater.format(getWeaponScaledDamage(stack, player)),
+				getWeaponScaledDamage(stack, player) / getWeaponBaseDamage(stack) - 1, ""));
+		tooltip.add(addStatWithMultiplyInfo("DPS",
+				damageFormater.format((getWeaponScaledDamage(stack, player) / getShootCooldown(stack)) * 20), 1, ""));
+		tooltip.add(addStatWithMultiplyInfo("Speed", (int) (20d / getShootCooldown(stack) * 60),
+				(double) getBaseShootCooldown(stack) / (double) getShootCooldown(stack), " s/m"));
+		tooltip.add(addStatWithMultiplyInfo("Range", getRange(stack), (double) getRange(stack) / (double) range, "b"));
+		tooltip.add(addStatWithMultiplyInfo("Accuracy", "", 1 / (modifyStatFromModules(WeaponStats.ACCURACY, stack, 1)
+				* getCustomFloatStat(stack, CUSTOM_ACCURACY_MULTIPLY_TAG, 1)), ""));
+		StringBuilder heatInfo = new StringBuilder(TextFormatting.DARK_RED + "Heat: ");
+		double heatPercent = getHeat(stack) / getMaxHeat(stack);
+		for (int i = 0; i < 32 * heatPercent; i++) {
+			heatInfo.append("|");
+		}
+		tooltip.add(heatInfo.toString());
+		addCustomDetails(stack, player, tooltip);
+		AddModuleDetails(stack, tooltip);
+		tooltip.add("");
+	}
+
+	public static final String KEY_WEAPON = "key.oedldoedltechnology.weapon";
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		if (ModTooltips.showAnnotationTip()) {
+			for (int i = 1; i <= annotationLines; ++i) {
+				ModTooltips.addAnnotation(tooltip, this.getUnlocalizedName(), i);
+			}
+		}
+		if (ModTooltips.showInfoTip()) {
+			for (int i = 1; i <= tooltipLines; ++i) {
+				ModTooltips.addInformation(tooltip, this.getUnlocalizedName(), i);
+			}
+		} else if (ModTooltips.showInfoTipKey() && !(tooltipLines == 0)) {
+			ModTooltips.addKey(tooltip, ModTooltips.KEY_INFO);
+		}
+		if (GuiScreen.isCtrlKeyDown() && TechnologyConfig.TOOLTIPS.WEAPON_INFO_TOOLTIPS) {
+			addMOWeaponDetails(stack, Minecraft.getMinecraft().player, tooltip);
+		} else if (TechnologyConfig.TOOLTIPS.WEAPON_INFO_TOOLTIPS
+				&& TechnologyConfig.TOOLTIPS.WEAPON_INFO_TOOLTIPS_KEY) {
+			ModTooltips.addKey(tooltip, KEY_WEAPON);
+		}
 	}
 }

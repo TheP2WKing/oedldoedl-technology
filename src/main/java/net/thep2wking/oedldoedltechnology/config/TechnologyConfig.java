@@ -8,8 +8,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.thep2wking.oedldoedlcore.util.ModReferences;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.config.categories.Content;
-import net.thep2wking.oedldoedltechnology.config.categories.Properties;
 import net.thep2wking.oedldoedltechnology.config.categories.Recipes;
+import net.thep2wking.oedldoedltechnology.config.categories.Tooltips;
 
 @Config(modid = OedldoedlTechnology.MODID, name = ModReferences.BASE_MODID + "/"
         + OedldoedlTechnology.MODID, category = OedldoedlTechnology.MODID)
@@ -17,12 +17,12 @@ public class TechnologyConfig {
     @Config.Name("content")
     public static final Content CONTENT = new Content();
 
-    @Config.Name("properties")
-    public static final Properties PROPERTIES = new Properties();
-
     @Config.Name("recipes")
     public static final Recipes RECIPES = new Recipes();
     
+    @Config.Name("tooltips")
+    public static final Tooltips TOOLTIPS = new Tooltips();
+
     @Mod.EventBusSubscriber
     public static class ConfigHolder {
         @SubscribeEvent
