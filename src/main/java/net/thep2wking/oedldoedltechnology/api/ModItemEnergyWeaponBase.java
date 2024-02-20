@@ -420,7 +420,7 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 	}
 
 	@SuppressWarnings("all")
-	public void AddModuleDetails(ItemStack weapon, List infos) {
+	public void addModuleDetails(ItemStack weapon, List infos) {
 		ItemStack module = WeaponHelper.getModuleAtSlot(2, weapon);
 		if (!module.isEmpty()) {
 		}
@@ -464,7 +464,7 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 		}
 		tooltip.add(heatInfo.toString());
 		addCustomDetails(stack, player, tooltip);
-		AddModuleDetails(stack, tooltip);
+		addModuleDetails(stack, tooltip);
 		tooltip.add("");
 	}
 

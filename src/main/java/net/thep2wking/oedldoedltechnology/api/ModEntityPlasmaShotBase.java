@@ -72,8 +72,7 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 	}
 
 	public ModEntityPlasmaShotBase(World world, EntityLivingBase entityLivingBase, Vec3d position, Vec3d dir,
-			WeaponShot shot,
-			float speed) {
+			WeaponShot shot, float speed) {
 		super(world);
 		rand.setSeed(shot.getSeed());
 		setEntityId(shot.getSeed());
@@ -227,7 +226,7 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 				}
 				movingobjectposition.entityHit.hurtResistantTime = 0;
 				double lastMotionX = movingobjectposition.entityHit.motionX;
-				double lastMotionY = movingobjectposition.entityHit.motionY;
+				// double lastMotionY = movingobjectposition.entityHit.motionY;
 				double lastMotionZ = movingobjectposition.entityHit.motionZ;
 				boolean attack = movingobjectposition.entityHit.attackEntityFrom(damagesource, this.damage);
 				if (!attack && movingobjectposition.entityHit instanceof EntityDragon) {
@@ -237,8 +236,8 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 				if (attack) {
 					movingobjectposition.entityHit.motionX = lastMotionX
 							+ (movingobjectposition.entityHit.motionX - lastMotionX) * knockback;
-					movingobjectposition.entityHit.motionY = lastMotionY
-							+ (movingobjectposition.entityHit.motionY - lastMotionY) * knockback;
+					// movingobjectposition.entityHit.motionY = lastMotionY
+					// 		+ (movingobjectposition.entityHit.motionY - lastMotionY) * knockback;
 					movingobjectposition.entityHit.motionZ = lastMotionZ
 							+ (movingobjectposition.entityHit.motionZ - lastMotionZ) * knockback;
 					if (movingobjectposition.entityHit instanceof EntityLivingBase) {

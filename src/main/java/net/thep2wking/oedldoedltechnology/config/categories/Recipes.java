@@ -6,7 +6,7 @@ public class Recipes {
 	@Config.Name("Enable Default Recipes")
 	public boolean DEFAULT_RECIPES = true;
 
-	@Config.Name("Enable Default Inscriber Recipes")
+	@Config.Name("Enable Inscriber Recipes")
 	public boolean DEFAULT_INSCRIBER_RECIPES = true;
 
 	@Config.Name("Enable Default Oredict")

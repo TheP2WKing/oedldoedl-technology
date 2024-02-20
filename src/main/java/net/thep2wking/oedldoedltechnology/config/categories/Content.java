@@ -3,6 +3,9 @@ package net.thep2wking.oedldoedltechnology.config.categories;
 import net.minecraftforge.common.config.Config;
 
 public class Content {
+	@Config.Name("Spawn Republican Space Ranger")
+	public boolean SPAWN_REPUBLICAN_SPACE_RANGER = true;
+
 	@Config.Name("railgun")
 	public final Railgun RAILGUN = new Railgun();
 
@@ -107,5 +110,12 @@ public class Content {
 		@Config.Name("Motion Strength")
 		@Config.RangeDouble(min = 0, max = 8)
 		public double MOTION_STRENGTH = 0.6;
+
+		@Config.Name("Radius")
+		@Config.RangeInt(min = 0, max = 8)
+		public int RADIUS = 3;
+
+		@Config.Name("Potion Effects")
+		public boolean POTION_EFFECTS = true;
 	}
 }

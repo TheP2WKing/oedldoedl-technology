@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedltechnology.api.ModEntityPlasmaShotBase;
 import net.thep2wking.oedldoedltechnology.api.ModItemEnergyWeaponBase;
-import net.thep2wking.oedldoedltechnology.entity.EntityRailgunBolt;
+import net.thep2wking.oedldoedltechnology.entity.projectile.EntityRailgunBolt;
 import net.thep2wking.oedldoedltechnology.init.ModSounds;
 
 public class ItemRailgun extends ModItemEnergyWeaponBase {
@@ -69,6 +69,8 @@ public class ItemRailgun extends ModItemEnergyWeaponBase {
 				&& module.getItemDamage() != WeaponModuleBarrel.DOOMSDAY_BARREL_ID
 				&& module.getItem() == MatterOverdrive.ITEMS.weapon_module_barrel
 				&& module.getItemDamage() != WeaponModuleBarrel.EXPLOSION_BARREL_ID
+				&& module.getItem() == MatterOverdrive.ITEMS.weapon_module_barrel
+				&& module.getItemDamage() != WeaponModuleBarrel.FIRE_BARREL_ID
 				|| module.getItem() == MatterOverdrive.ITEMS.weapon_module_color);
 	}
 
@@ -87,7 +89,7 @@ public class ItemRailgun extends ModItemEnergyWeaponBase {
 			WeaponShot shot) {
 		EntityRailgunBolt bolt = new EntityRailgunBolt(shooter.world, shooter, position, dir, shot,
 				getShotSpeed(weapon, shooter));
-		bolt.setKnockBack(1);
+		bolt.setKnockBack(2);
 		return bolt;
 	}
 }

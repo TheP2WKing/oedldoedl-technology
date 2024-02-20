@@ -12,5 +12,23 @@
         "sounds": [
             "oedldoedltechnology:up_n_atomizer_shot"
         ]
+    },
+    "republican_space_ranger_idle": {
+        "category": "hostile",
+        "subtitle": "sound.oedldoedltechnology.republican_space_ranger_idle",
+        "sounds": [
+            "oedldoedltechnology:republican_space_ranger_idle_1",
+            "oedldoedltechnology:republican_space_ranger_idle_2",
+            "oedldoedltechnology:republican_space_ranger_idle_3",
+            "oedldoedltechnology:republican_space_ranger_idle_4",
+            "oedldoedltechnology:republican_space_ranger_idle_5"
+        ]
+    },
+    "republican_space_ranger_death": {
+        "category": "hostile",
+        "subtitle": "sound.oedldoedltechnology.republican_space_ranger_death",
+        "sounds": [
+            "oedldoedltechnology:republican_space_ranger_death"
+        ]
     }
 }

@@ -1,4 +1,4 @@
-package net.thep2wking.oedldoedltechnology.entity;
+package net.thep2wking.oedldoedltechnology.entity.projectile;
 
 import java.util.List;
 
@@ -17,8 +17,7 @@ import net.thep2wking.oedldoedltechnology.config.TechnologyConfig;
 
 public class EntityUpNAtomizerBolt extends ModEntityPlasmaShotBase {
 	public EntityUpNAtomizerBolt(World world, EntityLivingBase entityLivingBase, Vec3d position, Vec3d dir,
-			WeaponShot shot,
-			float speed) {
+			WeaponShot shot, float speed) {
 		super(world, entityLivingBase, position, dir, shot, speed);
 	}
 
@@ -28,7 +27,7 @@ public class EntityUpNAtomizerBolt extends ModEntityPlasmaShotBase {
 
 	@Override
 	public boolean manageHitEffect(RayTraceResult hit) {
-		int boxSize = 3;
+		int boxSize = TechnologyConfig.CONTENT.UP_N_ATOMIZER.UP_N_ATOMIZER_PROJECTILE.RADIUS;
 		EntityLivingBase entity = (EntityLivingBase) hit.entityHit;
 		Vec3d block = (Vec3d) hit.hitVec;
 
@@ -39,15 +38,18 @@ public class EntityUpNAtomizerBolt extends ModEntityPlasmaShotBase {
 						new AxisAlignedBB(blockPos).grow(boxSize));
 				for (EntityLivingBase entities : listBlockPos) {
 					if (entities != null) {
-						entities.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 40, 3));
-						entities.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 20, 0));
+						if (entities instanceof EntityPlayer && !((EntityPlayer) entities).capabilities.isCreativeMode
+								&& TechnologyConfig.CONTENT.UP_N_ATOMIZER.UP_N_ATOMIZER_PROJECTILE.POTION_EFFECTS) {
+							entities.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 40, 3, false, false));
+							entities.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 20, 0, false, false));
+						}
 						double d5 = entities.posX - blockPos.getX();
 						double d7 = entities.posY + (double) entities.getEyeHeight() - blockPos.getY();
 						double d9 = entities.posZ - blockPos.getZ();
 						entities.motionX += d5
 								* TechnologyConfig.CONTENT.UP_N_ATOMIZER.UP_N_ATOMIZER_PROJECTILE.MOTION_STRENGTH;
 						entities.motionY += d7
-								* TechnologyConfig.CONTENT.UP_N_ATOMIZER.UP_N_ATOMIZER_PROJECTILE.MOTION_STRENGTH;
+								* (TechnologyConfig.CONTENT.UP_N_ATOMIZER.UP_N_ATOMIZER_PROJECTILE.MOTION_STRENGTH * 1.5);
 						entities.motionZ += d9
 								* TechnologyConfig.CONTENT.UP_N_ATOMIZER.UP_N_ATOMIZER_PROJECTILE.MOTION_STRENGTH;
 						if (entities instanceof EntityPlayer
@@ -62,8 +64,11 @@ public class EntityUpNAtomizerBolt extends ModEntityPlasmaShotBase {
 						new AxisAlignedBB(entityPos).grow(boxSize));
 				for (EntityLivingBase entities : listEntityPos) {
 					if (entities != null) {
-						entities.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 40, 3));
-						entities.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 20, 0));
+						if (entities instanceof EntityPlayer && !((EntityPlayer) entities).capabilities.isCreativeMode
+								&& TechnologyConfig.CONTENT.UP_N_ATOMIZER.UP_N_ATOMIZER_PROJECTILE.POTION_EFFECTS) {
+							entities.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 40, 3, false, false));
+							entities.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 20, 0, false, false));
+						}
 						double d5 = entities.posX - entityPos.getX();
 						double d7 = entities.posY + (double) entities.getEyeHeight() - entityPos.getY();
 						double d9 = entities.posZ - entityPos.getZ();

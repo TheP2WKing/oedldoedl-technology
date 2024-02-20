@@ -2,22 +2,9 @@
 itemGroup.oedldoedltechnology.name=§dOedldoedl Technology
 
 # icons
-item.oedldoedlcore.technology_icon.annotation3=Version: §e1.12.2-3.0.0
-
-# blocks
-tile.oedldoedltechnology.record_package.name=Record Package
-tile.oedldoedltechnology.record_package.annotation1=Contents: §eMusic Discs
-tile.oedldoedltechnology.record_package.tip1=Thanks for the quick delivery, Jeffy.
-tile.oedldoedltechnology.record_package.tip2=What is inside for you?
-
-tile.oedldoedltechnology.music_player.name=Music Player
-tile.oedldoedltechnology.music_player.tip1=Has 12 disc slots and saves its inventory.
-tile.oedldoedltechnology.music_player.tip2=A way better method of listening to records.
+item.oedldoedlcore.technology_icon.annotation3=Version: §e1.12.2-4.0.0
 
 # items
-item.oedldoedltechnology.iphone_14_pro_max.name=iPhone 14 Pro Max
-item.oedldoedltechnology.iphone_14_pro_max.tip1=TODO
-
 item.oedldoedltechnology.railgun.name=Railgun
 item.oedldoedltechnology.railgun.annotation1=Manufacturer: §cCoil
 item.oedldoedltechnology.railgun.tip1=All you need to know is Magnets and it does
@@ -38,10 +25,28 @@ item.oedldoedltechnology.railgun_receiver.name=Railgun Receiver
 item.oedldoedltechnology.railgun_receiver.tip1=The only thing you recieve is hate!
 item.oedldoedltechnology.tesla_core.name=Tesla Core
 item.oedldoedltechnology.tesla_core.tip1=Developed and manufactured by Coil (TM).
+item.oedldoedltechnology.up_n_atomizer_handle.name=Up-n-Atomizer Handle
+item.oedldoedltechnology.up_n_atomizer_handle.tip1=Not sponsored by Up-n-Atom Burger!
+item.oedldoedltechnology.up_n_atomizer_receiver.name=Up-n-Atomizer Receiver
+item.oedldoedltechnology.up_n_atomizer_receiver.tip1=Not sponsored by Up-n-Atom Burger!
+item.oedldoedltechnology.shockwave_emitter.name=Shockwave Emitter
+item.oedldoedltechnology.shockwave_emitter.tip1=You will be shocked what happened next...
+
+item.oedldoedltechnology.alien_egg.name=Alien Egg
+item.oedldoedltechnology.alien_egg.tip1=???
+
+item.oedldoedltechnology.iphone_14_pro_max.name=iPhone 14 Pro Max
+item.oedldoedltechnology.iphone_14_pro_max.tip1=Think different...
+
+# entites
+entity.oedldoedltechnology.republican_space_ranger.name=Republican Space Ranger
 
 # sounds
 sound.oedldoedltechnology.railgun_shot=Railgun Shot
 sound.oedldoedltechnology.up_n_atomizer_shot=Up-n-Atomizer Shot
+
+sound.oedldoedltechnology.republican_space_ranger_idle=Republican Space Ranger talks
+sound.oedldoedltechnology.republican_space_ranger_death=Republican Space Ranger dies
 
 # tooltips
 key.oedldoedltechnology.weapon=§7Hold §b§oCrtl§r§7 for Weapon Info

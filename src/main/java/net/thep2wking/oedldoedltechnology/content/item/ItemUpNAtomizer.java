@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedltechnology.api.ModEntityPlasmaShotBase;
 import net.thep2wking.oedldoedltechnology.api.ModItemEnergyWeaponBase;
-import net.thep2wking.oedldoedltechnology.entity.EntityUpNAtomizerBolt;
+import net.thep2wking.oedldoedltechnology.entity.projectile.EntityUpNAtomizerBolt;
 import net.thep2wking.oedldoedltechnology.init.ModSounds;
 
 public class ItemUpNAtomizer extends ModItemEnergyWeaponBase {
@@ -52,11 +52,11 @@ public class ItemUpNAtomizer extends ModItemEnergyWeaponBase {
 	public Vector2f getModuleScreenPosition(int slot, ItemStack weapon) {
 		switch (slot) {
 			case Reference.MODULE_BATTERY:
-				return new Vector2f(165, 80);
+				return new Vector2f(150, 80);
 			case Reference.MODULE_COLOR:
-				return new Vector2f(110, 90);
+				return new Vector2f(125, 85);
 			case Reference.MODULE_BARREL:
-				return new Vector2f(90, 95);
+				return new Vector2f(110, 85);
 		}
 		return getSlotPosition(slot, weapon);
 	}
@@ -74,6 +74,8 @@ public class ItemUpNAtomizer extends ModItemEnergyWeaponBase {
 				&& module.getItemDamage() != WeaponModuleBarrel.DOOMSDAY_BARREL_ID
 				&& module.getItem() == MatterOverdrive.ITEMS.weapon_module_barrel
 				&& module.getItemDamage() != WeaponModuleBarrel.EXPLOSION_BARREL_ID
+				&& module.getItem() == MatterOverdrive.ITEMS.weapon_module_barrel
+				&& module.getItemDamage() != WeaponModuleBarrel.FIRE_BARREL_ID
 				|| module.getItem() == MatterOverdrive.ITEMS.weapon_module_color);
 	}
 
@@ -81,11 +83,6 @@ public class ItemUpNAtomizer extends ModItemEnergyWeaponBase {
 	public float getWeaponBaseAccuracy(ItemStack weapon, boolean zoomed) {
 		return 0.5f + getHeat(weapon) / getMaxHeat(weapon) * 4;
 	}
-
-	// @Override
-	// public boolean isWeaponZoomed(EntityLivingBase entityPlayer, ItemStack weapon) {
-	// 	return false;
-	// }
 
 	@Override
 	public EnumAction getItemUseAction(ItemStack itemStack) {
@@ -95,15 +92,6 @@ public class ItemUpNAtomizer extends ModItemEnergyWeaponBase {
 	@Override
 	public SoundEvent setShotSound() {
 		return ModSounds.UP_N_ATOMIZER_SHOT;
-	}
-
-	@Override
-	public ModEntityPlasmaShotBase setBolt(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
-			WeaponShot shot) {
-		EntityUpNAtomizerBolt bolt = new EntityUpNAtomizerBolt(shooter.world, shooter, position, dir, shot,
-				getShotSpeed(weapon, shooter));
-		bolt.setKnockBack(1);
-		return bolt;
 	}
 
 	@Override
@@ -138,5 +126,14 @@ public class ItemUpNAtomizer extends ModItemEnergyWeaponBase {
 			}
 		}
 		super.onShooterClientUpdate(itemStack, world, entityPlayer, sendServerTick);
+	}
+
+	@Override
+	public ModEntityPlasmaShotBase setBolt(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir,
+			WeaponShot shot) {
+		EntityUpNAtomizerBolt bolt = new EntityUpNAtomizerBolt(shooter.world, shooter, position, dir, shot,
+				getShotSpeed(weapon, shooter));
+		bolt.setKnockBack(2);
+		return bolt;
 	}
 }

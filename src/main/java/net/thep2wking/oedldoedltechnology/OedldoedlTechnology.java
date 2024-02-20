@@ -2,6 +2,7 @@ package net.thep2wking.oedldoedltechnology;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -17,9 +18,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedlcore.OedldoedlCore;
 import net.thep2wking.oedldoedlcore.config.CoreConfig;
 import net.thep2wking.oedldoedlcore.init.ModItems;
+import net.thep2wking.oedldoedlcore.util.ModEntityUtil;
 import net.thep2wking.oedldoedlcore.util.ModLogger;
 import net.thep2wking.oedldoedlcore.util.ModReferences;
+import net.thep2wking.oedldoedltechnology.init.ModEntities;
 import net.thep2wking.oedldoedltechnology.registry.ModRecipes;
+import net.thep2wking.oedldoedltechnology.util.handler.ModWeaponFactory;
 import net.thep2wking.oedldoedltechnology.util.network.ModPacketPipeline;
 import net.thep2wking.oedldoedltechnology.util.proxy.CommonProxy;
 
@@ -30,10 +34,11 @@ public class OedldoedlTechnology {
     public static final String MC_VERSION = "1.12.2";
     public static final String NAME = "Oedldoedl Technology";
     public static final String VERSION = MC_VERSION + "-" + "3.0.0";
-    public static final String DEPENDENCIES = "required-after:forge@[14.23.5.2847,);required-after:oedldoedlcore@[1.12.2-3.0.0,);required-after:matteroverdrive@[0.8,);";
+    public static final String DEPENDENCIES = "required-after:forge@[14.23.5.2847,);required-after:oedldoedlcore@[1.12.2-4.0.0,);required-after:oedldoedlresources@[1.12.2-4.0.0,);required-after:matteroverdrive@[0.7,);";
     public static final String CLIENT_PROXY_CLASS = "net.thep2wking.oedldoedltechnology.util.proxy.ClientProxy";
     public static final String SERVER_PROXY_CLASS = "net.thep2wking.oedldoedltechnology.util.proxy.ServerProxy";
-	public static final ModPacketPipeline NETWORK = new ModPacketPipeline();;
+	public static final ModPacketPipeline NETWORK = new ModPacketPipeline();
+    public static final ModWeaponFactory WEAPON_FACTORY = new ModWeaponFactory();
 
     @Instance
     public static OedldoedlTechnology INSTANCE;
@@ -53,11 +58,19 @@ public class OedldoedlTechnology {
 		public ResourceLocation getBackgroundImage() {
 			return ModReferences.CREATIVE_TAB_DARK;
 		}
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public void displayAllRelevantItems(NonNullList<ItemStack> list) {
+            super.displayAllRelevantItems(list);
+            ModEntityUtil.displaySpawnEggs(list, OedldoedlTechnology.MODID);
+        }
 	};
     
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         ModLogger.preInitLogger(MODID);
+        ModEntities.registerEntities();
         NETWORK.registerPackets();
         PROXY.preInit(event);
     }
@@ -67,6 +80,9 @@ public class OedldoedlTechnology {
         ModLogger.initLogger(MODID);
         ModRecipes.registerOreDict();
         ModRecipes.registerRecipes();
+        WEAPON_FACTORY.initModules();
+		WEAPON_FACTORY.initWeapons();
+        PROXY.render();
         PROXY.init(event);
     }
 

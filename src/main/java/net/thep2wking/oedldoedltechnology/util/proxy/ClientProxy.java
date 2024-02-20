@@ -7,11 +7,11 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.init.ModItems;
-import net.thep2wking.oedldoedltechnology.util.ModModules;
 import net.thep2wking.oedldoedltechnology.util.handler.ModClientWeaponHandler;
 import net.thep2wking.oedldoedltechnology.util.handler.ModCommonWeaponHandler;
 import net.thep2wking.oedldoedltechnology.util.handler.ModTickHandler;
 import net.thep2wking.oedldoedltechnology.util.render.ModRenderHandler;
+import net.thep2wking.oedldoedltechnology.util.render.ModRenderer;
 
 public class ClientProxy extends CommonProxy {
 	public static ModRenderHandler renderHandler;
@@ -31,30 +31,31 @@ public class ClientProxy extends CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
-		if (ModModules.isMatterOverdriveLoaded()) {
-			renderHandler = new ModRenderHandler();
-			renderHandler.createItemRenderers();
-			renderHandler.registerEntityRenderers();
-		}
+		renderHandler = new ModRenderHandler();
+		renderHandler.createItemRenderers();
+		renderHandler.registerEntityRenderers();
 	}
 
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
-		if (ModModules.isMatterOverdriveLoaded()) {
-			renderHandler.init(Minecraft.getMinecraft().world, Minecraft.getMinecraft().getTextureManager());
-			MinecraftForge.EVENT_BUS.register(renderHandler);
-			MinecraftForge.EVENT_BUS.register(new ModTickHandler());
-			renderHandler.registerWeaponLayers();
-			renderHandler.createItemRenderers();
-			weaponHandler = new ModClientWeaponHandler();
-			renderHandler = new ModRenderHandler();
-			weaponHandler.registerWeapon(ModItems.RAILGUN);
-			weaponHandler.registerWeapon(ModItems.UP_N_ATOMIZER);
-		}
+		renderHandler.init(Minecraft.getMinecraft().world, Minecraft.getMinecraft().getTextureManager());
+		MinecraftForge.EVENT_BUS.register(renderHandler);
+		MinecraftForge.EVENT_BUS.register(new ModTickHandler());
+		renderHandler.registerWeaponLayers();
+		renderHandler.createItemRenderers();
+		weaponHandler = new ModClientWeaponHandler();
+		renderHandler = new ModRenderHandler();
+		weaponHandler.registerWeapon(ModItems.RAILGUN);
+		weaponHandler.registerWeapon(ModItems.UP_N_ATOMIZER);
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
 		super.postInit(event);
+	}
+
+	@Override
+	public void render() {
+		ModRenderer.registerRenderer();
 	}
 
 	public ModClientWeaponHandler getModClientWeaponHandler() {

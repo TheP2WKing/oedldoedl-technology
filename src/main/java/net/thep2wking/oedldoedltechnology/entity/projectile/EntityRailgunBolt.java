@@ -1,4 +1,4 @@
-package net.thep2wking.oedldoedltechnology.entity;
+package net.thep2wking.oedldoedltechnology.entity.projectile;
 
 import matteroverdrive.api.weapon.WeaponShot;
 import net.minecraft.entity.EntityLivingBase;
