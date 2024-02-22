@@ -55,9 +55,6 @@ dependencies {
     deobfCompile("curse.maven:ftb-library-legacy-forge-237167:2985811")
     deobfCompile("curse.maven:ftb-utilities-forge-237102:3157548")
 
-    // baubles
-    deobfCompile("curse.maven:baubles-227083:2518667")
-
     // worldedit
     deobfCompile("curse.maven:worldedit-225608:2941712")
 
