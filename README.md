@@ -1,7 +1,7 @@
 # Oedldoedl Technology
 
 [![curseforge](https://img.shields.io/static/v1?message=%20curseforge&logo=curseforge&style=for-the-badge&labelColor=f16436&color=1a1a1a&logoColor=0d0d0d&label)](https://www.curseforge.com/minecraft/mc-mods/oedldoedl-technology)
-[![versions](https://img.shields.io/static/v1?message=for%201.12.2%20|%201.16.5&logo=curseforge&style=for-the-badge&labelColor=f16436&color=1a1a1a&logoColor=0d0d0d&label)](https://www.curseforge.com/minecraft/mc-mods/oedldoedl-technology/files/all)
+[![versions](https://img.shields.io/static/v1?message=for%201.12.2&logo=curseforge&style=for-the-badge&labelColor=f16436&color=1a1a1a&logoColor=0d0d0d&label)](https://www.curseforge.com/minecraft/mc-mods/oedldoedl-technology/files/all)
 [![projects](https://img.shields.io/static/v1?message=%20more%20projects&logo=curseforge&style=for-the-badge&labelColor=f16436&color=1a1a1a&logoColor=0d0d0d&label)](https://www.curseforge.com/members/thep2wking/projects)
 [![github](https://img.shields.io/static/v1?message=github&logo=github&style=for-the-badge&labelColor=010409&color=161b22&logoColor=e6edf3&label)](https://github.com/thep2wking/oedldoedl-technology)
 [![mantained](https://img.shields.io/static/v1?message=%20mantained&logo=github&style=for-the-badge&labelColor=green&color=161b22&logoColor=0d0d0d&label)](https://github.com/thep2wking/oedldoedl-technology)
