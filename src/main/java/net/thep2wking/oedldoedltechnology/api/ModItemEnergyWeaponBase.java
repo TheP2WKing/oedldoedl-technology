@@ -426,6 +426,32 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 		}
 	}
 
+	public ModEntityPlasmaShotBase getDefaultProjectileNew(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir, WeaponShot shot) {
+		ModEntityPlasmaShotBase fire = new ModEntityPlasmaShotBase(shooter.world, shooter, position, dir, shot, this.getShotSpeed(weapon, shooter));
+		fire.setWeapon(weapon);
+		fire.setFireDamageMultiply(WeaponHelper.modifyStat(WeaponStats.FIRE_DAMAGE, weapon, 0.0F));
+		float explosionAmount = WeaponHelper.modifyStat(WeaponStats.EXPLOSION_DAMAGE, weapon, 0.0F);
+		if (explosionAmount > 0.0F) {
+		   fire.setExplodeMultiply(this.getWeaponBaseDamage(weapon) * 0.3F * explosionAmount);
+		}
+  
+		if (WeaponHelper.modifyStat(WeaponStats.RICOCHET, weapon, 0.0F) == 1.0F) {
+		   fire.markRicochetable();
+		}
+  
+		return fire;
+	 }
+  
+	 public ModEntityPlasmaShotBase spawnProjectileNew(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir, WeaponShot shot) {
+		ModEntityPlasmaShotBase fire = this.getDefaultProjectileNew(weapon, shooter, position, dir, shot);
+		shooter.world.spawnEntity(fire);
+		if (shooter.world.isRemote && shooter instanceof EntityPlayer) {
+		   ((ModClientWeaponHandler)OedldoedlTechnology.PROXY.getModWeaponHandler()).addPlasmaBolt(fire);
+		}
+  
+		return fire;
+	 }
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onClientShot(ItemStack weapon, EntityLivingBase shooter, Vec3d position, Vec3d dir, WeaponShot shot) {
@@ -433,7 +459,7 @@ public class ModItemEnergyWeaponBase extends EnergyWeapon {
 				3f + itemRand.nextFloat() * 0.5f, 0.9f + itemRand.nextFloat() * 0.2f);
 		sound.setPosition((float) position.x, (float) position.y, (float) position.z);
 		Minecraft.getMinecraft().getSoundHandler().playSound(sound);
-		spawnProjectile(weapon, shooter, position, dir, shot);
+		spawnProjectileNew(weapon, shooter, position, dir, shot);
 	}
 
 	public void addMOWeaponDetails(ItemStack stack, EntityPlayer player, List<String> tooltip) {

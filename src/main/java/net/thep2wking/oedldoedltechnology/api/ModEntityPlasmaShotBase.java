@@ -39,14 +39,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.thep2wking.oedldoedlcore.util.ModLogger;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.util.handler.ModClientWeaponHandler;
-import net.thep2wking.oedldoedltechnology.util.network.ModEventPlasmaBoltHit;
 import net.thep2wking.oedldoedltechnology.util.network.ModPacketUpdatePlasmaBolt;
 
 public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGravityEntity, IEntityAdditionalSpawnData {
@@ -226,7 +223,6 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 				}
 				movingobjectposition.entityHit.hurtResistantTime = 0;
 				double lastMotionX = movingobjectposition.entityHit.motionX;
-				// double lastMotionY = movingobjectposition.entityHit.motionY;
 				double lastMotionZ = movingobjectposition.entityHit.motionZ;
 				boolean attack = movingobjectposition.entityHit.attackEntityFrom(damagesource, this.damage);
 				if (!attack && movingobjectposition.entityHit instanceof EntityDragon) {
@@ -236,8 +232,6 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 				if (attack) {
 					movingobjectposition.entityHit.motionX = lastMotionX
 							+ (movingobjectposition.entityHit.motionX - lastMotionX) * knockback;
-					// movingobjectposition.entityHit.motionY = lastMotionY
-					// 		+ (movingobjectposition.entityHit.motionY - lastMotionY) * knockback;
 					movingobjectposition.entityHit.motionZ = lastMotionZ
 							+ (movingobjectposition.entityHit.motionZ - lastMotionZ) * knockback;
 					if (movingobjectposition.entityHit instanceof EntityLivingBase) {
@@ -271,13 +265,13 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 						((ModItemEnergyWeaponBase) weapon.getItem()).onProjectileHit(movingobjectposition, weapon,
 								world, 5);
 					}
-					// onHit(movingobjectposition);
-					ModLogger.LOGGER.info("HMMM0");
+					onHit(movingobjectposition);
 				}
 				manageHitEffect(movingobjectposition);
-				MinecraftForge.EVENT_BUS.post(new ModEventPlasmaBoltHit(weapon, movingobjectposition, this,
-						world.isRemote ? Side.CLIENT : Side.SERVER));
+				// MinecraftForge.EVENT_BUS.post(new ModEventPlasmaBoltHit(weapon, movingobjectposition, this,
+				// 		world.isRemote ? Side.CLIENT : Side.SERVER));
 			} else {
+				// onHit(movingobjectposition);
 				this.blockPos = movingobjectposition.getBlockPos();
 				this.blockState = this.world.getBlockState(blockPos);
 				if (this.blockState.getMaterial() != Material.AIR) {
@@ -297,11 +291,10 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 						((ModItemEnergyWeaponBase) weapon.getItem()).onProjectileHit(movingobjectposition, weapon,
 								world, 5);
 					}
-					// onHit(movingobjectposition);
-					ModLogger.LOGGER.info("HMM");
+					onHit(movingobjectposition);
 				}
-				MinecraftForge.EVENT_BUS.post(new ModEventPlasmaBoltHit(weapon, movingobjectposition, this,
-						world.isRemote ? Side.CLIENT : Side.SERVER));
+				// MinecraftForge.EVENT_BUS.post(new ModEventPlasmaBoltHit(weapon, movingobjectposition, this,
+				// 		world.isRemote ? Side.CLIENT : Side.SERVER));
 				if (!manageHitEffect(movingobjectposition)) {
 					if (canRicoche) {
 						handleRicochets(movingobjectposition);
@@ -347,8 +340,13 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 	}
 
 	public SoundEvent setImpactSound() {
+		System.out.println("Overridden method calle");
 		return MatterOverdriveSounds.weaponsSizzle;
 	}
+
+	// public SoundEvent setImpactSound() {
+	// 	return ModSounds.MONEY;
+	// }
 
 	@SideOnly(Side.CLIENT)
 	public void onHit(RayTraceResult hit) {
@@ -382,13 +380,11 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 						SoundCategory.PLAYERS, rand.nextFloat() * 0.2f + 0.4f, rand.nextFloat() * 0.6f + 0.7f);
 				sizzleSound.setPosition((float) hit.hitVec.x, (float) hit.hitVec.y, (float) hit.hitVec.z);
 				Minecraft.getMinecraft().getSoundHandler().playSound(sizzleSound);
-				ModLogger.LOGGER.info("SOMETHING1");
 				if (hit.typeOfHit == RayTraceResult.Type.BLOCK) {
 					MOPositionedSound ricochetSound = new MOPositionedSound(setImpactSound(),
 							SoundCategory.PLAYERS, rand.nextFloat() * 0.2f + 0.6f, rand.nextFloat() * 0.2f + 1f);
 					ricochetSound.setPosition((float) hit.hitVec.x, (float) hit.hitVec.y, (float) hit.hitVec.z);
 					Minecraft.getMinecraft().getSoundHandler().playSound(ricochetSound);
-					ModLogger.LOGGER.info("SOMETHING2");
 				}
 			}
 			if (rand.nextBoolean()) {

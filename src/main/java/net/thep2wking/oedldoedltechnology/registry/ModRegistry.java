@@ -53,7 +53,10 @@ public class ModRegistry {
 		ModLogger.registeredSoundEventsLogger(OedldoedlTechnology.MODID);
 
 		ModRegistryHelper.registerSoundEvent(event, ModSounds.RAILGUN_SHOT);
+		ModRegistryHelper.registerSoundEvent(event, ModSounds.RAILGUN_IMPACT);
+
 		ModRegistryHelper.registerSoundEvent(event, ModSounds.UP_N_ATOMIZER_SHOT);
+		ModRegistryHelper.registerSoundEvent(event, ModSounds.UP_N_ATOMIZER_IMPACT);
 
 		ModRegistryHelper.registerSoundEvent(event, ModSounds.REPUBLICAN_SPACE_RANGER_IDLE);
 		ModRegistryHelper.registerSoundEvent(event, ModSounds.REPUBLICAN_SPACE_RANGER_DEATH);

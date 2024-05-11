@@ -2,7 +2,7 @@ package net.thep2wking.oedldoedltechnology.init;
 
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntityZombie;
-import net.thep2wking.oedldoedlcore.util.ModBiomeUtils;
+import net.thep2wking.oedldoedlcore.util.ModBiomeUtil;
 import net.thep2wking.oedldoedlcore.util.ModLogger;
 import net.thep2wking.oedldoedlcore.util.ModRegistryHelper;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
@@ -20,7 +20,7 @@ public class ModEntities {
 		ModRegistryHelper.registerEntityWithSpawnEgg(OedldoedlTechnology.MODID, "republican_space_ranger", OedldoedlTechnology.INSTANCE, id++, EntityRepublicanSpaceRanger.class, 80, 3, false, 0x5d8407, 0x333f00);
 	
 		if (TechnologyConfig.CONTENT.SPAWN_REPUBLICAN_SPACE_RANGER) {
-			ModRegistryHelper.registerEntitySpawn(EntityRepublicanSpaceRanger.class, EnumCreatureType.MONSTER, 100, 1, 2, ModBiomeUtils.getEntitySpawningBiomes(EnumCreatureType.MONSTER, EntityZombie.class));
+			ModRegistryHelper.registerEntitySpawn(EntityRepublicanSpaceRanger.class, EnumCreatureType.MONSTER, 25, 1, 2, ModBiomeUtil.getEntitySpawningBiomes(EnumCreatureType.MONSTER, EntityZombie.class));
 		}
 	}
 }

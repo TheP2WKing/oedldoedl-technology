@@ -6,11 +6,25 @@
             "oedldoedltechnology:railgun_shot"
         ]
     },
+    "railgun_impact": {
+        "category": "player",
+        "subtitle": "sound.oedldoedltechnology.railgun_impact",
+        "sounds": [
+            "oedldoedltechnology:railgun_impact"
+        ]
+    },
     "up_n_atomizer_shot": {
         "category": "player",
         "subtitle": "sound.oedldoedltechnology.up_n_atomizer_shot",
         "sounds": [
             "oedldoedltechnology:up_n_atomizer_shot"
+        ]
+    },
+    "up_n_atomizer_impact": {
+        "category": "player",
+        "subtitle": "sound.oedldoedltechnology.up_n_atomizer_impact",
+        "sounds": [
+            "oedldoedltechnology:up_n_atomizer_impact"
         ]
     },
     "republican_space_ranger_idle": {

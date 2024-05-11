@@ -135,9 +135,11 @@ public class EntityRepublicanSpaceRanger extends EntityRougeAndroidMob implement
 		ItemStack gun = OedldoedlTechnology.WEAPON_FACTORY.getRandomDecoratedEnergyWeapon(
 				new ModWeaponFactory.WeaponGenerationContext(androidLevel, this, getIsLegendary()));
 		((EnergyContainer) EnergyWeapon.getStorage(gun)).setFull();
-		this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, gun);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE)
-				.setBaseValue((double) (((EnergyWeapon) gun.getItem()).getRange(gun) - 2));
+		if (gun != null) {
+			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, gun);
+			this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE)
+					.setBaseValue((double) (((EnergyWeapon) gun.getItem()).getRange(gun) - 2));
+		}
 	}
 
 	public void setCombatTask() {
@@ -167,7 +169,7 @@ public class EntityRepublicanSpaceRanger extends EntityRougeAndroidMob implement
 			if (lastSeenPosition == null) {
 				lastSeenPosition = target.getPositionVector();
 			}
-			if (weapon.getItem() instanceof EnergyWeapon) {
+			if (weapon.getItem() instanceof EnergyWeapon && weapon != null) {
 				EnergyWeapon energyWeapon = (EnergyWeapon) weapon.getItem();
 				Vec3d pos = new Vec3d(this.posX, this.posY + (double) this.getEyeHeight(), this.posZ);
 				Vec3d dir = lastSeenPosition.subtract(this.getPositionVector());

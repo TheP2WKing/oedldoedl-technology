@@ -17,7 +17,7 @@ public class EntityRailgunBolt extends ModEntityPlasmaShotBase {
 	public EntityRailgunBolt(World world) {
 		super(world);
 	}
-
+	
 	@Override
 	public boolean manageHitEffect(RayTraceResult hit) {
 		if (!world.isRemote) {
