@@ -6,11 +6,11 @@
 
 - code cleanup
 - minor fixed related to phaser bolt impact
+- fixed server crash of Republican Süace Ranger entity
 
 ### Removed
 
 - removed test logger with stupid messages
-- temporarily removed spawning of Republican Space Ranger when the world is a server to prevent crashing because of null pointer exception.
 
 ## [4.0.0] - 2024-03-03
 

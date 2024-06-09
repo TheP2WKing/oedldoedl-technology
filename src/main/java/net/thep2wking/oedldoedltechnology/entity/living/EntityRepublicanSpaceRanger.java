@@ -1,8 +1,5 @@
 package net.thep2wking.oedldoedltechnology.entity.living;
 
-import java.util.Arrays;
-import java.util.List;
-
 import matteroverdrive.MatterOverdrive;
 import matteroverdrive.api.entity.IRangedEnergyWeaponAttackMob;
 import matteroverdrive.api.weapon.WeaponShot;
@@ -15,8 +12,6 @@ import matteroverdrive.entity.monster.EntityRougeAndroidMob;
 import matteroverdrive.items.includes.EnergyContainer;
 import matteroverdrive.items.weapon.EnergyWeapon;
 import matteroverdrive.network.packet.bi.PacketFirePlasmaShot;
-import matteroverdrive.util.MOStringHelper;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -39,7 +34,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.thep2wking.oedldoedlcore.util.ModRandomUtil;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.init.ModItems;
 import net.thep2wking.oedldoedltechnology.init.ModSounds;
@@ -51,7 +45,7 @@ public class EntityRepublicanSpaceRanger extends EntityRougeAndroidMob implement
 	public static boolean UNLIMITED_WEAPON_ENERGY = true;
 	private final EntityAIPhaserBoltAttack aiBoltAttack = new EntityAIPhaserBoltAttack(this, 1.0, 60, 15.0F);
 	private final EntityAIRangedRunFromMelee aiRangedRunFromMelee = new EntityAIRangedRunFromMelee(this, 1.0);
-	private final List<String> NAMES = Arrays.asList("Commander", "Dick", "Butch", "Vanessa", "Luke", "TheF2PKing");
+	// private final List<String> NAMES = Arrays.asList("Commander", "Dick", "Butch", "Vanessa", "Luke", "TheF2PKing");
 
 	public EntityRepublicanSpaceRanger(World world) {
 		super(world);
@@ -88,15 +82,15 @@ public class EntityRepublicanSpaceRanger extends EntityRougeAndroidMob implement
 		if (world != null && !world.isRemote) {
 			this.setCombatTask();
 		}
-		String name = this.getIsLegendary()
-				? String.format("%s %s ", "\u272a", MOStringHelper.translateToLocal("rarity.legendary", new Object[0]))
-				: "";
-		name = name + String.format("[%s] ", this.getAndroidLevel());
-		name = name
-				+ String.format("[%s] ",
-						I18n.format("entity." + OedldoedlTechnology.MODID + ".republican_space_ranger.name"))
-				+ ModRandomUtil.selectRandom(rand, NAMES);
-		this.setCustomNameTag(name);
+		// String name = this.getIsLegendary()
+		// 		? String.format("%s %s ", "\u272a", MOStringHelper.translateToLocal("rarity.legendary", new Object[0]))
+		// 		: "";
+		// name = name + String.format("[%s] ", this.getAndroidLevel());
+		// name = name
+		// 		+ String.format("[%s] ",
+		// 				I18n.format("entity." + OedldoedlTechnology.MODID + ".republican_space_ranger.name"))
+		// 		+ ModRandomUtil.selectRandom(rand, NAMES);
+		// this.setCustomNameTag(name);
 	}
 
 	@Override
