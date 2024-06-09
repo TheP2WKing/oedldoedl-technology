@@ -265,7 +265,7 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 						((ModItemEnergyWeaponBase) weapon.getItem()).onProjectileHit(movingobjectposition, weapon,
 								world, 5);
 					}
-					onHit(movingobjectposition);
+					// onHit(movingobjectposition);
 				}
 				manageHitEffect(movingobjectposition);
 				// MinecraftForge.EVENT_BUS.post(new ModEventPlasmaBoltHit(weapon, movingobjectposition, this,
@@ -291,7 +291,7 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 						((ModItemEnergyWeaponBase) weapon.getItem()).onProjectileHit(movingobjectposition, weapon,
 								world, 5);
 					}
-					onHit(movingobjectposition);
+					// onHit(movingobjectposition);
 				}
 				// MinecraftForge.EVENT_BUS.post(new ModEventPlasmaBoltHit(weapon, movingobjectposition, this,
 				// 		world.isRemote ? Side.CLIENT : Side.SERVER));

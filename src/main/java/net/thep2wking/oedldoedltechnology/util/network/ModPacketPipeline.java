@@ -17,7 +17,7 @@ import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 
 @ChannelHandler.Sharable
 public class ModPacketPipeline {
-	public static final SimpleNetworkWrapper CHANNEL = NetworkRegistry.INSTANCE.newSimpleChannel(OedldoedlTechnology.MODID + "_channel");
+	public static final SimpleNetworkWrapper CHANNEL = NetworkRegistry.INSTANCE.newSimpleChannel(OedldoedlTechnology.MODID);
 	public static int packetID = 0;
 
 	public ModPacketPipeline() {
