@@ -340,13 +340,8 @@ public class ModEntityPlasmaShotBase extends Entity implements IProjectile, IGra
 	}
 
 	public SoundEvent setImpactSound() {
-		System.out.println("Overridden method calle");
 		return MatterOverdriveSounds.weaponsSizzle;
 	}
-
-	// public SoundEvent setImpactSound() {
-	// 	return ModSounds.MONEY;
-	// }
 
 	@SideOnly(Side.CLIENT)
 	public void onHit(RayTraceResult hit) {
