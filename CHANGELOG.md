@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.1.0] - 2024-06-09
+
+### Changed
+
+- code cleanup
+- minor fixed related to phaser bolt impact
+
+### Removed
+
+- removed test logger with stupid messages
+- temporarily removed spawning of Republican Space Ranger when the world is a server to prevent crashing because of null pointer exception.
+
 ## [4.0.0] - 2024-03-03
 
 ### 1.12.2 isn't dead, it just took some time

@@ -27,6 +27,7 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -109,10 +110,16 @@ public class EntityRepublicanSpaceRanger extends EntityRougeAndroidMob implement
 	}
 
 	@Override
-	public void applyEntityAttributes() {
+	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25);
-		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(24.0);
+		IAttributeInstance movementSpeedAttribute = this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+		if (movementSpeedAttribute != null) {
+			movementSpeedAttribute.setBaseValue(0.25);
+		}
+		IAttributeInstance followRangeAttribute = this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE);
+		if (followRangeAttribute != null) {
+			followRangeAttribute.setBaseValue(24.0);
+		}
 	}
 
 	@Override
@@ -120,25 +127,33 @@ public class EntityRepublicanSpaceRanger extends EntityRougeAndroidMob implement
 		if (!this.hasTeam() || recentlyHit) {
 			int j = this.rand.nextInt(2 + lootingLevel);
 			for (int k = 0; k < j; ++k) {
-				this.dropItem(MatterOverdrive.ITEMS.energyPack, 1);
+				if (MatterOverdrive.ITEMS.energyPack != null) {
+					this.dropItem(MatterOverdrive.ITEMS.energyPack, 1);
+				}
 			}
-			if (this.rand.nextFloat() < 0.15F) {
+			if (this.rand.nextFloat() < 0.15F && ModItems.ALIEN_EGG != null) {
 				this.dropItem(ModItems.ALIEN_EGG, 1);
 			}
 		}
 	}
+	
 
 	@Override
 	public void addRandomArmor() {
 		super.addRandomArmor();
 		int androidLevel = getAndroidLevel();
 		ItemStack gun = OedldoedlTechnology.WEAPON_FACTORY.getRandomDecoratedEnergyWeapon(
-				new ModWeaponFactory.WeaponGenerationContext(androidLevel, this, getIsLegendary()));
-		((EnergyContainer) EnergyWeapon.getStorage(gun)).setFull();
+			new ModWeaponFactory.WeaponGenerationContext(androidLevel, this, getIsLegendary()));
 		if (gun != null) {
+			EnergyContainer storage = (EnergyContainer) EnergyWeapon.getStorage(gun);
+			if (storage != null && storage instanceof EnergyContainer) {
+				storage.setFull();
+			}
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, gun);
-			this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE)
-					.setBaseValue((double) (((EnergyWeapon) gun.getItem()).getRange(gun) - 2));
+			IAttributeInstance followRangeAttribute = this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE);
+			if (followRangeAttribute != null && gun.getItem() instanceof EnergyWeapon) {
+				followRangeAttribute.setBaseValue((double) (((EnergyWeapon) gun.getItem()).getRange(gun) - 2));
+			}
 		}
 	}
 
