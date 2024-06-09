@@ -5,8 +5,9 @@
 ### Changed
 
 - code cleanup
-- minor fixed related to phaser bolt impact
-- fixed server crash of Republican Süace Ranger entity
+- minor fixes related to phaser bolt impact
+- fixed server crash because of Republican Space Ranger entity
+- fixed server crashing when holding weapons because the packet channel length of 20 was exceeded
 
 ### Removed
 
