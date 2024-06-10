@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.thep2wking.oedldoedlcore.util.ModReferences;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.config.categories.Content;
+import net.thep2wking.oedldoedltechnology.config.categories.Integration;
 import net.thep2wking.oedldoedltechnology.config.categories.Recipes;
 import net.thep2wking.oedldoedltechnology.config.categories.Tooltips;
 
@@ -22,6 +23,9 @@ public class TechnologyConfig {
     
     @Config.Name("tooltips")
     public static final Tooltips TOOLTIPS = new Tooltips();
+
+    @Config.Name("integration")
+    public static final Integration INTEGRATION = new Integration();
 
     @Mod.EventBusSubscriber
     public static class ConfigHolder {

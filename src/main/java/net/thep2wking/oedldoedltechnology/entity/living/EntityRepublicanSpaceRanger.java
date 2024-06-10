@@ -1,5 +1,7 @@
 package net.thep2wking.oedldoedltechnology.entity.living;
 
+import javax.annotation.Nullable;
+
 import matteroverdrive.MatterOverdrive;
 import matteroverdrive.api.entity.IRangedEnergyWeaponAttackMob;
 import matteroverdrive.api.weapon.WeaponShot;
@@ -27,6 +29,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -35,11 +38,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
-import net.thep2wking.oedldoedltechnology.init.ModItems;
 import net.thep2wking.oedldoedltechnology.init.ModSounds;
 import net.thep2wking.oedldoedltechnology.util.handler.ModWeaponFactory;
 
 public class EntityRepublicanSpaceRanger extends EntityRougeAndroidMob implements IRangedEnergyWeaponAttackMob {
+	public static final ResourceLocation LOOTTABLE = new ResourceLocation(OedldoedlTechnology.MODID, "entities/republican_space_ranger");
 	public static boolean DROP_NORMAL_WEAPONS = true;
 	public static boolean DROP_LEGENDARY_WEAPONS = true;
 	public static boolean UNLIMITED_WEAPON_ENERGY = true;
@@ -50,11 +53,19 @@ public class EntityRepublicanSpaceRanger extends EntityRougeAndroidMob implement
 	public EntityRepublicanSpaceRanger(World world) {
 		super(world);
 		this.init(world);
+		this.experienceValue = 20;
 	}
 
 	public EntityRepublicanSpaceRanger(World world, int level, boolean legendary) {
 		super(world, level, legendary);
 		this.init(world);
+		this.experienceValue = 20;
+	}
+
+	@Override
+	@Nullable
+	public ResourceLocation getLootTable() {
+		return LOOTTABLE;
 	}
 
 	@Override
@@ -116,20 +127,20 @@ public class EntityRepublicanSpaceRanger extends EntityRougeAndroidMob implement
 		}
 	}
 
-	@Override
-	public void dropFewItems(boolean recentlyHit, int lootingLevel) {
-		if (!this.hasTeam() || recentlyHit) {
-			int j = this.rand.nextInt(2 + lootingLevel);
-			for (int k = 0; k < j; ++k) {
-				if (MatterOverdrive.ITEMS.energyPack != null) {
-					this.dropItem(MatterOverdrive.ITEMS.energyPack, 1);
-				}
-			}
-			if (this.rand.nextFloat() < 0.15F && ModItems.ALIEN_EGG != null) {
-				this.dropItem(ModItems.ALIEN_EGG, 1);
-			}
-		}
-	}
+	// @Override
+	// public void dropFewItems(boolean recentlyHit, int lootingLevel) {
+	// 	if (!this.hasTeam() || recentlyHit) {
+	// 		int j = this.rand.nextInt(2 + lootingLevel);
+	// 		for (int k = 0; k < j; ++k) {
+	// 			if (MatterOverdrive.ITEMS.energyPack != null) {
+	// 				this.dropItem(MatterOverdrive.ITEMS.energyPack, 1);
+	// 			}
+	// 		}
+	// 		if (this.rand.nextFloat() < 0.15F && ModItems.ALIEN_EGG != null) {
+	// 			this.dropItem(ModItems.ALIEN_EGG, 1);
+	// 		}
+	// 	}
+	// }
 	
 
 	@Override
