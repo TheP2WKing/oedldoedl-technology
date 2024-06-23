@@ -118,4 +118,27 @@ public class Content {
 		@Config.Name("Potion Effects")
 		public boolean POTION_EFFECTS = true;
 	}
+
+	@Config.Name("factory")
+	public final Factory FACTORY = new Factory();
+
+	public static class Factory {
+		@Config.Name("Power Shard Speed And Power Increase")
+		@Config.RangeInt(min = 0, max = 10)
+		public double POWER_SHARD_SPEED_AND_POWER_INCREASE = 0.5;
+
+		@Config.Name("constructor")
+		public final Constructor CONSTRUCTOR = new Constructor();
+
+		@Config.Name("assembler")
+		public final Assembler ASSEMBLER = new Assembler();
+	}
+
+	public static class Constructor {
+
+	}
+
+	public static class Assembler {
+
+	}
 }

@@ -10,6 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.thep2wking.oedldoedlcore.util.ModLogger;
 import net.thep2wking.oedldoedlcore.util.ModRegistryHelper;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
+import net.thep2wking.oedldoedltechnology.init.ModBlocks;
 import net.thep2wking.oedldoedltechnology.init.ModItems;
 import net.thep2wking.oedldoedltechnology.init.ModSounds;
 import net.thep2wking.oedldoedltechnology.util.render.ModRenderer;
@@ -25,11 +26,17 @@ public class ModRegistry {
 	@SubscribeEvent
 	public static void onBlockRegister(RegistryEvent.Register<Block> event) {
 		ModLogger.registeredBlocksLogger(OedldoedlTechnology.MODID);
+
+		ModRegistryHelper.registerBlock(event, ModBlocks.CONSTRUCTOR);
+		ModRegistryHelper.registerBlock(event, ModBlocks.ASSEMBLER);
 	}
 
 	@SubscribeEvent
 	public static void onItemRegister(RegistryEvent.Register<Item> event) {
 		ModLogger.registeredItemsLogger(OedldoedlTechnology.MODID);
+
+		ModRegistryHelper.registerItemBlock(event, ModItems.CONSTRUCTOR);
+		ModRegistryHelper.registerItemBlock(event, ModItems.ASSEMBLER);
 
 		ModRegistryHelper.registerItem(event, ModItems.RAILGUN);
 		ModRegistryHelper.registerItem(event, ModItems.UP_N_ATOMIZER);
@@ -46,6 +53,13 @@ public class ModRegistry {
 		ModRegistryHelper.registerItem(event, ModItems.ALIEN_EGG);
 
 		ModRegistryHelper.registerItem(event, ModItems.IPHONE_14_PRO_MAX);
+
+		ModRegistryHelper.registerItem(event, ModItems.POWER_SHARD);
+		
+		ModRegistryHelper.registerItem(event, ModItems.IRON_PLATE);
+		ModRegistryHelper.registerItem(event, ModItems.IRON_ROD);
+		ModRegistryHelper.registerItem(event, ModItems.SCREW);
+		ModRegistryHelper.registerItem(event, ModItems.REINFORCED_IRON_PLATE);
 	}
 
 	@SubscribeEvent

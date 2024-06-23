@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.thep2wking.oedldoedlcore.init.ModItems;
@@ -21,9 +22,12 @@ import net.thep2wking.oedldoedlcore.util.ModEntityUtil;
 import net.thep2wking.oedldoedlcore.util.ModLogInUtil;
 import net.thep2wking.oedldoedlcore.util.ModLogger;
 import net.thep2wking.oedldoedlcore.util.ModReferences;
+import net.thep2wking.oedldoedltechnology.content.assembler.recipe.ModAssemblerRecipes;
+import net.thep2wking.oedldoedltechnology.content.constructor.recipe.ModConstructorRecipes;
 import net.thep2wking.oedldoedltechnology.init.ModEntities;
 import net.thep2wking.oedldoedltechnology.integration.JERPlugin;
 import net.thep2wking.oedldoedltechnology.registry.ModRecipes;
+import net.thep2wking.oedldoedltechnology.util.handler.GuiHandler;
 import net.thep2wking.oedldoedltechnology.util.handler.ModWeaponFactory;
 import net.thep2wking.oedldoedltechnology.util.network.ModPacketPipeline;
 import net.thep2wking.oedldoedltechnology.util.proxy.CommonProxy;
@@ -75,10 +79,13 @@ public class OedldoedlTechnology {
         if (Loader.isModLoaded("jeresources")) {
             JERPlugin.register();
         }
+        NetworkRegistry.INSTANCE.registerGuiHandler(OedldoedlTechnology.INSTANCE, new GuiHandler());
+        ModConstructorRecipes.reggister();
+        ModAssemblerRecipes.reggister();
         NETWORK.registerPackets();
         PROXY.preInit(event);
     }
-
+    
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         ModLogger.initLogger(MODID);
@@ -89,7 +96,7 @@ public class OedldoedlTechnology {
         PROXY.render();
         PROXY.init(event);
     }
-
+    
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         ModLogger.postInitLogger(MODID);

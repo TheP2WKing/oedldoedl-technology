@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/cube_bottom_top",
+    "textures": 
+    {
+        "top": "oedldoedltechnology:blocks/factory_top",
+        "bottom": "oedldoedltechnology:blocks/factory_bottom",
+        "side": "oedldoedltechnology:blocks/assembler_side"
+    }
+}

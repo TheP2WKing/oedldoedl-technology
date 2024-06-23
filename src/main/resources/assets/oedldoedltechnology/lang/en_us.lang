@@ -4,6 +4,10 @@ itemGroup.oedldoedltechnology.name=§dOedldoedl Technology
 # icons
 item.oedldoedlcore.technology_icon.annotation3=Version: §e1.12.2-4.2.0
 
+# jei
+jei.oedldoedltechnology.factory.constructor.category=Constructor
+jei.oedldoedltechnology.factory.assembler.category=Assembler
+
 # items
 item.oedldoedltechnology.railgun.name=Railgun
 item.oedldoedltechnology.railgun.annotation1=Manufacturer: §cCoil
@@ -38,6 +42,28 @@ item.oedldoedltechnology.alien_egg.tip1=???
 item.oedldoedltechnology.iphone_14_pro_max.name=iPhone 14 Pro Max
 item.oedldoedltechnology.iphone_14_pro_max.tip1=Think different...
 
+item.oedldoedltechnology.power_shard.name=Power Shard
+item.oedldoedltechnology.power_shard.annotation1=Speed and power increase:
+item.oedldoedltechnology.power_shard.tip1=Mucus from the power slugs compressed
+item.oedldoedltechnology.power_shard.tip2=into a solid crystal-like shard.
+item.oedldoedltechnology.power_shard.tip3=It radiates a strange power.
+
+item.oedldoedltechnology.iron_plate.name=Iron Plate
+item.oedldoedltechnology.iron_plate.tip1=One of the most basic parts.
+item.oedldoedltechnology.iron_rod.name=Iron Rod
+item.oedldoedltechnology.iron_rod.tip1=One of the most basic parts.
+item.oedldoedltechnology.screw.name=Screw
+item.oedldoedltechnology.screw.tip1=One of the most basic parts.
+item.oedldoedltechnology.reinforced_iron_plate.name=Reinforced Iron Plate
+item.oedldoedltechnology.reinforced_iron_plate.tip1=A sturdier and more durable Iron Plate.
+
+# blocks
+tile.oedldoedltechnology.constructor.name=Constructor
+tile.oedldoedltechnology.constructor.tip1=Crafts one part into another part.
+
+tile.oedldoedltechnology.assembler.name=Assembler
+tile.oedldoedltechnology.assembler.tip1=Crafts two parts into another part.
+
 # entites
 entity.oedldoedltechnology.republican_space_ranger.name=Republican Space Ranger
 
@@ -50,3 +76,21 @@ sound.oedldoedltechnology.republican_space_ranger_death=Republican Space Ranger 
 
 # tooltips
 key.oedldoedltechnology.weapon=§7Hold §b§oCtrl§r§7 for Weapon Info
+
+# top tooltips
+top.oedldoedltechnology.disabled=Disabled by Redstone
+top.oedldoedltechnology.energy=Energy Usage:
+top.oedldoedltechnology.speed=Clock Speed:
+top.oedldoedltechnology.upgrades=Power Shards:
+
+# tier
+item.oedldoedltechnology.project_part.annotation1=Tier:
+item.oedldoedltechnology.project_part.tier0=0
+item.oedldoedltechnology.project_part.tier1=1
+item.oedldoedltechnology.project_part.tier2=2
+item.oedldoedltechnology.project_part.tier3=3
+item.oedldoedltechnology.project_part.tier4=4
+item.oedldoedltechnology.project_part.tier5=5
+item.oedldoedltechnology.project_part.tier6=6
+item.oedldoedltechnology.project_part.tier7=7
+item.oedldoedltechnology.project_part.tier8=8

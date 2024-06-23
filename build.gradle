@@ -35,6 +35,9 @@ repositories {
     maven {
         url "https://cursemaven.com"
     }
+        maven { 
+        url "https://maven.blamejared.com"
+    }
 }
 
 dependencies {
@@ -62,6 +65,28 @@ dependencies {
     // matteroverdrive
     // deobfCompile("curse.maven:matteroverdrive-legacy-308192:2699215")
     deobfCompile("curse.maven:matter-overdrive-community-edition-557428:5114422")
+
+    // thermal
+    // deobfCompile("curse.maven:thermal-expansion-69163:2926431")
+    // deobfCompile("curse.maven:thermal-foundation-222880:2926428")
+    // deobfCompile("curse.maven:thermal-dynamics-227443:2920505")
+    // deobfCompile("curse.maven:cofh-core-69162:2920433")
+    // deobfCompile("curse.maven:cofh-world-271384:2920434")
+    // deobfCompile("curse.maven:redstone-flux-270789:2920436")
+    // deobfCompile("curse.maven:codechicken-lib-1-8-242818:2779848")
+
+    // extended crafting
+    // deobfCompile("curse.maven:cucumber-272335:2645867")
+    // deobfCompile("curse.maven:extended-crafting-nomifactory-edition-398267:4592627")
+
+    // crafttweaker
+    deobfCompile("curse.maven:mtlib-253211:3308160")
+    compileOnly("CraftTweaker2:CraftTweaker2-API:4.1.20.699") {
+        exclude module: "asm-debug-all"
+    }
+    deobfCompile("CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.699") {
+        exclude module: "asm-debug-all"
+    }
 }
 
 processResources {
