@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ConstructorRecipeRegistry {
 	private static final List<ConstructorRecipe> customRecipeList = new ArrayList<>();
@@ -32,6 +33,12 @@ public class ConstructorRecipeRegistry {
 
 	public static void registerRecipe(ConstructorRecipe recipe) {
 		customRecipeList.add(recipe);
+	}
+
+	public static void registerOreDictRecipe(ItemStack output, String inputOreDict, int count, int time) {
+		for (ItemStack inputs : OreDictionary.getOres(inputOreDict)) {
+			customRecipeList.add(new ConstructorRecipe(new ItemStack(inputs.getItem(), count, inputs.getMetadata()), output, time));
+		}
 	}
 
 	public static void removeRecipe(ItemStack output) {

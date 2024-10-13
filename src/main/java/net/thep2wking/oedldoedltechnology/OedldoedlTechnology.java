@@ -2,9 +2,6 @@ package net.thep2wking.oedldoedltechnology;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -17,20 +14,20 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.thep2wking.oedldoedlcore.api.tab.ModOedldoedlTabBase;
 import net.thep2wking.oedldoedlcore.init.ModItems;
-import net.thep2wking.oedldoedlcore.util.ModEntityUtil;
 import net.thep2wking.oedldoedlcore.util.ModLogInUtil;
 import net.thep2wking.oedldoedlcore.util.ModLogger;
-import net.thep2wking.oedldoedlcore.util.ModReferences;
 import net.thep2wking.oedldoedltechnology.content.assembler.recipe.ModAssemblerRecipes;
 import net.thep2wking.oedldoedltechnology.content.constructor.recipe.ModConstructorRecipes;
 import net.thep2wking.oedldoedltechnology.init.ModEntities;
-import net.thep2wking.oedldoedltechnology.integration.JERPlugin;
 import net.thep2wking.oedldoedltechnology.registry.ModRecipes;
+import net.thep2wking.oedldoedltechnology.registry.ModRegistry;
 import net.thep2wking.oedldoedltechnology.util.handler.GuiHandler;
 import net.thep2wking.oedldoedltechnology.util.handler.ModWeaponFactory;
 import net.thep2wking.oedldoedltechnology.util.network.ModPacketPipeline;
 import net.thep2wking.oedldoedltechnology.util.proxy.CommonProxy;
+import net.thep2wking.oedldoedltechnology.util.world.ModStructureGen;
 
 @Mod(modid = OedldoedlTechnology.MODID, name = OedldoedlTechnology.NAME, version = OedldoedlTechnology.VERSION, dependencies = OedldoedlTechnology.DEPENDENCIES)
 public class OedldoedlTechnology {
@@ -39,7 +36,7 @@ public class OedldoedlTechnology {
     public static final String MC_VERSION = "1.12.2";
     public static final String NAME = "Oedldoedl Technology";
     public static final String VERSION = MC_VERSION + "-" + "4.2.0";
-    public static final String DEPENDENCIES = "required-after:forge@[14.23.5.2847,);required-after:oedldoedlcore@[1.12.2-4.1.0,);required-after:oedldoedlresources@[1.12.2-4.1.0,);required-after:matteroverdrive@[0.7,);";
+    public static final String DEPENDENCIES = "required-after:forge@[14.23.5.2847,);required-after:oedldoedlcore@[1.12.2-4.2.0,);required-after:oedldoedlresources@[1.12.2-4.2.0,);required-after:matteroverdrive@[0.7,);";
     public static final String CLIENT_PROXY_CLASS = "net.thep2wking.oedldoedltechnology.util.proxy.ClientProxy";
     public static final String SERVER_PROXY_CLASS = "net.thep2wking.oedldoedltechnology.util.proxy.ServerProxy";
     public static final ModPacketPipeline NETWORK = new ModPacketPipeline();
@@ -51,37 +48,22 @@ public class OedldoedlTechnology {
     @SidedProxy(clientSide = CLIENT_PROXY_CLASS, serverSide = SERVER_PROXY_CLASS)
     public static CommonProxy PROXY;
 
-    public static final CreativeTabs TAB = new CreativeTabs(OedldoedlTechnology.MODID + ".name") {
+    public static final CreativeTabs TAB = new ModOedldoedlTabBase(MODID) {
         @Override
         @SideOnly(Side.CLIENT)
         public ItemStack getTabIconItem() {
-            return new ItemStack(ModItems.TECHNOLOGY_ICON, 1, 0);
-        }
-
-        @Override
-        @SideOnly(Side.CLIENT)
-        public ResourceLocation getBackgroundImage() {
-            return ModReferences.CREATIVE_TAB_DARK;
-        }
-
-        @Override
-        @SideOnly(Side.CLIENT)
-        public void displayAllRelevantItems(NonNullList<ItemStack> list) {
-            super.displayAllRelevantItems(list);
-            ModEntityUtil.displaySpawnEggs(list, OedldoedlTechnology.MODID);
-        }
+            return new ItemStack(ModItems.TECHNOLOGY_ICON);
+        };
     };
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         ModLogger.preInitLogger(MODID);
         ModEntities.registerEntities();
-        if (Loader.isModLoaded("jeresources")) {
-            JERPlugin.register();
-        }
+        ModRegistry.registerTiles();
         NetworkRegistry.INSTANCE.registerGuiHandler(OedldoedlTechnology.INSTANCE, new GuiHandler());
-        ModConstructorRecipes.reggister();
-        ModAssemblerRecipes.reggister();
+        ModConstructorRecipes.register();
+        ModAssemblerRecipes.register();
         NETWORK.registerPackets();
         PROXY.preInit(event);
     }
@@ -91,6 +73,8 @@ public class OedldoedlTechnology {
         ModLogger.initLogger(MODID);
         ModRecipes.registerOreDict();
         ModRecipes.registerRecipes();
+        ModStructureGen.registerWorldGenerators();
+        ModRegistry.registerLootTables();
         WEAPON_FACTORY.initModules();
         WEAPON_FACTORY.initWeapons();
         PROXY.render();
@@ -112,7 +96,7 @@ public class OedldoedlTechnology {
     public static class ModJoinMessage {
         @SubscribeEvent
         public static void addJoinMessage(PlayerLoggedInEvent event) {
-            ModLogInUtil.addJoinMessage(event, NAME, MODID, VERSION);
+            ModLogInUtil.addJoinMessage(event, NAME, MODID, VERSION, true);
         }
     }
 }

@@ -1,7 +1,5 @@
 package net.thep2wking.oedldoedltechnology.api.factory;
 
-import javax.annotation.Nonnull;
-
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.ProbeMode;
@@ -18,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
@@ -39,22 +36,11 @@ public abstract class BlockFactoryBase extends ModBlockContainerBase implements 
 
 	@Override
 	public boolean isFullBlock(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean shouldSideBeRendered(IBlockState blockState, @Nonnull IBlockAccess blockAccess,
-			@Nonnull BlockPos pos, EnumFacing side) {
 		return true;
 	}
 
@@ -189,14 +175,16 @@ public abstract class BlockFactoryBase extends ModBlockContainerBase implements 
 							.alternateFilledColor(0xffda943b)); // 0xffba7026
 
 			if (player.isSneaking()) {
-				probeInfo.text(
-						TextFormatting.WHITE + "{*top." + OedldoedlTechnology.MODID + ".energy*}" + " "
-								+ TextFormatting.RED
-								+ tile.getEffectiveEnergy() + " FE");
-				probeInfo.text(TextFormatting.WHITE + "{*top." + OedldoedlTechnology.MODID + ".speed*}" + " "
-						+ TextFormatting.YELLOW + String.format("%.1f", tile.getShardPercentage() * 100) + "%");
-				probeInfo.text(TextFormatting.WHITE + "{*top." + OedldoedlTechnology.MODID + ".upgrades*}" + " "
-						+ TextFormatting.GOLD + tile.getShardCount() + " / 3");
+				probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffda943b).spacing(2))
+						.text(TextFormatting.WHITE + "{*top." + OedldoedlTechnology.MODID + ".energy*}" + " "
+								+ TextFormatting.RED + tile.getEffectiveEnergy() + " FE")
+						.text(TextFormatting.WHITE + "{*top." + OedldoedlTechnology.MODID + ".speed*}" + " "
+								+ TextFormatting.YELLOW + String.format("%.1f", tile.getShardPercentage() * 100) + "%")
+						.text(TextFormatting.WHITE + "{*top." + OedldoedlTechnology.MODID + ".upgrades*}" + " "
+								+ TextFormatting.GOLD + tile.getShardCount() + " / 3");
+			} else {
+				probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffda943b).spacing(-1))
+						.text(TextFormatting.GOLD + " ... ");
 			}
 		}
 	}

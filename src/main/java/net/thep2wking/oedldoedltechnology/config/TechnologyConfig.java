@@ -9,8 +9,10 @@ import net.thep2wking.oedldoedlcore.util.ModReferences;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.config.categories.Content;
 import net.thep2wking.oedldoedltechnology.config.categories.Integration;
+import net.thep2wking.oedldoedltechnology.config.categories.Properties;
 import net.thep2wking.oedldoedltechnology.config.categories.Recipes;
 import net.thep2wking.oedldoedltechnology.config.categories.Tooltips;
+import net.thep2wking.oedldoedltechnology.config.categories.World;
 
 @Config(modid = OedldoedlTechnology.MODID, name = ModReferences.BASE_MODID + "/"
         + OedldoedlTechnology.MODID, category = OedldoedlTechnology.MODID)
@@ -26,6 +28,12 @@ public class TechnologyConfig {
 
     @Config.Name("integration")
     public static final Integration INTEGRATION = new Integration();
+
+    @Config.Name("properties")
+    public static final Properties PROPERTIES = new Properties();
+
+    @Config.Name("world")
+    public static final World WORLD = new World();
 
     @Mod.EventBusSubscriber
     public static class ConfigHolder {

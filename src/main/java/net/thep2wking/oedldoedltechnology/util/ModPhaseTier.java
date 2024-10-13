@@ -13,9 +13,10 @@ public enum ModPhaseTier {
     TIER_3("tier3", ModRarities.GREEN),
     TIER_4("tier4", ModRarities.YELLOW),
     TIER_5("tier5", ModRarities.GOLD),
-    TIER_6("tier6", ModRarities.LIGHT_PURPLE),
+    TIER_6("tier6", ModRarities.AQUA),
 	TIER_7("tier7", ModRarities.LIGHT_PURPLE),
-	TIER_8("tier8", ModRarities.RED),
+	TIER_8("tier8", ModRarities.LIGHT_PURPLE),
+	TIER_9("tier9", ModRarities.RED),
     ;
 
     private String tier;

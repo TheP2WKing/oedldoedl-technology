@@ -13,4 +13,7 @@ public class ModSounds {
 
 	public static final SoundEvent REPUBLICAN_SPACE_RANGER_IDLE = new ModSoundEventBase(OedldoedlTechnology.MODID, "republican_space_ranger_idle");
 	public static final SoundEvent REPUBLICAN_SPACE_RANGER_DEATH = new ModSoundEventBase(OedldoedlTechnology.MODID, "republican_space_ranger_death");
+
+	public static final SoundEvent DETONATE = new ModSoundEventBase(OedldoedlTechnology.MODID, "detonate");
+	public static final SoundEvent NOBELISK_IMPACT = new ModSoundEventBase(OedldoedlTechnology.MODID, "nobelisk_impact");
 }

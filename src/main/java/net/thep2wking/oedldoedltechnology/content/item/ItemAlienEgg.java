@@ -18,7 +18,7 @@ public class ItemAlienEgg extends ModItemBase {
 	public ItemAlienEgg(String modid, String name, CreativeTabs tab, EnumRarity rarity, boolean hasEffect,
 			int tooltipLines, int annotationLines) {
 		super(modid, name, tab, rarity, hasEffect, tooltipLines, annotationLines);
-		setMaxStackSize(1);
+		setMaxStackSize(16);
 	}
 
 	@Override

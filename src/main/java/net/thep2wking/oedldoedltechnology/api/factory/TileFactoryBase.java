@@ -36,7 +36,7 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 		}
 	};
 
-	private final EnergyStorageModifiable energyStorage = new EnergyStorageModifiable(100000) {
+	private final EnergyStorageModifiable energyStorage = new EnergyStorageModifiable(TechnologyConfig.PROPERTIES.MACHINE_ENERGY_STORAGE) {
 		@Override
 		public int receiveEnergy(int maxReceive, boolean simulate) {
 			if (!simulate) {

@@ -9,5 +9,8 @@ public class Integration {
 	public static class JER {
 		@Config.Name("Republican Space Ranger Mob Drops")
 		public boolean REPUBLICAN_SPACE_RANGER_MOB_DROPS = true;
+
+		@Config.Name("Crash Site Dungeon Chests")
+		public boolean CRASH_SITE_DUNGEON_CHEST = true;
 	}
 }

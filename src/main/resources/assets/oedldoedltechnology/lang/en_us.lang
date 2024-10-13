@@ -4,9 +4,15 @@ itemGroup.oedldoedltechnology.name=§dOedldoedl Technology
 # icons
 item.oedldoedlcore.technology_icon.annotation3=Version: §e1.12.2-4.2.0
 
+# join message
+join.oedldoedltechnology.message=Welcome to the future!
+
 # jei
 jei.oedldoedltechnology.factory.constructor.category=Constructor
 jei.oedldoedltechnology.factory.assembler.category=Assembler
+
+# jer
+chest.oedldoedltechnology.crash_site.jer=Crash Site
 
 # items
 item.oedldoedltechnology.railgun.name=Railgun
@@ -57,6 +63,56 @@ item.oedldoedltechnology.screw.tip1=One of the most basic parts.
 item.oedldoedltechnology.reinforced_iron_plate.name=Reinforced Iron Plate
 item.oedldoedltechnology.reinforced_iron_plate.tip1=A sturdier and more durable Iron Plate.
 
+item.oedldoedltechnology.cable.name=Cable
+item.oedldoedltechnology.cable.tip1=Primarily used to build power lines.
+item.oedldoedltechnology.wire.name=Wire
+item.oedldoedltechnology.wire.tip1=One of the most basic parts.
+item.oedldoedltechnology.copper_sheet.name=Copper Sheet
+item.oedldoedltechnology.copper_sheet.tip1=Primarily used for pipelines due
+item.oedldoedltechnology.copper_sheet.tip2=to its high corrosion resistance.
+item.oedldoedltechnology.rotor.name=Rotor
+item.oedldoedltechnology.rotor.tip1=The moving parts of a motor.
+item.oedldoedltechnology.modular_frame.name=Modular Frame
+item.oedldoedltechnology.modular_frame.tip1=Multi-purpose building block.
+item.oedldoedltechnology.smart_plating.name=Smart Plating
+item.oedldoedltechnology.smart_plating.tip1=Ship with the Space Elevator to
+item.oedldoedltechnology.smart_plating.tip2=complete phases of Project Assembly.
+item.oedldoedltechnology.steel_beam.name=Steel Beam
+item.oedldoedltechnology.steel_beam.tip1=Steel Beams are used most often when
+item.oedldoedltechnology.steel_beam.tip2=constructing a little more advanced buildings.
+item.oedldoedltechnology.steel_pipe.name=Steel Pipe
+item.oedldoedltechnology.steel_pipe.tip1=Steel Pipes are used most often when
+item.oedldoedltechnology.steel_pipe.tip2=constructing a little more advanced buildings.
+item.oedldoedltechnology.versatile_framework.name=Versatile Framework
+item.oedldoedltechnology.versatile_framework.tip1=Project Part #2. Ship with the Space Elevator
+item.oedldoedltechnology.versatile_framework.tip2=to complete phases of Project Assembly.
+
+item.oedldoedltechnology.automated_wiring.name=Automated Wiring
+item.oedldoedltechnology.automated_wiring.tip1=Project Part #3. Ship with the Space Elevator
+item.oedldoedltechnology.automated_wiring.tip2=to complete phases of Project Assembly.
+item.oedldoedltechnology.encased_industrial_beam.name=Encased Industrial Beam
+item.oedldoedltechnology.encased_industrial_beam.tip1=Encased Industrial Beams utilize the compressive strength
+item.oedldoedltechnology.encased_industrial_beam.tip2=of concrete and tensile strength of steel simultaneously.
+item.oedldoedltechnology.heavy_modular_frame.name=Heavy Modular Frame
+item.oedldoedltechnology.heavy_modular_frame.tip1=A more robust multi-purpose frame.
+item.oedldoedltechnology.motor.name=Motor
+item.oedldoedltechnology.motor.tip1=The Motor creates a mechanical force that is used
+item.oedldoedltechnology.motor.tip2=to move things from machines to vehicles.
+item.oedldoedltechnology.stator.name=Stator
+item.oedldoedltechnology.stator.tip1=Used for crafting.
+item.oedldoedltechnology.stator.tip2=The static parts of a motor.
+
+item.oedldoedltechnology.nobelisk_detonator.name=Nobelisk Detonator
+item.oedldoedltechnology.nobelisk_detonator.tip1=A remote-control device used to 
+item.oedldoedltechnology.nobelisk_detonator.tip2=handle and detonate Nobelisks.
+item.oedldoedltechnology.nobelisk.name=Nobelisk
+item.oedldoedltechnology.nobelisk.tip1=A simple explosive, useful for clearing
+item.oedldoedltechnology.nobelisk.tip2=boulders, vegetation, and other obstacles.
+item.oedldoedltechnology.cluster_nobelisk.name=Cluster Nobelisk
+item.oedldoedltechnology.cluster_nobelisk.tip1=Detonates into multiple smaller explosions.
+item.oedldoedltechnology.cluster_nobelisk.tip2=Practical for clearing out large areas of
+item.oedldoedltechnology.cluster_nobelisk.tip3=vegetation and other inconveniences.
+
 # blocks
 tile.oedldoedltechnology.constructor.name=Constructor
 tile.oedldoedltechnology.constructor.tip1=Crafts one part into another part.
@@ -64,8 +120,18 @@ tile.oedldoedltechnology.constructor.tip1=Crafts one part into another part.
 tile.oedldoedltechnology.assembler.name=Assembler
 tile.oedldoedltechnology.assembler.tip1=Crafts two parts into another part.
 
+tile.oedldoedltechnology.blue_power_slug.name=Blue Power Slug
+tile.oedldoedltechnology.blue_power_slug.tip1=A strange slug radiating a strange power.
+tile.oedldoedltechnology.yellow_power_slug.name=Yellow Power Slug
+tile.oedldoedltechnology.yellow_power_slug.tip1=A strange slug radiating a strange power.
+tile.oedldoedltechnology.purple_power_slug.name=Purple Power Slug
+tile.oedldoedltechnology.purple_power_slug.tip1=A strange slug radiating a strange power.
+
 # entites
 entity.oedldoedltechnology.republican_space_ranger.name=Republican Space Ranger
+entity.oedldoedltechnology.custer_explosion.name=Cluster Explosion
+entity.oedldoedltechnology.normal_nobelisk.name=Nobelisk
+entity.oedldoedltechnology.cluster_nobelisk.name=Cluster Nobelisk
 
 # sounds
 sound.oedldoedltechnology.railgun_shot=Railgun Shot
@@ -73,6 +139,9 @@ sound.oedldoedltechnology.up_n_atomizer_shot=Up-n-Atomizer Shot
 
 sound.oedldoedltechnology.republican_space_ranger_idle=Republican Space Ranger talks
 sound.oedldoedltechnology.republican_space_ranger_death=Republican Space Ranger dies
+
+sound.oedldoedltechnology.detonate=Nobelisk detonator detonates
+sound.oedldoedltechnology.nobelisk_impact=Nobelisk impacts
 
 # tooltips
 key.oedldoedltechnology.weapon=§7Hold §b§oCtrl§r§7 for Weapon Info

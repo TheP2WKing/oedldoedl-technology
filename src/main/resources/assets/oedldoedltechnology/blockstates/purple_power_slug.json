@@ -1,0 +1,39 @@
+{
+    "variants": {
+        "normal": {
+            "model": "oedldoedltechnology:purple_power_slug",
+            "x": 0,
+            "y": 0
+        },
+        "facing=north": {
+            "model": "oedldoedltechnology:purple_power_slug",
+            "x": 270,
+            "y": 180
+        },
+        "facing=south": {
+            "model": "oedldoedltechnology:purple_power_slug",
+            "x": 270,
+            "y": 0
+        },
+        "facing=west": {
+            "model": "oedldoedltechnology:purple_power_slug",
+            "x": 270,
+            "y": 90
+        },
+        "facing=east": {
+            "model": "oedldoedltechnology:purple_power_slug",
+            "x": 270,
+            "y": 270
+        },
+        "facing=up": {
+            "model": "oedldoedltechnology:purple_power_slug",
+            "x": 0,
+            "y": 0
+        },
+        "facing=down": {
+            "model": "oedldoedltechnology:purple_power_slug",
+            "x": 180,
+            "y": 180
+        }
+    }
+}

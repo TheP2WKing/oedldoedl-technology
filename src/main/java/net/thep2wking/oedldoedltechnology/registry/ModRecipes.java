@@ -2,6 +2,7 @@ package net.thep2wking.oedldoedltechnology.registry;
 
 import matteroverdrive.MatterOverdrive;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.thep2wking.oedldoedlcore.util.ModLogger;
 import net.thep2wking.oedldoedlcore.util.ModRecipeHelper;
@@ -41,7 +42,35 @@ public class ModRecipes {
 			ModRecipeHelper.addOreDict("superconductorMagnet", MatterOverdrive.ITEMS.s_magnet, 0);
 			ModRecipeHelper.addOreDict("forcefieldEmitter", MatterOverdrive.ITEMS.forceFieldEmitter, 0);
 			ModRecipeHelper.addOreDict("matterContainer", MatterOverdrive.ITEMS.matterContainer, 0);
+
+			ModRecipeHelper.addOreDict("powerShard", ModItems.POWER_SHARD, 0);
+			
+			ModRecipeHelper.addOreDict("ingotSteel", ModItems.ALIEN_EGG, 0);
+
+			addProjectPartOreDict("ironPlate", ModItems.IRON_PLATE);
+			addProjectPartOreDict("ironRod", ModItems.IRON_ROD);
+			addProjectPartOreDict("screw", ModItems.SCREW);
+			addProjectPartOreDict("reinforcedIronPlate", ModItems.REINFORCED_IRON_PLATE);
+			addProjectPartOreDict("wire", ModItems.WIRE);
+			addProjectPartOreDict("cable", ModItems.CABLE);
+			addProjectPartOreDict("copperSheet", ModItems.COPPER_SHEET);
+			addProjectPartOreDict("modularFrame", ModItems.MODULAR_FRAME);
+			addProjectPartOreDict("rotor", ModItems.ROTOR);
+			addProjectPartOreDict("smartPlating", ModItems.SMART_PLATING);
+			addProjectPartOreDict("steelBeam", ModItems.STEEL_BEAM);
+			addProjectPartOreDict("steelPipe", ModItems.STEEL_PIPE);
+			addProjectPartOreDict("versatileFramework", ModItems.VERSATILE_FRAMEWORK);
+			addProjectPartOreDict("automatedWiring", ModItems.AUTOMATED_WIRING);
+			addProjectPartOreDict("encasedIndustrialBeam", ModItems.ENCASED_INDUSTRIAL_BEAM);
+			addProjectPartOreDict("heavyModularFrame", ModItems.HEAVY_MODULAR_FRAME);
+			addProjectPartOreDict("motor", ModItems.MOTOR);
+			addProjectPartOreDict("stator", ModItems.STATOR);
 		}
+	}
+
+	public static void addProjectPartOreDict(String name, Item item) {
+		ModRecipeHelper.addOreDict("projectPart", item, 0);
+		ModRecipeHelper.addOreDict("projectPart" + Character.toUpperCase(name.charAt(0)) + name.substring(1), item, 0);
 	}
 
 	public static void registerRecipes() {

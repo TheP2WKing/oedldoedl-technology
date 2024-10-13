@@ -44,5 +44,19 @@
         "sounds": [
             "oedldoedltechnology:republican_space_ranger_death"
         ]
+    },
+    "detonate": {
+        "category": "ambient",
+        "subtitle": "sound.oedldoedltechnology.detonate",
+        "sounds": [
+            "oedldoedltechnology:detonate"
+        ]
+    },
+    "nobelisk_impact": {
+        "category": "ambient",
+        "subtitle": "sound.oedldoedltechnology.nobelisk_impact",
+        "sounds": [
+            "oedldoedltechnology:nobelisk_impact"
+        ]
     }
 }
