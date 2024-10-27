@@ -5,10 +5,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.thep2wking.oedldoedlcore.api.integration.ModJERPluginBase;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.init.ModItems;
-import net.thep2wking.oedldoedltechnology.integration.jer.OedldoedlTechnologyJERPlugin;
 import net.thep2wking.oedldoedltechnology.util.handler.ModClientWeaponHandler;
 import net.thep2wking.oedldoedltechnology.util.handler.ModCommonWeaponHandler;
 import net.thep2wking.oedldoedltechnology.util.handler.ModTickHandler;
@@ -40,7 +38,6 @@ public class ClientProxy extends CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
-		ModJERPluginBase.registerPlugin(new OedldoedlTechnologyJERPlugin());
 		renderHandler.init(Minecraft.getMinecraft().world, Minecraft.getMinecraft().getTextureManager());
 		MinecraftForge.EVENT_BUS.register(renderHandler);
 		MinecraftForge.EVENT_BUS.register(new ModTickHandler());

@@ -1,12 +1,14 @@
 package net.thep2wking.oedldoedltechnology.integration.jer;
 
 import jeresources.api.conditionals.LightLevel;
+import net.thep2wking.oedldoedlcore.api.integration.JERPlugin;
 import net.thep2wking.oedldoedlcore.api.integration.ModJERPluginBase;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.config.TechnologyConfig;
 import net.thep2wking.oedldoedltechnology.entity.living.EntityRepublicanSpaceRanger;
 import net.thep2wking.oedldoedltechnology.init.ModLootTables;
 
+@JERPlugin
 public class OedldoedlTechnologyJERPlugin extends ModJERPluginBase {
 	@Override
 	public String getModId() {
