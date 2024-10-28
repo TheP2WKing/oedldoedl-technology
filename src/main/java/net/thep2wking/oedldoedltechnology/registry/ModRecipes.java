@@ -44,8 +44,6 @@ public class ModRecipes {
 			ModRecipeHelper.addOreDict("matterContainer", MatterOverdrive.ITEMS.matterContainer, 0);
 
 			ModRecipeHelper.addOreDict("powerShard", ModItems.POWER_SHARD, 0);
-			
-			ModRecipeHelper.addOreDict("ingotSteel", ModItems.ALIEN_EGG, 0);
 
 			addProjectPartOreDict("ironPlate", ModItems.IRON_PLATE);
 			addProjectPartOreDict("ironRod", ModItems.IRON_ROD);
