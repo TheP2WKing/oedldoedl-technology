@@ -99,7 +99,6 @@ public abstract class ModEntityNobeliskBase extends EntityThrowable {
 		this.setRotY(this.ticksExisted * 5 % 360);
 		this.setRotZ(this.ticksExisted * 5 % 360);
 		this.world.setEntityState(this, (byte) 3);
-		this.setVelocity(0, 0, 0);
 		this.markVelocityChanged();
 	}
 
