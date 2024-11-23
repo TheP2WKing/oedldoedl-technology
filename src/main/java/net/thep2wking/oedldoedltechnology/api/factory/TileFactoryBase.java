@@ -16,6 +16,7 @@ import net.thep2wking.oedldoedltechnology.api.ModTileEntityBase;
 import net.thep2wking.oedldoedltechnology.api.factory.handler.DefaultItemHandler;
 import net.thep2wking.oedldoedltechnology.api.factory.handler.EnergyStorageModifiable;
 import net.thep2wking.oedldoedltechnology.api.factory.handler.ItemHandlerAutomation;
+import net.thep2wking.oedldoedltechnology.api.factory.handler.SomersloopItemHandler;
 import net.thep2wking.oedldoedltechnology.api.factory.handler.SubItemHandler;
 import net.thep2wking.oedldoedltechnology.api.factory.handler.UpgradeItemHandler;
 import net.thep2wking.oedldoedltechnology.config.TechnologyConfig;
@@ -24,7 +25,7 @@ import net.thep2wking.oedldoedltechnology.content.item.ItemPowerShard;
 public abstract class TileFactoryBase extends ModTileEntityBase {
 	private static final int UPDATE_INTERVAL = 5;
 
-	public final DefaultItemHandler itemHandler = new DefaultItemHandler(this, getNumberOfSlots() + 3) {
+	public final DefaultItemHandler itemHandler = new DefaultItemHandler(this, getNumberOfSlots() + 3 + 1) {
 		@Override
 		public boolean isItemValid(int slot, ItemStack itemStack) {
 			return validteInputSlot(slot, itemStack);
@@ -36,7 +37,8 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 		}
 	};
 
-	private final EnergyStorageModifiable energyStorage = new EnergyStorageModifiable(TechnologyConfig.PROPERTIES.MACHINE_ENERGY_STORAGE) {
+	private final EnergyStorageModifiable energyStorage = new EnergyStorageModifiable(
+			TechnologyConfig.PROPERTIES.FACTORY_ENERGY_STORAGE) {
 		@Override
 		public int receiveEnergy(int maxReceive, boolean simulate) {
 			if (!simulate) {
@@ -49,8 +51,10 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 	public final SubItemHandler inputSlots = new SubItemHandler(itemHandler, 0, calculateInputSlotDistribution());
 	public final SubItemHandler outputSlots = new SubItemHandler(itemHandler, calculateInputSlotDistribution(),
 			calculateOutputSlotDistribution());
-	public final SubItemHandler powerShardSlots = new UpgradeItemHandler(itemHandler,
-			calculateOutputSlotDistribution(), calculateUpgradeSlotDistribution());
+	public final SubItemHandler powerShardSlots = new UpgradeItemHandler(itemHandler, calculateOutputSlotDistribution(),
+			calculateUpgradeSlotDistribution());
+	public final SubItemHandler somersloopSlots = new SomersloopItemHandler(itemHandler,
+			calculateUpgradeSlotDistribution(), calculateSomersloopSlotDistribution());
 
 	private final ItemHandlerAutomation itemHandlerAutomation = new ItemHandlerAutomation(itemHandler) {
 		@Override
@@ -71,6 +75,8 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 	public abstract int getNumberOfInputs();
 
 	public abstract int getNumberOfOutputs();
+
+	public abstract int getRequiredSomersloops();
 
 	public int calculateInputSlotDistribution() {
 		if (getNumberOfInputs() == 1) {
@@ -98,6 +104,10 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 
 	public int calculateUpgradeSlotDistribution() {
 		return 3 + calculateOutputSlotDistribution();
+	}
+
+	public int calculateSomersloopSlotDistribution() {
+		return 1 + calculateUpgradeSlotDistribution();
 	}
 
 	public boolean validteInputSlot(int slot, ItemStack itemStack) {
@@ -191,6 +201,7 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 
 	public boolean addItemToOutput(ItemStack itemStack) {
 		int firstEmptySlot = -1;
+		int modifiedCount = itemStack.getCount() * (hasSomersloopMultiplier() ? getSomersloopMultiplier() : 1);
 		for (int i = 0; i < outputSlots.getSlots(); i++) {
 			ItemStack slotStack = outputSlots.getStackInSlot(i);
 			if (slotStack.isEmpty()) {
@@ -198,22 +209,40 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 					firstEmptySlot = i;
 				}
 			} else {
-				if (slotStack.getCount() + itemStack.getCount() <= slotStack.getMaxStackSize()
+				if (slotStack.getCount() + modifiedCount <= slotStack.getMaxStackSize()
 						&& slotStack.isItemEqual(itemStack) && ItemStack.areItemStackTagsEqual(slotStack, itemStack)) {
-					slotStack.grow(itemStack.getCount());
+					slotStack.grow(modifiedCount);
 					return true;
 				}
 			}
 		}
 		if (firstEmptySlot != -1) {
-			outputSlots.setStackInSlot(firstEmptySlot, itemStack);
+			ItemStack modfiiedStack = itemStack;
+			modfiiedStack.setCount(modifiedCount);
+			outputSlots.setStackInSlot(firstEmptySlot, modfiiedStack);
 			return true;
 		}
 		return false;
 	}
 
 	public int getEffectiveEnergy() {
-		return (int) (getEnergyUsage() + (getEnergyUsage() * getEnergyUpgradeMultiplier()));
+		return (int) ((getEnergyUsage() + (getEnergyUsage() * getEnergyUpgradeMultiplier()))
+				* getSomerloopEnergyMultiplier());
+	}
+
+	public int getSomerloopEnergyMultiplier() {
+		if (hasSomersloopMultiplier()) {
+			return TechnologyConfig.CONTENT.FACTORY.SOMERSLOOP_OUTPUT_MULTIPLIER; // getRequiredSomersloops() + 1
+		}
+		return 1;
+	}
+
+	public boolean hasSomersloopMultiplier() {
+		return somersloopSlots.getStackInSlot(0).getCount() == getRequiredSomersloops();
+	}
+
+	public int getSomersloopMultiplier() {
+		return TechnologyConfig.CONTENT.FACTORY.SOMERSLOOP_OUTPUT_MULTIPLIER;
 	}
 
 	public abstract int getEnergyUsage();
@@ -234,6 +263,7 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 			powerShardSlots.setStackInSlot(0, new ItemStack(tagCompound.getCompoundTag("PowerShardSlot1")));
 			powerShardSlots.setStackInSlot(1, new ItemStack(tagCompound.getCompoundTag("PowerShardSlot2")));
 			powerShardSlots.setStackInSlot(2, new ItemStack(tagCompound.getCompoundTag("PowerShardSlot3")));
+			somersloopSlots.setStackInSlot(0, new ItemStack(tagCompound.getCompoundTag("SomersloopSlot1")));
 		} else {
 			itemHandler.deserializeNBT(tagCompound.getCompoundTag("ItemHandler"));
 		}
@@ -247,6 +277,7 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 		powerShardSlots.setStackInSlot(0, new ItemStack(tagCompound.getCompoundTag("PowerShardSlot1")));
 		powerShardSlots.setStackInSlot(1, new ItemStack(tagCompound.getCompoundTag("PowerShardSlot2")));
 		powerShardSlots.setStackInSlot(2, new ItemStack(tagCompound.getCompoundTag("PowerShardSlot3")));
+		somersloopSlots.setStackInSlot(0, new ItemStack(tagCompound.getCompoundTag("SomersloopSlot1")));
 	}
 
 	@Override
@@ -267,6 +298,8 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 			tagCompound.setTag("PowerShardSlot2", upgradeSpeedStack2.writeToNBT(new NBTTagCompound()));
 			ItemStack upgradeSpeedStack3 = powerShardSlots.getStackInSlot(2);
 			tagCompound.setTag("PowerShardSlot3", upgradeSpeedStack3.writeToNBT(new NBTTagCompound()));
+			ItemStack somersloopStack = somersloopSlots.getStackInSlot(0);
+			tagCompound.setTag("SomersloopSlot1", somersloopStack.writeToNBT(new NBTTagCompound()));
 		} else {
 			tagCompound.setTag("ItemHandler", itemHandler.serializeNBT());
 		}
@@ -284,6 +317,8 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 		tagCompound.setTag("PowerShardSlot2", upgradeSpeedStack2.writeToNBT(new NBTTagCompound()));
 		ItemStack upgradeSpeedStack3 = powerShardSlots.getStackInSlot(2);
 		tagCompound.setTag("PowerShardSlot3", upgradeSpeedStack3.writeToNBT(new NBTTagCompound()));
+		ItemStack somersloopStack = somersloopSlots.getStackInSlot(0);
+		tagCompound.setTag("SomersloopSlot1", somersloopStack.writeToNBT(new NBTTagCompound()));
 	}
 
 	public float getEnergyPercentage() {
@@ -312,6 +347,11 @@ public abstract class TileFactoryBase extends ModTileEntityBase {
 		ItemStack stack2 = powerShardSlots.getStackInSlot(2);
 		int count = stack.getCount() + stack1.getCount() + stack2.getCount();
 		return count;
+	}
+
+	public int getSomerloopCount() {
+		ItemStack stack = somersloopSlots.getStackInSlot(0);
+		return stack.getCount();
 	}
 
 	public float getEnergyUpgradeMultiplier() {

@@ -124,8 +124,12 @@ public class Content {
 
 	public static class Factory {
 		@Config.Name("Power Shard Speed And Power Increase")
-		@Config.RangeInt(min = 0, max = 10)
+		@Config.RangeDouble(min = 0, max = 10)
 		public double POWER_SHARD_SPEED_AND_POWER_INCREASE = 0.5;
+
+		@Config.Name("Somersloop Output Multiplier")
+		@Config.RangeInt(min = 0, max = 4)
+		public int SOMERSLOOP_OUTPUT_MULTIPLIER = 2;
 
 		@Config.Name("constructor")
 		public final Constructor CONSTRUCTOR = new Constructor();

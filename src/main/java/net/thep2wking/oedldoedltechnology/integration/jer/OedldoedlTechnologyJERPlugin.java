@@ -25,7 +25,7 @@ public class OedldoedlTechnologyJERPlugin extends ModJERPluginBase {
 		}
 
 		if (TechnologyConfig.INTEGRATION.JER.CRASH_SITE_DUNGEON_CHEST
-				&& TechnologyConfig.WORLD.CRASH_SITE_STRUCTURE_GENERATION) {
+				&& TechnologyConfig.WORLD.CRASH_SITE_STRUCTURE) {
 			addDungeonLoot("crash_site", ModLootTables.CRASH_SITE);
 		}
 	}

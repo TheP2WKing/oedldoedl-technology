@@ -19,18 +19,12 @@ public class RenderTilePowerSlug extends TileEntitySpecialRenderer<TilePowerSlug
     public void render(TilePowerSlug te, double x, double y, double z, float partialTicks, int destroyStage,
             float alpha) {
         GlStateManager.pushMatrix();
-
-        // Translate to the correct position
         GlStateManager.translate(x, y, z);
-
-        // Get the facing direction of the block
         EnumFacing facing = te.getWorld().getBlockState(te.getPos()).getValue(BlockPowerSlug.FACING);
-
-        // Get the color of the block
         ModPowerSlugColor color = te.getColor();
-        ResourceLocation TEXTURE = new ResourceLocation("oedldoedltechnology:textures/blocks/" + color + "_power_slug.png");
+        ResourceLocation TEXTURE = new ResourceLocation(
+                "oedldoedltechnology:textures/blocks/" + color + "_power_slug.png");
 
-        // Apply transformations based on the facing direction
         switch (facing) {
             case UP:
                 GlStateManager.translate(0.5F, 1.5F, 0.5F);
@@ -56,15 +50,9 @@ public class RenderTilePowerSlug extends TileEntitySpecialRenderer<TilePowerSlug
                 GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
                 break;
         }
-
-        // Apply rotation based on tile entity's rotation
         GlStateManager.rotate(te.getRotation(), 0.0F, 1.0F, 0.0F);
-
-        // Bind the texture and render the model
         this.bindTexture(TEXTURE);
         this.MODEL.render(null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
-
-        // Pop the matrix to reset transformations
         GlStateManager.popMatrix();
     }
 }

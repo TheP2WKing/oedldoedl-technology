@@ -26,6 +26,7 @@ import net.thep2wking.oedldoedlcore.integration.top.ITOPInfoProvider;
 import net.thep2wking.oedldoedlcore.util.ModToolTypes;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.api.ModBlockContainerBase;
+import net.thep2wking.oedldoedltechnology.config.TechnologyConfig;
 
 public abstract class BlockFactoryBase extends ModBlockContainerBase implements ITOPInfoProvider {
 	public BlockFactoryBase(String modid, String name, CreativeTabs tab, Material material, SoundType sound,
@@ -159,7 +160,7 @@ public abstract class BlockFactoryBase extends ModBlockContainerBase implements 
 	public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world,
 			IBlockState blockState, IProbeHitData data) {
 		TileFactoryBase tile = (TileFactoryBase) world.getTileEntity(data.getPos());
-		if (tile == null)
+		if (tile == null || !TechnologyConfig.INTEGRATION.THEONEPROBE.FACTORY_INFORMATION)
 			return;
 
 		if (tile.isDisabledByRedstone()) {
@@ -168,23 +169,33 @@ public abstract class BlockFactoryBase extends ModBlockContainerBase implements 
 		}
 
 		if (!tile.isDisabledByRedstone()) {
+			int color = tile.hasSomersloopMultiplier() ? 0xff9c6da0 : 0xffda943b;
+			TextFormatting colorText = TextFormatting.WHITE;
 			probeInfo.progress(Math.round(tile.getProgress() * 100), 100,
 					probeInfo.defaultProgressStyle()
 							.suffix("%")
-							.filledColor(0xffda943b)
-							.alternateFilledColor(0xffda943b)); // 0xffba7026
+							.filledColor(color)
+							.alternateFilledColor(color));
 
-			if (player.isSneaking()) {
-				probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffda943b).spacing(2))
+			if (player.isSneaking() || TechnologyConfig.INTEGRATION.THEONEPROBE.FACTORY_INFORMATION_EXPANDED_BY_DEFAULT) {
+				probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(color).spacing(2))
 						.text(TextFormatting.WHITE + "{*top." + OedldoedlTechnology.MODID + ".energy*}" + " "
 								+ TextFormatting.RED + tile.getEffectiveEnergy() + " FE")
 						.text(TextFormatting.WHITE + "{*top." + OedldoedlTechnology.MODID + ".speed*}" + " "
 								+ TextFormatting.YELLOW + String.format("%.1f", tile.getShardPercentage() * 100) + "%")
+						.text(TextFormatting.WHITE + "{*top." + OedldoedlTechnology.MODID + ".multiplier*}" + " "
+								+ TextFormatting.YELLOW + "x"
+								+ (tile.hasSomersloopMultiplier()
+										? TechnologyConfig.CONTENT.FACTORY.SOMERSLOOP_OUTPUT_MULTIPLIER
+										: 1))
 						.text(TextFormatting.WHITE + "{*top." + OedldoedlTechnology.MODID + ".upgrades*}" + " "
-								+ TextFormatting.GOLD + tile.getShardCount() + " / 3");
+								+ TextFormatting.GOLD + tile.getShardCount() + " / 3")
+						.text(TextFormatting.WHITE + "{*top." + OedldoedlTechnology.MODID + ".somersloop*}" + " "
+								+ TextFormatting.LIGHT_PURPLE + tile.getSomerloopCount() + " / "
+								+ tile.getRequiredSomersloops());
 			} else {
-				probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(0xffda943b).spacing(-1))
-						.text(TextFormatting.GOLD + " ... ");
+				probeInfo.vertical(probeInfo.defaultLayoutStyle().borderColor(color).spacing(-1))
+						.text(colorText + " ... ");
 			}
 		}
 	}

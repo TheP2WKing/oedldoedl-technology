@@ -9,6 +9,7 @@ import net.thep2wking.oedldoedlcore.util.ModRecipeHelper;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.api.ModMatterOverdriveHelper;
 import net.thep2wking.oedldoedltechnology.config.TechnologyConfig;
+import net.thep2wking.oedldoedltechnology.init.ModBlocks;
 import net.thep2wking.oedldoedltechnology.init.ModItems;
 
 public class ModRecipes {
@@ -16,6 +17,13 @@ public class ModRecipes {
 		ModLogger.registeredOreDictLogger(OedldoedlTechnology.MODID);
 
 		if (TechnologyConfig.RECIPES.DEFAULT_OREDICT) {
+			ModRecipeHelper.addOreDict("powerSlug", ModBlocks.BLUE_POWER_SLUG, 0);
+			ModRecipeHelper.addOreDict("powerSlugBlue", ModBlocks.BLUE_POWER_SLUG, 0);
+			ModRecipeHelper.addOreDict("powerSlug", ModBlocks.YELLOW_POWER_SLUG, 0);
+			ModRecipeHelper.addOreDict("powerSlugYellow", ModBlocks.YELLOW_POWER_SLUG, 0);
+			ModRecipeHelper.addOreDict("powerSlug", ModBlocks.PURPLE_POWER_SLUG, 0);
+			ModRecipeHelper.addOreDict("powerSlugPurple", ModBlocks.PURPLE_POWER_SLUG, 0);
+
 			ModRecipeHelper.addOreDict("isolinearCircuitOedldoedl", ModItems.OEDLDOEDL_ISOLINEAR_CIRCUIT, 0);
 
 			ModRecipeHelper.addOreDict("receiverRailgun", ModItems.RAILGUN_RECEIVER, 0);
@@ -44,6 +52,12 @@ public class ModRecipes {
 			ModRecipeHelper.addOreDict("matterContainer", MatterOverdrive.ITEMS.matterContainer, 0);
 
 			ModRecipeHelper.addOreDict("powerShard", ModItems.POWER_SHARD, 0);
+			ModRecipeHelper.addOreDict("somersloop", ModItems.SOMERSLOOP, 0);
+
+			ModRecipeHelper.addOreDict("nobelisk", ModItems.NORMAL_NOBELISK, 0);
+			ModRecipeHelper.addOreDict("nobeliskNormal", ModItems.NORMAL_NOBELISK, 0);
+			ModRecipeHelper.addOreDict("nobelisk", ModItems.CLUSTER_NOBELISK, 0);
+			ModRecipeHelper.addOreDict("nobeliskCluster", ModItems.CLUSTER_NOBELISK, 0);
 
 			addProjectPartOreDict("ironPlate", ModItems.IRON_PLATE);
 			addProjectPartOreDict("ironRod", ModItems.IRON_ROD);
@@ -61,8 +75,8 @@ public class ModRecipes {
 			addProjectPartOreDict("automatedWiring", ModItems.AUTOMATED_WIRING);
 			addProjectPartOreDict("encasedIndustrialBeam", ModItems.ENCASED_INDUSTRIAL_BEAM);
 			addProjectPartOreDict("heavyModularFrame", ModItems.HEAVY_MODULAR_FRAME);
-			addProjectPartOreDict("motor", ModItems.MOTOR);
-			addProjectPartOreDict("stator", ModItems.STATOR);
+			// addProjectPartOreDict("motor", ModItems.MOTOR);
+			// addProjectPartOreDict("stator", ModItems.STATOR);
 		}
 	}
 
@@ -107,9 +121,35 @@ public class ModRecipes {
 					new ItemStack(ModItems.UP_N_ATOMIZER_RECEIVER, 1, 0), "ABC", "DEF", "AAC", 'A', "ingotTritanium",
 					'B', "gemDilithium", 'C', "plateTritanium", 'D', "obsidian", 'E', "isolinearCircuitMk3", 'F',
 					"dyeBlue");
-			ModRecipeHelper.addShapedRecipe(OedldoedlTechnology.MODID, "shickwave_emitter",
+			ModRecipeHelper.addShapedRecipe(OedldoedlTechnology.MODID, "shockwave_emitter",
 					new ItemStack(ModItems.SOCKWAVE_EMITTER, 1, 0), "ABA", "CDC", "ABA", 'A', "dustGlowstone", 'B',
 					"glowstone", 'C', "superconductorMagnet", 'D', "forcefieldEmitter");
+
+			ModRecipeHelper.addShapedRecipe(OedldoedlTechnology.MODID, "nobelisk_detonator",
+					new ItemStack(ModItems.NOBELISK_DETONATOR, 1, 0), "ABA", "CDC", "EDE", 'A', "projectPartScrew", 'B',
+					"dyeYellow", 'C', "projectPartReinforcedIronPlate", 'D', "projectPartCable", 'E',
+					"projectPartSteelBeam");
+
+			ModRecipeHelper.addShapedRecipe(OedldoedlTechnology.MODID, "normal_nobelisk",
+					new ItemStack(ModItems.NORMAL_NOBELISK, 1, 0), "ABC", "DCB", "CDA", 'A', "gemCoal", 'B',
+					"dustSulfur", 'C', "projectPartSteelPipe", 'D', "dustGunpowder");
+			ModRecipeHelper.addShapedRecipe(OedldoedlTechnology.MODID, "cluster_nobelisk",
+					new ItemStack(ModItems.CLUSTER_NOBELISK, 1, 0), "ABC", "BCB", "CBA", 'A', "dustSulfur", 'B',
+					"dustGunpowder", 'C', "nobeliskNormal");
+
+			ModRecipeHelper.addShapelessRecipe(OedldoedlTechnology.MODID, "power_shard_from_blue_power_slug",
+					new ItemStack(ModItems.POWER_SHARD, 1, 0), "powerSlugBlue");
+			ModRecipeHelper.addShapelessRecipe(OedldoedlTechnology.MODID, "power_shard_from_yellow_power_slug",
+					new ItemStack(ModItems.POWER_SHARD, 2, 0), "powerSlugYellow");
+			ModRecipeHelper.addShapelessRecipe(OedldoedlTechnology.MODID, "power_shard_from_purple_power_slug",
+					new ItemStack(ModItems.POWER_SHARD, 5, 0), "powerSlugPurple");
+
+			ModRecipeHelper.addShapedRecipe(OedldoedlTechnology.MODID, "constructor",
+					new ItemStack(ModBlocks.CONSTRUCTOR, 1, 0), "ABA", "AAA", "ABA", 'A', "projectPartCable", 'B',
+					"projectPartReinforcedIronPlate");
+			ModRecipeHelper.addShapedRecipe(OedldoedlTechnology.MODID, "assembler",
+					new ItemStack(ModBlocks.ASSEMBLER, 1, 0), "ABA", "CBC", "ABA", 'A', "projectPartCable", 'B',
+					"projectPartReinforcedIronPlate", 'C', "projectPartRotor");
 		}
 
 		if (TechnologyConfig.RECIPES.DEFAULT_INSCRIBER_RECIPES) {

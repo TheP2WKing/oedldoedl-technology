@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class AssemblerRecipeRegistry {
 	private static final List<AssemblerRecipe> customRecipeList = new ArrayList<>();
@@ -33,6 +34,37 @@ public class AssemblerRecipeRegistry {
 
 	public static void registerRecipe(AssemblerRecipe recipe) {
 		customRecipeList.add(recipe);
+	}
+
+	public static void registerOreDictRecipe(ItemStack output, String inputOreDict1, int count1, String inputOreDict2,
+			int count2, int time) {
+		List<ItemStack> inputs1 = OreDictionary.getOres(inputOreDict1);
+		List<ItemStack> inputs2 = OreDictionary.getOres(inputOreDict2);
+		for (ItemStack input1 : inputs1) {
+			for (ItemStack input2 : inputs2) {
+				customRecipeList.add(new AssemblerRecipe(new ItemStack(input1.getItem(),
+						count1, input1.getMetadata()),
+						new ItemStack(input2.getItem(), count2, input2.getMetadata()), output,
+						time));
+			}
+		}
+	}
+
+	public static void registerOreDictRecipe(ItemStack output, ItemStack input1, String inputOreDict2, int count2,
+			int time) {
+		for (ItemStack inputs : OreDictionary.getOres(inputOreDict2)) {
+			customRecipeList.add(new AssemblerRecipe(input1,
+					new ItemStack(inputs.getItem(), count2, inputs.getMetadata()), output, time));
+		}
+	}
+
+	public static void registerOreDictRecipe(ItemStack output, String inputOreDict1, int count1, ItemStack input2,
+			int time) {
+		for (ItemStack inputs : OreDictionary.getOres(inputOreDict1)) {
+			customRecipeList
+					.add(new AssemblerRecipe(new ItemStack(inputs.getItem(), count1, inputs.getMetadata()), input2,
+							output, time));
+		}
 	}
 
 	public static void removeRecipe(ItemStack output) {

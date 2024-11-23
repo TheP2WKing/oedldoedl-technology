@@ -62,8 +62,6 @@ public class OedldoedlTechnology {
         ModEntities.registerEntities();
         ModRegistry.registerTiles();
         NetworkRegistry.INSTANCE.registerGuiHandler(OedldoedlTechnology.INSTANCE, new GuiHandler());
-        ModConstructorRecipes.register();
-        ModAssemblerRecipes.register();
         NETWORK.registerPackets();
         PROXY.preInit(event);
     }
@@ -73,6 +71,8 @@ public class OedldoedlTechnology {
         ModLogger.initLogger(MODID);
         ModRecipes.registerOreDict();
         ModRecipes.registerRecipes();
+        ModConstructorRecipes.register();
+        ModAssemblerRecipes.register();
         ModStructureGen.registerWorldGenerators();
         ModRegistry.registerLootTables();
         WEAPON_FACTORY.initModules();

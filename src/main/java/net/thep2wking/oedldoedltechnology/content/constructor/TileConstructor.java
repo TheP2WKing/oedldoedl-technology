@@ -48,9 +48,12 @@ public class TileConstructor extends TileFactoryBase {
 					for (int i = 0; i < outputSlots.getSlots(); i++) {
 						ItemStack outputStack = outputSlots.getStackInSlot(i);
 						ItemStack recipeOutput = getRecipeOutput(inputStack1);
+						int recipeOutputCount = hasSomersloopMultiplier()
+								? recipeOutput.getCount() * getSomersloopMultiplier()
+								: recipeOutput.getCount();
 						if (outputStack.isEmpty() || (outputStack.isItemEqual(recipeOutput)
 								&& outputStack.getCount() < outputStack.getMaxStackSize()
-								&& outputStack.getMaxStackSize() - outputStack.getCount() >= recipeOutput.getCount())) {
+								&& outputStack.getMaxStackSize() - outputStack.getCount() >= recipeOutputCount)) {
 							foundSpace = true;
 						}
 					}
@@ -175,6 +178,11 @@ public class TileConstructor extends TileFactoryBase {
 	@Override
 	public int getEnergyUsage() {
 		return 40;
+	}
+
+	@Override
+	public int getRequiredSomersloops() {
+		return 1;
 	}
 
 	public ItemStack work(ItemStack itemStack) {

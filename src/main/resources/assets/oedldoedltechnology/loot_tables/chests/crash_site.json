@@ -34,6 +34,20 @@
         },
         {
           "type": "item",
+          "name": "oedldoedltechnology:heavy_modular_frame",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "set_count",
+              "count": {
+                "min": 0,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "item",
           "name": "oedldoedltechnology:copper_sheet",
           "weight": 4,
           "functions": [
@@ -104,6 +118,20 @@
         },
         {
           "type": "item",
+          "name": "oedldoedltechnology:rotor",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "set_count",
+              "count": {
+                "min": 1,
+                "max": 5
+              }
+            }
+          ]
+        },
+        {
+          "type": "item",
           "name": "oedldoedltechnology:power_shard",
           "weight": 3,
           "functions": [
@@ -112,6 +140,20 @@
               "count": {
                 "min": 0,
                 "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "item",
+          "name": "oedldoedltechnology:somersloop",
+          "weight": 1,
+          "functions": [
+            {
+              "function": "set_count",
+              "count": {
+                "min": 0,
+                "max": 1
               }
             }
           ]

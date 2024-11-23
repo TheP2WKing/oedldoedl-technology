@@ -71,6 +71,7 @@ public class ModRegistry {
 		ModRegistryHelper.registerItem(event, ModItems.IPHONE_14_PRO_MAX);
 
 		ModRegistryHelper.registerItem(event, ModItems.POWER_SHARD);
+		ModRegistryHelper.registerItem(event, ModItems.SOMERSLOOP);
 		
 		ModRegistryHelper.registerItem(event, ModItems.IRON_PLATE);
 		ModRegistryHelper.registerItem(event, ModItems.IRON_ROD);
@@ -91,8 +92,8 @@ public class ModRegistry {
 		ModRegistryHelper.registerItem(event, ModItems.AUTOMATED_WIRING);
 		ModRegistryHelper.registerItem(event, ModItems.ENCASED_INDUSTRIAL_BEAM);
 		ModRegistryHelper.registerItem(event, ModItems.HEAVY_MODULAR_FRAME);
-		ModRegistryHelper.registerItem(event, ModItems.MOTOR);
-		ModRegistryHelper.registerItem(event, ModItems.STATOR);
+		// ModRegistryHelper.registerItem(event, ModItems.MOTOR);
+		// ModRegistryHelper.registerItem(event, ModItems.STATOR);
 
 		ModRegistryHelper.registerItem(event, ModItems.NOBELISK_DETONATOR);
 		ModRegistryHelper.registerItem(event, ModItems.NORMAL_NOBELISK);

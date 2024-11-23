@@ -2,6 +2,7 @@ package net.thep2wking.oedldoedltechnology.util.model;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
 
 public class ModelPowerSlug  extends ModelBase {
@@ -70,7 +71,6 @@ public class ModelPowerSlug  extends ModelBase {
 		layer6 = new ModelRenderer(this);
 		layer6.setRotationPoint(0, 16, 0);
 		
-
 		cube_r1 = new ModelRenderer(this);
 		cube_r1.setRotationPoint(2, 6, -1);
 		layer6.addChild(cube_r1);
@@ -78,13 +78,13 @@ public class ModelPowerSlug  extends ModelBase {
 		cube_r1.setTextureOffset(38, 5).addBox(-2.5F, 0, -6.4F, 1, 1, 4);
 
 		cube_r2 = new ModelRenderer(this);
-		cube_r2.setRotationPoint(-1, 7, -1);
+		cube_r2.setRotationPoint(-1, 6.999F, -1);
 		layer6.addChild(cube_r2);
 		setRotationAngle(cube_r2, 0, 0.3927F, 0);
 		cube_r2.setTextureOffset(20, 3).addBox(2, 0, -6, 1, 1, 1);
 
 		cube_r3 = new ModelRenderer(this);
-		cube_r3.setRotationPoint(1, 7, -1);
+		cube_r3.setRotationPoint(1, 6.999F, -1);
 		layer6.addChild(cube_r3);
 		setRotationAngle(cube_r3, 0, -0.3927F, 0);
 		cube_r3.setTextureOffset(20, 6).addBox(-3, 0, -6, 1, 1, 1);
@@ -104,7 +104,6 @@ public class ModelPowerSlug  extends ModelBase {
 
 		layer7 = new ModelRenderer(this);
 		layer7.setRotationPoint(0, 16, 0);
-		
 
 		cube_r6 = new ModelRenderer(this);
 		cube_r6.setRotationPoint(0, 4, 1);
@@ -143,5 +142,10 @@ public class ModelPowerSlug  extends ModelBase {
 		modelRenderer.rotateAngleX = x;
 		modelRenderer.rotateAngleY = y;
 		modelRenderer.rotateAngleZ = z;
+	}
+
+	public void renderBreakingTexture(TextureAtlasSprite breakingTexture) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'renderBreakingTexture'");
 	}
 }

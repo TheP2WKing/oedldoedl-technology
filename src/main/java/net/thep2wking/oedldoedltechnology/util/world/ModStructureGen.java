@@ -41,9 +41,9 @@ public class ModStructureGen implements IWorldGenerator {
 		switch (world.provider.getDimension()) {
 			case 0:
 				// The overworld
-				if (TechnologyConfig.WORLD.CRASH_SITE_STRUCTURE_GENERATION) {
+				if (TechnologyConfig.WORLD.CRASH_SITE_STRUCTURE) {
 					runGenerator(this.crashSiteGenerator, world, blockX, blockZ,
-							TechnologyConfig.WORLD.CRASH_SITE_GENERATION_CHANCE, random); // 5 common 250 rare?
+							TechnologyConfig.WORLD.CRASH_SITE_GENERATION, random); // 5 common 250 rare?
 				}
 				break;
 			case -1:

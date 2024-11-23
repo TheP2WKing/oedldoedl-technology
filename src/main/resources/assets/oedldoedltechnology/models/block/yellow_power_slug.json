@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"0": "oedldoedltechnology:blocks/yellow_power_slug",
-		"particle": "oedldoedltechnology:items/yellow_power_slug"
+		"particle": "oedldoedltechnology:blocks/yellow_power_slug"
 	},
 	"elements": [
 		{

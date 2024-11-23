@@ -76,14 +76,14 @@ public class GuiFactoryBase extends GuiContainer {
 		drawSmallText(energy, (centerX - textWidth / 2), 60, 0xda943b);
 		// clock speed header
 		String clockSpeedHeader = String.valueOf("Clock Speed:");
-		drawSmallText(clockSpeedHeader, 26, 101, 0x000);
+		drawSmallText(clockSpeedHeader, 10, 101, 0x000);
 		// clock speed
 		String clockSpeed = String.valueOf(tileEntity.getShardPercentage() * 100 + "%");
-		drawMediumText(clockSpeed, 23, 97, 0xda943b);
+		drawMediumText(clockSpeed, 9, 97, 0xda943b);
 		// if (tileEntity.isProcessing()) {
-			String progress = String.valueOf((int) (tileEntity.getProgress() * 100) + "%");
-			int progressWidth = fontRenderer.getStringWidth(progress) / 2;
-			drawSmallText(progress, (centerX - progressWidth / 2), 45);
+		String progress = String.valueOf((int) (tileEntity.getProgress() * 100) + "%");
+		int progressWidth = fontRenderer.getStringWidth(progress) / 2;
+		drawSmallText(progress, (centerX - progressWidth / 2), 45);
 		// } else {
 		// 	String idle = String.valueOf("Idle");
 		// 	int idleWidth = fontRenderer.getStringWidth(idle) / 2;
@@ -101,6 +101,6 @@ public class GuiFactoryBase extends GuiContainer {
 
 	public ResourceLocation getBackgroundTexture() {
 		return new ResourceLocation(OedldoedlTechnology.MODID,
-				"textures/gui/factory/factory_" + tileEntity.getNumberOfInputs() + "_inputs.png");
+				"textures/gui/factory/factory_" + tileEntity.getNumberOfInputs() + "_inputs_sl.png");
 	}
 }

@@ -37,7 +37,8 @@ public class ConstructorRecipeRegistry {
 
 	public static void registerOreDictRecipe(ItemStack output, String inputOreDict, int count, int time) {
 		for (ItemStack inputs : OreDictionary.getOres(inputOreDict)) {
-			customRecipeList.add(new ConstructorRecipe(new ItemStack(inputs.getItem(), count, inputs.getMetadata()), output, time));
+			customRecipeList.add(
+					new ConstructorRecipe(new ItemStack(inputs.getItem(), count, inputs.getMetadata()), output, time));
 		}
 	}
 

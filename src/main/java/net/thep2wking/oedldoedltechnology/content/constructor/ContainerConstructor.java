@@ -9,7 +9,8 @@ import net.minecraftforge.items.SlotItemHandler;
 import net.thep2wking.oedldoedltechnology.api.factory.ContainerFactoryBase;
 import net.thep2wking.oedldoedltechnology.api.factory.TileFactoryBase;
 import net.thep2wking.oedldoedltechnology.api.factory.slot.SlotOutput;
-import net.thep2wking.oedldoedltechnology.api.factory.slot.SlotUpgrade;
+import net.thep2wking.oedldoedltechnology.api.factory.slot.SlotPowerShard;
+import net.thep2wking.oedldoedltechnology.api.factory.slot.SlotSomersloop;
 
 public class ContainerConstructor extends ContainerFactoryBase {
 	public ContainerConstructor(InventoryPlayer inventoryPlayer, TileFactoryBase tileEntity) {
@@ -17,13 +18,19 @@ public class ContainerConstructor extends ContainerFactoryBase {
 		ItemStackHandler itemHandler = tileEntity.getItemHandler();
 
 		addSlotToContainer(new SlotItemHandler(itemHandler, 0, 10, 39));
-		// addSlotToContainer(new SlotItemHandler(itemHandler, 1, 10, 49));
 
 		addSlotToContainer(new SlotOutput(itemHandler, 1, 114, 39));
 
-		addSlotToContainer(new SlotUpgrade(itemHandler, 2, 80, 103));
-		addSlotToContainer(new SlotUpgrade(itemHandler, 3, 105, 103));
-		addSlotToContainer(new SlotUpgrade(itemHandler, 4, 130, 103));
+		addSlotToContainer(new SlotPowerShard(itemHandler, 2, 60, 103));
+		addSlotToContainer(new SlotPowerShard(itemHandler, 3, 85, 103));
+		addSlotToContainer(new SlotPowerShard(itemHandler, 4, 110, 103));
+
+		addSlotToContainer(new SlotSomersloop(itemHandler, 5, 149, 103) {
+			@Override
+			public int getItemStackLimit(ItemStack stack) {
+				return tileEntity.getRequiredSomersloops();
+			}
+		});
 
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 9; j++) {
@@ -43,18 +50,14 @@ public class ContainerConstructor extends ContainerFactoryBase {
 		if (slot != null && slot.getHasStack()) {
 			ItemStack slotStack = slot.getStack();
 			itemStack = slotStack.copy();
-			if (slotNumber <= 4) {
-				if (!mergeItemStack(slotStack, 5, 41, true)) {
+			if (slotNumber <= 5) {
+				if (!mergeItemStack(slotStack, 6, 42, true)) {
 					return ItemStack.EMPTY;
 				}
 			} else if (tileEntity.getItemHandler().isItemValid(0, slotStack)) {
 				if (!mergeItemStack(slotStack, 0, 1, false)) {
 					return ItemStack.EMPTY;
 				}
-			// } else if (tileEntity.getItemHandler().isItemValid(1, slotStack)) {
-			// 	if (!mergeItemStack(slotStack, 1, 2, false)) {
-			// 		return ItemStack.EMPTY;
-			// 	}
 			}
 			if (slotStack.isEmpty()) {
 				slot.putStack(ItemStack.EMPTY);

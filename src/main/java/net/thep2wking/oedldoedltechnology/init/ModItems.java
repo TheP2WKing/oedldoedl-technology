@@ -14,6 +14,7 @@ import net.thep2wking.oedldoedltechnology.content.item.ItemNobeliskDetonator;
 import net.thep2wking.oedldoedltechnology.content.item.ItemNormalNobelisk;
 import net.thep2wking.oedldoedltechnology.content.item.ItemPowerShard;
 import net.thep2wking.oedldoedltechnology.content.item.ItemRailgun;
+import net.thep2wking.oedldoedltechnology.content.item.ItemSomersloop;
 import net.thep2wking.oedldoedltechnology.content.item.ItemUpNAtomizer;
 import net.thep2wking.oedldoedltechnology.util.ModPhaseTier;
 
@@ -43,6 +44,7 @@ public class ModItems {
 	public static final Item IPHONE_14_PRO_MAX = new ModItemBase(OedldoedlTechnology.MODID, "iphone_14_pro_max", OedldoedlTechnology.TAB, ModRarities.LIGHT_PURPLE, false, 1, 0);
 
 	public static final Item POWER_SHARD = new ItemPowerShard(OedldoedlTechnology.MODID, "power_shard", OedldoedlTechnology.TAB, ModRarities.YELLOW, false, 3, 1);
+	public static final Item SOMERSLOOP = new ItemSomersloop(OedldoedlTechnology.MODID, "somersloop", OedldoedlTechnology.TAB, ModRarities.LIGHT_PURPLE, false, 3, 1);
 
 	public static final Item IRON_PLATE = new ModItemProjectPartBase(OedldoedlTechnology.MODID, "iron_plate", OedldoedlTechnology.TAB, ModPhaseTier.TIER_0, false, 1);
 	public static final Item IRON_ROD = new ModItemProjectPartBase(OedldoedlTechnology.MODID, "iron_rod", OedldoedlTechnology.TAB, ModPhaseTier.TIER_0, false, 1);

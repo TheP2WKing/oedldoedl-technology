@@ -49,10 +49,16 @@ item.oedldoedltechnology.iphone_14_pro_max.name=iPhone 14 Pro Max
 item.oedldoedltechnology.iphone_14_pro_max.tip1=Think different...
 
 item.oedldoedltechnology.power_shard.name=Power Shard
-item.oedldoedltechnology.power_shard.annotation1=Speed and power increase:
+item.oedldoedltechnology.power_shard.annotation1=Speed and Power increase:
 item.oedldoedltechnology.power_shard.tip1=Mucus from the power slugs compressed
 item.oedldoedltechnology.power_shard.tip2=into a solid crystal-like shard.
 item.oedldoedltechnology.power_shard.tip3=It radiates a strange power.
+
+item.oedldoedltechnology.somersloop.name=Somersloop
+item.oedldoedltechnology.somersloop.annotation1=Output and Power multiplier:
+item.oedldoedltechnology.somersloop.tip1=An odd alien object with a mind-bending,
+item.oedldoedltechnology.somersloop.tip2=yet somehow familiar shape.
+item.oedldoedltechnology.somersloop.tip3=It emits an unsettling energy.
 
 item.oedldoedltechnology.iron_plate.name=Iron Plate
 item.oedldoedltechnology.iron_plate.tip1=One of the most basic parts.
@@ -151,6 +157,8 @@ top.oedldoedltechnology.disabled=Disabled by Redstone
 top.oedldoedltechnology.energy=Energy Usage:
 top.oedldoedltechnology.speed=Clock Speed:
 top.oedldoedltechnology.upgrades=Power Shards:
+top.oedldoedltechnology.somersloop=Somersloops:
+top.oedldoedltechnology.multiplier=Output Multiplier:
 
 # tier
 item.oedldoedltechnology.project_part.annotation1=Tier:
