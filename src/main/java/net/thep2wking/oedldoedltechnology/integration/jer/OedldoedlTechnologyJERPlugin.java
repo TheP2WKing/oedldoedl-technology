@@ -6,6 +6,7 @@ import net.thep2wking.oedldoedlcore.api.integration.ModJERPluginBase;
 import net.thep2wking.oedldoedltechnology.OedldoedlTechnology;
 import net.thep2wking.oedldoedltechnology.config.TechnologyConfig;
 import net.thep2wking.oedldoedltechnology.entity.living.EntityRepublicanSpaceRanger;
+import net.thep2wking.oedldoedltechnology.init.ModBlocks;
 import net.thep2wking.oedldoedltechnology.init.ModLootTables;
 
 @JERPlugin
@@ -27,6 +28,12 @@ public class OedldoedlTechnologyJERPlugin extends ModJERPluginBase {
 		if (TechnologyConfig.INTEGRATION.JER.CRASH_SITE_DUNGEON_CHEST
 				&& TechnologyConfig.WORLD.CRASH_SITE_STRUCTURE) {
 			addDungeonLoot("crash_site", ModLootTables.CRASH_SITE);
+		}
+
+		if (TechnologyConfig.INTEGRATION.JER.POWER_SLUG_WORLD_GEN && TechnologyConfig.WORLD.POWER_SLUG) {
+			addSpikeOreGen(ModBlocks.BLUE_POWER_SLUG, 80, 15, 0.0001f);
+			addSpikeOreGen(ModBlocks.YELLOW_POWER_SLUG, 80, 15, 0.0001f);
+			addSpikeOreGen(ModBlocks.PURPLE_POWER_SLUG, 80, 15, 0.0001f);
 		}
 	}
 }

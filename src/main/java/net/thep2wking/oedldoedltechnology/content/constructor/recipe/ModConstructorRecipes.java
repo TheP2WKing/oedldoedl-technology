@@ -8,7 +8,7 @@ public class ModConstructorRecipes {
 	public static void register() {
 		ConstructorRecipeRegistry.registerOreDictRecipe(new ItemStack(ModItems.POWER_SHARD, 1, 0), "powerSlugBlue", 1,
 				8);
-		ConstructorRecipeRegistry.registerOreDictRecipe(new ItemStack(ModItems.POWER_SHARD, 2, 0), "powerSlugYellow", 4,
+		ConstructorRecipeRegistry.registerOreDictRecipe(new ItemStack(ModItems.POWER_SHARD, 2, 0), "powerSlugYellow", 1,
 				12);
 		ConstructorRecipeRegistry.registerOreDictRecipe(new ItemStack(ModItems.POWER_SHARD, 5, 0), "powerSlugPurple", 1,
 				24);

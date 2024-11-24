@@ -12,6 +12,9 @@ public class Integration {
 		
 		@Config.Name("Crash Site Dungeon Chests")
 		public boolean CRASH_SITE_DUNGEON_CHEST = true;
+
+		@Config.Name("Power Slug World Gen")
+		public boolean POWER_SLUG_WORLD_GEN = true;
 	}
 	
 	@Config.Name("jei")
