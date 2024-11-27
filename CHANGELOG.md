@@ -1,5 +1,24 @@
 # Changelog
 
+## [4.2.0] - 2024-11-27
+
+### Added
+
+- added satisfactory constructor and assembler machines (no multiblocks)
+- added powershards and somersloops (still early stage)
+- added tier 0, 1, 2, 3 and some tier 4 parts
+- added power sligs to world gen
+- added crash site structure to world gen
+- added jei integration for satisfactory machines
+- added jer support for power slugs and loot chests
+- added crafttweaker support for satisfactory machines (still early stage)
+- added nobelisks (and cluster variant for now) and nobelisk detonator (yes it works like you remember)
+
+### Changed
+
+- updated creative tab implementation
+- republican space ranger now uses json loot table instead of hardcoded drops
+
 ## [4.1.0] - 2024-06-09
 
 ### Changed
